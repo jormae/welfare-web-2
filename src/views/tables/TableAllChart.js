@@ -135,7 +135,7 @@ const TableAllChart = () => {
                   <TableCell align='left'>{row.pttypeName}</TableCell>
                   <TableCell align='center'>
                     <Link href={`/detail-chart/${row.an}`}>
-                      <Button variant='outlined'>รายละเอียด</Button>
+                      <Button variant='outlined'>เปิด</Button>
                     </Link>
                   </TableCell>
                 </TableRow>
