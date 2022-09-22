@@ -50,7 +50,6 @@ const TableChartHistory = () => {
               <TableRow>
                 <TableCell align='left'>วันที่</TableCell>
                 <TableCell align='left'>เหตุการณ์</TableCell>
-                <TableCell align='left'>รายละเอียด</TableCell>
                 <TableCell align='left'>เจ้าหน้าที่</TableCell>
               </TableRow>
             </TableHead>
@@ -59,7 +58,6 @@ const TableChartHistory = () => {
                 <TableRow>
                   <TableCell align='left'>{moment(row.datetime).format('L')}</TableCell>
                   <TableCell align='left'>{row.action}</TableCell>
-                  <TableCell align='left'>{row.details}</TableCell>
                   <TableCell align='left'>{row.staffName}</TableCell>
                 </TableRow>
               ))}
