@@ -5,6 +5,7 @@ import apiConfig from 'src/configs/apiConfig'
 import FormChartDetail from 'src/views/form-layouts/FormChartDetail'
 import axios from 'axios'
 import CardNewChart from 'src/views/cards/CardNewChart'
+import TableChartHistory from 'src/views/tables/TableChartHistory'
 
 export const ChartContext = createContext()
 export const WardsContext = createContext()
@@ -14,6 +15,7 @@ export const DoctorsContext = createContext()
 export const ReferCausesContext = createContext()
 export const ReferHospitalsContext = createContext()
 export const PttypesContext = createContext()
+export const HistoriesContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
@@ -25,10 +27,11 @@ const FormLayouts = () => {
   const [referCauses, setReferCauses] = useState([])
   const [referHospitals, setReferHospitals] = useState([])
   const [pttypes, setPttypes] = useState([])
+  const [chartHistories, setChartHistories] = useState({ blogs: [] })
 
   if (router.isReady) {
     const { an } = router.query
-    console.log(an)
+    // console.log(an)
   }
 
   const fetchChartDetail = async () => {
@@ -128,6 +131,18 @@ const FormLayouts = () => {
     }
   }
 
+  const fetchChartHistories = async () => {
+    let uri = apiConfig.baseURL + `/chart/history/${an}`
+
+    try {
+      const { data } = await axios.get(uri)
+      setChartHistories({ blogs: data })
+      console.log({ blogs: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (router.isReady) {
       router.query
@@ -139,7 +154,7 @@ const FormLayouts = () => {
       fetchReferCauses()
       fetchReferHospitals()
       fetchPttypes()
-      // console.log(router.query)
+      fetchChartHistories()
     }
   }, [router.isReady, router.query])
 
@@ -166,9 +181,11 @@ const FormLayouts = () => {
             </DischargeStutusesContext.Provider>
           </WardsContext.Provider>
         </Grid>
-        {/* <Grid item xs={6}>
-          <FormChartDetail />
-        </Grid> */}
+        <Grid item xs={6}>
+          <HistoriesContext.Provider value={chartHistories}>
+            <TableChartHistory />
+          </HistoriesContext.Provider>
+        </Grid>
       </Grid>
     </ChartContext.Provider>
   )

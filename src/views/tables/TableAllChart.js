@@ -129,13 +129,15 @@ const TableAllChart = () => {
                   <TableCell align='left'>{row.ptName}</TableCell>
                   <TableCell align='left'>{row.wardName}</TableCell>
                   <TableCell align='left'>{row.dischargeStatusName}</TableCell>
-                  <TableCell align='center'>{row.dischargeDate}</TableCell>
+                  <TableCell align='center'>{moment(row.dischargeDate).format('L')}</TableCell>
                   <TableCell align='left'>{row.dischargeTypeName}</TableCell>
                   <TableCell align='left'>{row.referHospitalName}</TableCell>
                   <TableCell align='left'>{row.pttypeName}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`/detail-chart/${row.an}`}>
-                      <Button variant='outlined'>เปิด</Button>
+                    <Link href={`/detail-chart/${row.an}`} color='success'>
+                      <Button type='button' variant='outlined'>
+                        เปิด
+                      </Button>
                     </Link>
                   </TableCell>
                 </TableRow>
