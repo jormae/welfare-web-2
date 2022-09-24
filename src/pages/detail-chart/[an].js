@@ -7,6 +7,51 @@ import axios from 'axios'
 import CardNewChart from 'src/views/cards/CardNewChart'
 import TableChartHistory from 'src/views/tables/TableChartHistory'
 
+const defaultData = {
+  id: 0,
+  an: '00000000',
+  hn: '0000',
+  ptName: 'N/A',
+  admitDate: '2022-04-09T17:00:00.000Z',
+  admitTime: '13:34:00',
+  dischargeDate: '2022-04-11T17:00:00.000Z',
+  dischargeTime: '12:00:00',
+  doctorCode: 421,
+  dischargeDoctor: 'นพ.สรวิชญ์ ไชยเจริญทรัพย์',
+  wardCode: '16',
+  dischargeStatusCode: '02',
+  dischargeTypeCode: '01',
+  referCauseCode: null,
+  referHospitalCode: null,
+  pttypeCode: '72',
+  admitDuration: 2,
+  startSummaryDate: '2022-09-15T05:39:03.000Z',
+  dueSummaryDate: '2022-09-24T17:00:00.000Z',
+  submitedBy: 'นายมาฮีดีน จอแม',
+  returnSummaryDate: '2022-09-15T08:54:25.000Z',
+  returnedSummaryBy: 'นายมาฮีดีน จอแม',
+  reauditDate: null,
+  collectedBy: null,
+  isReaudit: null,
+  codeDuration: 1,
+  summaryDuration: 0,
+  completionDuration: null,
+  chartStatusId: 1,
+  insertedBy: 'นายมาฮีดีน จอแม',
+  insertedAt: '2022-09-15T08:54:26.000Z',
+  updatedBy: null,
+  updatedAt: null,
+  wardId: 1,
+  wardName: 'หอผู้ป่วยใน 1',
+  wardLabel: 'IPD 1',
+  wardStatusId: 1,
+  dischargeStatusName: 'Improved',
+  dischargeTypeName: 'With Approval',
+  pttypeName: 'ประเภทผู้มีรายได้น้อย',
+  referCauseName: null,
+  referHospitalName: null
+}
+
 export const ChartContext = createContext()
 export const WardsContext = createContext()
 export const DischargeStutusesContext = createContext()
@@ -19,7 +64,7 @@ export const HistoriesContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
-  const [chartDetail, setChartDetail] = useState()
+  const [chartDetail, setChartDetail] = useState(defaultData)
   const [wards, setWards] = useState([])
   const [dischargeStatuses, setDischargeStatuses] = useState([])
   const [dischargeTypes, setDischargeTypes] = useState([])
@@ -34,17 +79,14 @@ const FormLayouts = () => {
     // console.log(an)
   }
 
-  const fetchChartDetail = async () => {
+  const fetchChartDetail = () => {
     let uri = apiConfig.baseURL + `/chart/all-chart/${an}`
-    console.log(uri)
-    try {
-      await axios
-        .get(uri)
-        .then(result => setChartDetail(result.data[0]))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
+    // console.log(uri)
+
+    axios
+      .get(uri)
+      .then(result => setChartDetail(result.data[0]))
+      .catch(error => console.log('An error occurred' + error))
   }
 
   const fetchWards = async () => {
@@ -137,7 +179,7 @@ const FormLayouts = () => {
     try {
       const { data } = await axios.get(uri)
       setChartHistories({ blogs: data })
-      console.log({ blogs: data })
+      // console.log({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -147,16 +189,18 @@ const FormLayouts = () => {
     if (router.isReady) {
       router.query
       fetchChartDetail()
-      fetchWards()
-      fetchDischargeStatuses()
-      fetchDischargeTypes()
-      fetchDoctors()
-      fetchReferCauses()
-      fetchReferHospitals()
-      fetchPttypes()
-      fetchChartHistories()
+      // fetchWards()
+      // fetchDischargeStatuses()
+      // fetchDischargeTypes()
+      // fetchDoctors()
+      // fetchReferCauses()
+      // fetchReferHospitals()
+      // fetchPttypes()
+      // fetchChartHistories()
     }
   }, [router.isReady, router.query])
+
+  // const [registeredAddresses, setRegisteredAddresses] = useState([]);
 
   return (
     <ChartContext.Provider value={chartDetail}>

@@ -115,7 +115,7 @@ const TableAllChart = () => {
                 <TableCell align='center'>สถานะ</TableCell>
                 <TableCell align='center'>วันที่จำหน่าย</TableCell>
                 <TableCell align='center'>สาเหตุจำหน่าย</TableCell>
-                <TableCell align='center'>โรงพยาบาลรีเฟอร์</TableCell>
+                {/* <TableCell align='center'>โรงพยาบาลรีเฟอร์</TableCell> */}
                 <TableCell align='center'>สิทธิ์การรักษา</TableCell>
                 <TableCell align='center'>Action</TableCell>
               </TableRow>
@@ -131,7 +131,7 @@ const TableAllChart = () => {
                   <TableCell align='left'>{row.dischargeStatusName}</TableCell>
                   <TableCell align='center'>{moment(row.dischargeDate).format('L')}</TableCell>
                   <TableCell align='left'>{row.dischargeTypeName}</TableCell>
-                  <TableCell align='left'>{row.referHospitalName}</TableCell>
+                  {/* <TableCell align='left'>{row.referHospitalName}</TableCell> */}
                   <TableCell align='left'>{row.pttypeName}</TableCell>
                   <TableCell align='center'>
                     <Link href={`/detail-chart/${row.an}`} color='success'>
