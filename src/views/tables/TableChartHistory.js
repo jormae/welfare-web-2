@@ -34,7 +34,7 @@ const TableChartHistory = () => {
             </TableHead>
             <TableBody>
               {histories.blogs.map(row => (
-                <TableRow key={row.datetime}>
+                <TableRow key={row.id}>
                   <TableCell align='left'>{moment(row.datetime).format('L')}</TableCell>
                   <TableCell align='left'>{row.action}</TableCell>
                   <TableCell align='left'>{row.staffName}</TableCell>

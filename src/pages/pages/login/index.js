@@ -172,9 +172,9 @@ const LoginPage = () => {
             </Typography>
           </Box>
           <Box sx={{ mb: 6 }}>
-            <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
+            {/* <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
               Welcome to {themeConfig.templateName}! 👋🏻
-            </Typography>
+            </Typography> */}
             <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -210,16 +210,16 @@ const LoginPage = () => {
             <Box
               sx={{ mb: 4, display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}
             >
-              <FormControlLabel control={<Checkbox />} label='Remember Me' />
+              {/* <FormControlLabel control={<Checkbox />} label='Remember Me' />
               <Link passHref href='/'>
                 <LinkStyled onClick={e => e.preventDefault()}>Forgot Password?</LinkStyled>
-              </Link>
+              </Link> */}
             </Box>
             <Button fullWidth size='large' variant='contained' sx={{ marginBottom: 7 }} type='submit'>
               Login
             </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
+            {/* <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+              {/* <Typography variant='body2' sx={{ marginRight: 2 }}>
                 New on our platform?
               </Typography>
               <Typography variant='body2'>
@@ -227,8 +227,8 @@ const LoginPage = () => {
                   <LinkStyled>Create an account</LinkStyled>
                 </Link>
               </Typography>
-            </Box>
-            <Divider sx={{ my: 5 }}>or</Divider>
+            </Box> 
+            <Divider sx={{ my: 5 }}>or</Divider> 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Link href='/' passHref>
                 <IconButton component='a' onClick={e => e.preventDefault()}>
@@ -252,7 +252,7 @@ const LoginPage = () => {
                   <Google sx={{ color: '#db4437' }} />
                 </IconButton>
               </Link>
-            </Box>
+            </Box> */}
           </form>
         </CardContent>
       </Card>

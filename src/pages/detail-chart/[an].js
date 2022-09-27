@@ -6,50 +6,22 @@ import FormChartDetail from 'src/views/form-layouts/FormChartDetail'
 import axios from 'axios'
 import CardNewChart from 'src/views/cards/CardNewChart'
 import TableChartHistory from 'src/views/tables/TableChartHistory'
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const defaultData = {
-  id: 0,
-  an: '00000000',
-  hn: '0000',
-  ptName: 'N/A',
+  ptName: 'Loading',
   admitDate: '2022-04-09T17:00:00.000Z',
-  admitTime: '13:34:00',
   dischargeDate: '2022-04-11T17:00:00.000Z',
-  dischargeTime: '12:00:00',
-  doctorCode: 421,
-  dischargeDoctor: 'นพ.สรวิชญ์ ไชยเจริญทรัพย์',
-  wardCode: '16',
-  dischargeStatusCode: '02',
-  dischargeTypeCode: '01',
-  referCauseCode: null,
-  referHospitalCode: null,
-  pttypeCode: '72',
-  admitDuration: 2,
-  startSummaryDate: '2022-09-15T05:39:03.000Z',
-  dueSummaryDate: '2022-09-24T17:00:00.000Z',
-  submitedBy: 'นายมาฮีดีน จอแม',
-  returnSummaryDate: '2022-09-15T08:54:25.000Z',
-  returnedSummaryBy: 'นายมาฮีดีน จอแม',
-  reauditDate: null,
-  collectedBy: null,
-  isReaudit: null,
-  codeDuration: 1,
-  summaryDuration: 0,
-  completionDuration: null,
-  chartStatusId: 1,
-  insertedBy: 'นายมาฮีดีน จอแม',
-  insertedAt: '2022-09-15T08:54:26.000Z',
-  updatedBy: null,
-  updatedAt: null,
-  wardId: 1,
-  wardName: 'หอผู้ป่วยใน 1',
-  wardLabel: 'IPD 1',
-  wardStatusId: 1,
-  dischargeStatusName: 'Improved',
-  dischargeTypeName: 'With Approval',
-  pttypeName: 'ประเภทผู้มีรายได้น้อย',
-  referCauseName: null,
-  referHospitalName: null
+  doctorCode: 'Loading',
+  wardCode: 'Loading',
+  dischargeStatusCode: 'Loading',
+  dischargeTypeCode: 'Loading',
+  referCauseCode: 'Loading',
+  referHospitalCode: 'Loading',
+  pttypeCode: 'Loading',
+  admitDuration: 'Loading'
 }
 
 export const ChartContext = createContext()
@@ -73,6 +45,9 @@ const FormLayouts = () => {
   const [referHospitals, setReferHospitals] = useState([])
   const [pttypes, setPttypes] = useState([])
   const [chartHistories, setChartHistories] = useState({ blogs: [] })
+  console.log(chartDetail.id)
+  // console.log(chartHistories)
+  // console.log(chartHistories.blogs.length)
 
   if (router.isReady) {
     const { an } = router.query
@@ -81,7 +56,7 @@ const FormLayouts = () => {
 
   const fetchChartDetail = () => {
     let uri = apiConfig.baseURL + `/chart/all-chart/${an}`
-    // console.log(uri)
+    console.log(uri)
 
     axios
       .get(uri)
@@ -91,6 +66,7 @@ const FormLayouts = () => {
 
   const fetchWards = async () => {
     let uri = apiConfig.baseURL + `/utils/ward`
+    console.log(uri)
     try {
       await axios
         .get(uri)
@@ -179,7 +155,6 @@ const FormLayouts = () => {
     try {
       const { data } = await axios.get(uri)
       setChartHistories({ blogs: data })
-      // console.log({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -189,50 +164,80 @@ const FormLayouts = () => {
     if (router.isReady) {
       router.query
       fetchChartDetail()
-      // fetchWards()
-      // fetchDischargeStatuses()
-      // fetchDischargeTypes()
-      // fetchDoctors()
-      // fetchReferCauses()
-      // fetchReferHospitals()
-      // fetchPttypes()
-      // fetchChartHistories()
+      fetchWards()
+      fetchDischargeStatuses()
+      fetchDischargeTypes()
+      fetchDoctors()
+      fetchReferCauses()
+      fetchReferHospitals()
+      fetchPttypes()
+      fetchChartHistories()
     }
   }, [router.isReady, router.query])
 
-  // const [registeredAddresses, setRegisteredAddresses] = useState([]);
+  const SkeletonChartFormsLoading = () => (
+    <Box>
+      {
+      chartDetail.id ? 
+      (
+        <ChartContext.Provider value={chartDetail}>
+          <WardsContext.Provider value={wards}>
+              <DischargeStutusesContext.Provider value={dischargeStatuses}>
+                <DischargeTypesContext.Provider value={dischargeTypes}>
+                  <DoctorsContext.Provider value={doctors}>
+                    <ReferCausesContext.Provider value={referCauses}>
+                      <ReferHospitalsContext.Provider value={referHospitals}>
+                        <PttypesContext.Provider value={pttypes}>
+                          <FormChartDetail />
+                        </PttypesContext.Provider>
+                      </ReferHospitalsContext.Provider>
+                    </ReferCausesContext.Provider>
+                  </DoctorsContext.Provider>
+                </DischargeTypesContext.Provider>
+              </DischargeStutusesContext.Provider>
+            </WardsContext.Provider>
+          </ChartContext.Provider>
+      ) : 
+      ( 
+      <Typography variant="h4">
+        <Skeleton width="100%" height={300} sx={{ animationDuration: "3.0s" }}/>
+      </Typography>
+      )}
+    </Box>
+  );
+
+  const SkeletonChartHistotiesLoading = () => (
+    <Box>
+      {
+      chartHistories.blogs.length > 0 ? 
+      (
+        <Grid container wrap="nowrap">
+        <HistoriesContext.Provider value={chartHistories}>
+          <TableChartHistory />
+        </HistoriesContext.Provider>
+      </Grid>
+      ) : 
+      ( 
+        <Skeleton width="100%"  height="20%"/>
+      )}
+    </Box>
+  );
 
   return (
-    <ChartContext.Provider value={chartDetail}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <CardNewChart />
         </Grid>
         <Grid item xs={6}>
-          <WardsContext.Provider value={wards}>
-            <DischargeStutusesContext.Provider value={dischargeStatuses}>
-              <DischargeTypesContext.Provider value={dischargeTypes}>
-                <DoctorsContext.Provider value={doctors}>
-                  <ReferCausesContext.Provider value={referCauses}>
-                    <ReferHospitalsContext.Provider value={referHospitals}>
-                      <PttypesContext.Provider value={pttypes}>
-                        <FormChartDetail />
-                      </PttypesContext.Provider>
-                    </ReferHospitalsContext.Provider>
-                  </ReferCausesContext.Provider>
-                </DoctorsContext.Provider>
-              </DischargeTypesContext.Provider>
-            </DischargeStutusesContext.Provider>
-          </WardsContext.Provider>
+            <SkeletonChartFormsLoading />
         </Grid>
         <Grid item xs={6}>
-          <HistoriesContext.Provider value={chartHistories}>
-            <TableChartHistory />
-          </HistoriesContext.Provider>
+          <SkeletonChartHistotiesLoading />
         </Grid>
       </Grid>
-    </ChartContext.Provider>
   )
 }
+
+
 
 export default FormLayouts

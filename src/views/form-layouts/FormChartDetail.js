@@ -1,5 +1,6 @@
 // ** React Imports
 import React, { useContext, useEffect } from 'react'
+import Skeleton from '@mui/material/Skeleton';
 import { Controller, useForm } from 'react-hook-form'
 // import { useParams } from 'react-router-dom'
 
@@ -21,11 +22,12 @@ import InputAdornment from '@mui/material/InputAdornment'
 import FormHelperText from '@mui/material/FormHelperText'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import toast, { Toaster } from 'react-hot-toast'
+import apiConfig from 'src/configs/apiConfig'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 
 import { ChartContext } from 'src/pages/detail-chart/[an]'
@@ -36,10 +38,10 @@ import { DoctorsContext } from 'src/pages/detail-chart/[an]'
 import { ReferCausesContext } from 'src/pages/detail-chart/[an]'
 import { ReferHospitalsContext } from 'src/pages/detail-chart/[an]'
 import { PttypesContext } from 'src/pages/detail-chart/[an]'
+import { Details } from 'mdi-material-ui';
 
 const FormChartDetail = () => {
   const chartDetail = useContext(ChartContext)
-
   const wards = useContext(WardsContext)
   const dischargeStatuses = useContext(DischargeStutusesContext)
   const dischargeTypes = useContext(DischargeTypesContext)
@@ -47,66 +49,106 @@ const FormChartDetail = () => {
   const referCauses = useContext(ReferCausesContext)
   const referHospitals = useContext(ReferHospitalsContext)
   const pttypes = useContext(PttypesContext)
-  const { register, handleSubmit, reset } = useForm()
+
+  const { register, handleSubmit, reset, setValue, control } = useForm()
+
+  const an = chartDetail?.an
+  const patientName = chartDetail?.patientName
+  const wardCode = chartDetail?.wardCode
+  const dischargeStatusCode = chartDetail?.dischargeStatusCode
+  const dischargeTypeCode = chartDetail?.dischargeTypeCode
+  const doctorCode = chartDetail?.doctorCode ?? 190
+  // const doctorCode = 190
+  const referCauseCode = chartDetail?.referCauseCode
+  const referHospitalCode = chartDetail?.referHospitalCode
+  const pttypeCode = chartDetail?.pttypeCode
+  const updatedBy = (typeof window !== "undefined") ? localStorage?.getItem('staffName') : "system"
 
   useEffect(() => {
+    
     if (chartDetail) {
       reset({
         patientName: chartDetail?.ptName,
-        hn: chartDetail?.hn,
+        // hn: chartDetail?.hn,
+        admitDuration: chartDetail?.admitDuration,
         admitDate: moment(chartDetail?.admitDate).format('YYYY-MM-DD'),
         dischargeDate: moment(chartDetail?.dischargeDate).format('YYYY-MM-DD'),
-        dischargeDoctorName: chartDetail?.dischargeDoctorName,
-        wardName: chartDetail?.wardName,
-        dischargeStatusName: chartDetail?.dischargeStatusName,
-        dischargeTypeName: chartDetail?.dischargeTypeName,
-        referCauseName: chartDetail?.referCauseName,
-        referHospitalName: chartDetail?.referHospitalName,
-        admitDuration: chartDetail?.admitDuration,
-        pttypeName: chartDetail?.pttypeName,
-        wardCode: chartDetail?.wardCode,
-        dischargeStatusCode: chartDetail?.dischargeStatusCode,
-        dischargeTypeCode: chartDetail?.dischargeTypeCode,
-        doctorCode: chartDetail?.doctorCode,
-        referCauseCode: chartDetail?.referCauseCode,
-        referHospitalCode: chartDetail?.referHospitalCode,
-        pttypeCode: chartDetail?.pttypeCode
+        wardCode:  chartDetail?.wardCode,
+        dischargeStatusCode : chartDetail?.dischargeStatusCode,
+        dischargeTypeCode : chartDetail?.dischargeTypeCode,
+        doctorCode : chartDetail?.doctorCode,
+        referCauseCode : chartDetail?.referCauseCode,
+        referHospitalCode : chartDetail?.referHospitalCode,
+        pttypeCode : chartDetail?.pttypeCode
       })
     }
   }, [chartDetail])
+  console.log(doctorCode)
 
-  const onSubmit = data => console.log(data)
+  // handleSelectChange = ({target: {name,value}}) => { 
+  //   console.log(name);
+  //   console.log(value); 
+  // }
+
+  const onSubmit = data => {
+    let uri = apiConfig.baseURL + `/chart/all-chart/${an}`
+
+    fetch(uri, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status == 'success') {
+          toast.success(data.message)
+        } else {
+          toast.error(data.errors[0].msg)
+        }
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      })
+
+    // resetField('an')
+    // fetchCharts()
+  }
 
   return (
     <Card>
       <CardHeader title='ข้อมูลผู้ป่วย' titleTypographyProps={{ variant: 'h6' }} />
+      <Toaster />
       <CardContent>
         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={5}>
             <Grid item xs={6}>
-              <TextField fullWidth label='ชื่อผู้ป่วย' {...register('patientName')} />
-              {/* <input type='text' name='firstName' value={patientName} {...register('patientName')} /> */}
-              {/* <Controller
-                name={'textValue'}
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <TextField onChange={onChange} value={value} label={'Text Value'} />
-                )}
-              /> */}
-            </Grid>
-            {/* <Grid item xs={6}>
-              <TextField fullWidth label='วันที่แอดมิต' id='ptName' type='date' value={admitDate || ''} />
+            { chartDetail.ptName ? ( <TextField fullWidth label='ชื่อผู้ป่วย' {...register('patientName')} />) : (
+              <Skeleton variant="rectangular" width={250} height={55} />
+              )
+            }
+              <input type='hidden' {...register('updatedBy')} value={updatedBy}/>
             </Grid>
             <Grid item xs={6}>
-              <TextField fullWidth label='วันที่จำหน่าย' id='ptName' type='date' value={dischargeDate || ''} />
+              <TextField fullWidth label='วันที่แอดมิต'  type='date' {...register('admitDate')} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label='วันที่จำหน่าย' type='date' {...register('dischargeDate')} />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField fullWidth label='จำนวนวันนอน' {...register('admitDuration')} />
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>ชื่อแพทย์</InputLabel>
-                <Select label='ชื่อแพทย์' value={doctorCode ?? ''} {...register('doctorCode', { required: true })}>
-                  {doctors.map(item => {
+                <Select label='ชื่อแพทย์' 
+                defaultValue={doctorCode ?? ""} 
+                {...register('doctorCode', { required: true })}
+                >
+                 {doctors.map(item => {
                     return (
-                      <MenuItem key={item.doctorCode} value={item.doctorCode}>
+                      <MenuItem key={item.doctorCode} value={item.doctorCode} >
                         {item.doctorName}
                       </MenuItem>
                     )
@@ -119,28 +161,26 @@ const FormChartDetail = () => {
                 <InputLabel>ชื่อหอผู้ป่วย</InputLabel>
                 <Select
                   label='ชื่อหอผู้ป่วย'
-                  defaultValue={wardCode ?? ''}
+                  defaultValue={wardCode ?? ""}
                   {...register('wardCode', { required: true })}
                 >
                   {wards.map(item => {
-                    return <MenuItem key={item.wardCode}>{item.wardName}</MenuItem>
+                    return <MenuItem key={item.wardCode} value={item.wardCode}>{item.wardName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={6}>
-              <TextField fullWidth label='จำนวนวันนอน' id='ptName' value={admitDuration || ''} />
-            </Grid>
+            
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>สถานะการจำหน่าย</InputLabel>
                 <Select
                   label='สถานะการจำหน่าย'
-                  defaultValue={dischargeStatusCode ?? ''}
+                  defaultValue={dischargeStatusCode ?? ""}
                   {...register('dischargeStatusCode', { required: true })}
                 >
                   {dischargeStatuses.map(item => {
-                    return <MenuItem key={item.dischargeStatusCode}>{item.dischargeStatusName}</MenuItem>
+                    return <MenuItem key={item.dischargeStatusCode} value={item.dischargeStatusCode}>{item.dischargeStatusName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
@@ -150,11 +190,11 @@ const FormChartDetail = () => {
                 <InputLabel>ประเภทการจำหน่าย</InputLabel>
                 <Select
                   label='ประเภทการจำหน่าย'
-                  defaultValue={dischargeTypeCode ?? ''}
+                  defaultValue={dischargeTypeCode ?? ""}
                   {...register('dischargeTypeCode', { required: true })}
                 >
                   {dischargeTypes.map(item => {
-                    return <MenuItem key={item.dischargeTypeCode}>{item.dischargeTypeName}</MenuItem>
+                    return <MenuItem key={item.dischargeTypeCode} value={item.dischargeTypeCode}>{item.dischargeTypeName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
@@ -165,26 +205,26 @@ const FormChartDetail = () => {
                 <InputLabel>สิทธิ์การรักษา</InputLabel>
                 <Select
                   label='สิทธิ์การรักษา'
-                  defaultValue={pttypeCode ?? ''}
+                  defaultValue={pttypeCode ?? ""}
                   {...register('pttypeCode', { required: true })}
                 >
                   {pttypes.map(item => {
-                    return <MenuItem key={item.pttypeCode}>{item.pttypeName}</MenuItem>
+                    return <MenuItem key={item.pttypeCode} value={item.pttypeCode}>{item.pttypeName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> 
 
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>สาเหตุการส่งต่อ</InputLabel>
                 <Select
                   label='สาเหตุการส่งต่อ'
-                  defaultValue={referCauseCode ?? ''}
+                  defaultValue={referCauseCode ?? ""}
                   {...register('referCauseCode', { required: true })}
                 >
                   {referCauses.map(item => {
-                    return <MenuItem key={item.referCauseCode}>{item.referCauseName}</MenuItem>
+                    return <MenuItem key={item.referCauseCode} value={item.referCauseCode}>{item.referCauseName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
@@ -195,15 +235,15 @@ const FormChartDetail = () => {
                 <InputLabel>โรงพยาบาล</InputLabel>
                 <Select
                   label='โรงพยาบาล'
-                  defaultValue={referHospitalCode ?? ''}
+                  defaultValue={referHospitalCode ?? ""}
                   {...register('referHospitalCode', { required: true })}
                 >
                   {referHospitals.map(item => {
-                    return <MenuItem key={item.referHospitalCode}>{item.referHospitalName}</MenuItem>
+                    return <MenuItem key={item.referHospitalCode}value={item.referHospitalCode}>{item.referHospitalName}</MenuItem>
                   })}
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid>
 
             <Grid item xs={12}>
               <Box
@@ -219,7 +259,7 @@ const FormChartDetail = () => {
                   บันทึก
                 </Button>
               </Box>
-            </Grid>
+            </Grid> 
           </Grid>
         </form>
       </CardContent>

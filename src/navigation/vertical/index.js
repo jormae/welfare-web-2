@@ -81,11 +81,11 @@ const navigation = () => {
       icon: ChartLine,
       path: '/report-summary'
     },
-    {
-      title: 'Icons',
-      path: '/icons',
-      icon: GoogleCirclesExtended
-    }
+    // {
+    //   title: 'Icons',
+    //   path: '/icons',
+    //   icon: GoogleCirclesExtended
+    // }
 
     // {
     //   sectionTitle: 'User Interface'
