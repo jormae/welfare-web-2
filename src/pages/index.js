@@ -21,6 +21,8 @@ import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
+import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
+import StatisticChart from 'src/views/dashboard/StatisticsChart'
 
 const Dashboard = () => {
   return (
@@ -30,7 +32,7 @@ const Dashboard = () => {
           <Trophy />
         </Grid>
         <Grid item xs={12} md={8}>
-          <StatisticsCard />
+          <StatisticChart />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
@@ -85,7 +87,7 @@ const Dashboard = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <SalesByCountries />
+          <ChartChangeLogs />
         </Grid>
         <Grid item xs={12} md={12} lg={8}>
           <DepositWithdraw />

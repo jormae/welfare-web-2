@@ -9,6 +9,7 @@ import TableChartHistory from 'src/views/tables/TableChartHistory'
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const defaultData = {
   ptName: 'Loading',
@@ -200,7 +201,8 @@ const FormLayouts = () => {
       ) : 
       ( 
       <Typography variant="h4">
-        <Skeleton width="100%" height={300} sx={{ animationDuration: "3.0s" }}/>
+        <CircularProgress />
+        <Skeleton width="100%" height={200} sx={{ animationDuration: "3.0s" }}/>
       </Typography>
       )}
     </Box>
@@ -218,7 +220,7 @@ const FormLayouts = () => {
       </Grid>
       ) : 
       ( 
-        <Skeleton width="100%"  height="20%"/>
+        <Skeleton width="100%"  height={200}/>
       )}
     </Box>
   );
