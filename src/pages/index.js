@@ -23,6 +23,7 @@ import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
 import StatisticChart from 'src/views/dashboard/StatisticsChart'
+import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
 
 const Dashboard = () => {
   return (
@@ -34,13 +35,16 @@ const Dashboard = () => {
         <Grid item xs={12} md={8}>
           <StatisticChart />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        {/* <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <TotalEarning />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} md={6} lg={4}>
+          <ChartChangeLogs />
+        </Grid>
+        <Grid item xs={12} md={8} lg={8}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
               <CardStatisticsVerticalComponent
@@ -86,14 +90,12 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <ChartChangeLogs />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
+        
+        {/* <Grid item xs={12} md={12} lg={8}>
           <DepositWithdraw />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
-          <Table />
+          <TableDoctorTask />
         </Grid>
       </Grid>
     </ApexChartWrapper>
