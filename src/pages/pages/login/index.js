@@ -181,18 +181,18 @@ const LoginPage = () => {
             <TextField
               autoFocus
               fullWidth
-              label='Email'
+              label='ชื่อบัญชี'
               sx={{ marginBottom: 4 }}
-              {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+              {...register('email', { required: true})}
             />
 
             <FormControl fullWidth>
               <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
               <OutlinedInput
-                label='Password'
+                label='รหัสผ่าน'
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
-                {...register('password')}
+                {...register('password', { required: true})}
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton

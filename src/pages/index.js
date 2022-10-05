@@ -24,13 +24,14 @@ import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
 import StatisticChart from 'src/views/dashboard/StatisticsChart'
 import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
+import Greeting from 'src/views/dashboard/Greeting'
 
 const Dashboard = () => {
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
         <Grid item xs={12} md={4}>
-          <Trophy />
+          <Greeting />
         </Grid>
         <Grid item xs={12} md={8}>
           <StatisticChart />
