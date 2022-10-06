@@ -14,7 +14,6 @@ import DotsVertical from 'mdi-material-ui/DotsVertical'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
-
 const data = [
   {
     sales: '894k',
@@ -69,9 +68,8 @@ const data = [
 ]
 
 const ChartChangeLogs = () => {
-
   const [chartLogs, setChartChangeLogs] = useState({ blogs: [] })
-  const date = "2022-09"
+  const date = '2022-10'
 
   const fetchChartLogs = async () => {
     let uri = apiConfig.baseURL + `/dashboard/chart-log/${date}`
@@ -86,7 +84,7 @@ const ChartChangeLogs = () => {
   }
 
   useEffect(() => {
-      fetchChartLogs()
+    fetchChartLogs()
   }, [])
 
   return (

@@ -1,4 +1,4 @@
-// ** MUI Imports
+import { useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid'
 
 // ** Icons Imports
@@ -25,8 +25,37 @@ import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
 import StatisticChart from 'src/views/dashboard/StatisticsChart'
 import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
 import Greeting from 'src/views/dashboard/Greeting'
+import apiConfig from 'src/configs/apiConfig'
 
 const Dashboard = () => {
+  const verifyToken = async () => {
+    const token = localStorage.getItem('token')
+    let uri = apiConfig.baseURL + '/auth/token'
+    fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        if (data.status !== 'success') {
+          localStorage.removeItem('token')
+          localStorage.removeItem('staffName')
+          window.location = '/pages/login'
+          console.log(data)
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error)
+      })
+  }
+
+  useEffect(() => {
+    verifyToken()
+  }, [])
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
@@ -91,7 +120,7 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-        
+
         {/* <Grid item xs={12} md={12} lg={8}>
           <DepositWithdraw />
         </Grid> */}

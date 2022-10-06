@@ -45,6 +45,11 @@ const navigation = () => {
       path: '/return-chart'
     },
     {
+      title: 'รับคืนออดิตชาร์ต',
+      icon: BarcodeScan,
+      path: '/audit-chart'
+    },
+    {
       title: 'ส่งรีออดิตชาร์ต',
       icon: BarcodeScan,
       path: '/reaudit-chart'
@@ -80,7 +85,7 @@ const navigation = () => {
       title: 'รายงานสรุป',
       icon: ChartLine,
       path: '/report-summary'
-    },
+    }
     // {
     //   title: 'Icons',
     //   path: '/icons',

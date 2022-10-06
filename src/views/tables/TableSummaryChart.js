@@ -119,7 +119,7 @@ const TableSummaryChart = () => {
               {charts.blogs.map(row => (
                 <TableRow key={row.doctorCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component='th' scope='row'>
-                    {row.dischargeDoctor}
+                    {row.doctorName}
                   </TableCell>
                   <TableCell align='center'>{row.TOTAL_CHART}</TableCell>
                   <TableCell align='center'>

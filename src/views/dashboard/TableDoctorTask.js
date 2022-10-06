@@ -9,6 +9,8 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Typography from '@mui/material/Typography'
 import TableContainer from '@mui/material/TableContainer'
+import Avatar from '@mui/material/Avatar'
+import { Doctor } from 'mdi-material-ui'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
@@ -96,9 +98,8 @@ const statusObj = {
 }
 
 const TableDoctorTask = () => {
-
   const [doctorTasks, setDoctorTasks] = useState({ blogs: [] })
-  const date = "2022-04"
+  const date = '2022-09'
 
   const fetchDoctorTasks = async () => {
     let uri = apiConfig.baseURL + `/dashboard/doctor-summary/${date}`
@@ -124,8 +125,8 @@ const TableDoctorTask = () => {
             <TableRow>
               <TableCell>ชื่อแพทย์</TableCell>
               <TableCell>จำนวนชาร์ต</TableCell>
-              <TableCell>จำนวนสรุปชาร์ต</TableCell>
               <TableCell>จำนวนรอสรุปชาร์ต</TableCell>
+              <TableCell>จำนวนสรุปชาร์ต</TableCell>
               <TableCell>จำนวนวันสรุปชารต์เฉลี่ย</TableCell>
               <TableCell>จำนวนสรุปชาร์ตเกินกำหนด</TableCell>
               <TableCell>จำนวนรีออร์ดิต</TableCell>
@@ -135,17 +136,40 @@ const TableDoctorTask = () => {
             {doctorTasks.blogs.map(row => (
               <TableRow hover key={row.name} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                 <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  {/* <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.doctorName}</Typography>
                     <Typography variant='caption'>{row.doctorName}</Typography>
-                  </Box>
+                  </Box> */}
+                  <Avatar
+                    sx={{
+                      width: 30,
+                      height: 30,
+                      marginRight: 3,
+                      fontSize: '1rem',
+                      color: 'common.white',
+                      float: 'left',
+                      backgroundColor: 'primary.main'
+                    }}
+                  ></Avatar>
+                  <Typography sx={{ marginTop: 1, fontWeight: 500, fontSize: '0.875rem !important' }}>
+                    {row.doctorName}
+                  </Typography>
+                  {/* {row.doctorName} */}
                 </TableCell>
                 <TableCell align='center'>{row.totalChart}</TableCell>
-                <TableCell align='center'>{row.totalSummary}</TableCell>
                 <TableCell align='center'>{row.totalPendingSummary}</TableCell>
-                <TableCell align='center'>{row.avgSummaryDay}</TableCell>
-                <TableCell align='center' ><Typography variant='caption' sx={{ fontWeight: 600, color: 'error.main' }}>{row.totalLateSummary}</Typography></TableCell>
-                <TableCell align='center' ><Typography variant='caption' sx={{ fontWeight: 600, color: 'error.main' }}>{row.totalReaudit}</Typography></TableCell>
+                <TableCell align='center'>{row.totalSummary}</TableCell>
+                <TableCell align='center'>{row.avgSummaryDay ?? '-'}</TableCell>
+                <TableCell align='center'>
+                  <Typography variant='caption' sx={{ fontWeight: 600, color: 'error.main' }}>
+                    {row.totalLateSummary}
+                  </Typography>
+                </TableCell>
+                <TableCell align='center'>
+                  <Typography variant='caption' sx={{ fontWeight: 600, color: 'error.main' }}>
+                    {row.totalReaudit}
+                  </Typography>
+                </TableCell>
                 {/* <TableCell>
                   <Chip
                     label={row.status}

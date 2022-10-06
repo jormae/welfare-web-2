@@ -6,10 +6,10 @@ import FormChartDetail from 'src/views/form-layouts/FormChartDetail'
 import axios from 'axios'
 import CardNewChart from 'src/views/cards/CardNewChart'
 import TableChartHistory from 'src/views/tables/TableChartHistory'
-import Skeleton from "@mui/material/Skeleton";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
+import Skeleton from '@mui/material/Skeleton'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const defaultData = {
   ptName: 'Loading',
@@ -19,8 +19,8 @@ const defaultData = {
   wardCode: 'Loading',
   dischargeStatusCode: 'Loading',
   dischargeTypeCode: 'Loading',
-  referCauseCode: 'Loading',
-  referHospitalCode: 'Loading',
+  referCauseCode: 0,
+  referHospitalCode: 0,
   pttypeCode: 'Loading',
   admitDuration: 'Loading'
 }
@@ -178,68 +178,60 @@ const FormLayouts = () => {
 
   const SkeletonChartFormsLoading = () => (
     <Box>
-      {
-      chartDetail.id ? 
-      (
+      {chartDetail.id ? (
         <ChartContext.Provider value={chartDetail}>
           <WardsContext.Provider value={wards}>
-              <DischargeStutusesContext.Provider value={dischargeStatuses}>
-                <DischargeTypesContext.Provider value={dischargeTypes}>
-                  <DoctorsContext.Provider value={doctors}>
-                    <ReferCausesContext.Provider value={referCauses}>
-                      <ReferHospitalsContext.Provider value={referHospitals}>
-                        <PttypesContext.Provider value={pttypes}>
-                          <FormChartDetail />
-                        </PttypesContext.Provider>
-                      </ReferHospitalsContext.Provider>
-                    </ReferCausesContext.Provider>
-                  </DoctorsContext.Provider>
-                </DischargeTypesContext.Provider>
-              </DischargeStutusesContext.Provider>
-            </WardsContext.Provider>
-          </ChartContext.Provider>
-      ) : 
-      ( 
-      <Typography variant="h4">
-        <CircularProgress />
-        <Skeleton width="100%" height={200} sx={{ animationDuration: "3.0s" }}/>
-      </Typography>
+            <DischargeStutusesContext.Provider value={dischargeStatuses}>
+              <DischargeTypesContext.Provider value={dischargeTypes}>
+                <DoctorsContext.Provider value={doctors}>
+                  <ReferCausesContext.Provider value={referCauses}>
+                    <ReferHospitalsContext.Provider value={referHospitals}>
+                      <PttypesContext.Provider value={pttypes}>
+                        <FormChartDetail />
+                      </PttypesContext.Provider>
+                    </ReferHospitalsContext.Provider>
+                  </ReferCausesContext.Provider>
+                </DoctorsContext.Provider>
+              </DischargeTypesContext.Provider>
+            </DischargeStutusesContext.Provider>
+          </WardsContext.Provider>
+        </ChartContext.Provider>
+      ) : (
+        <Typography variant='h4'>
+          <CircularProgress />
+          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+        </Typography>
       )}
     </Box>
-  );
+  )
 
   const SkeletonChartHistotiesLoading = () => (
     <Box>
-      {
-      chartHistories.blogs.length > 0 ? 
-      (
-        <Grid container wrap="nowrap">
-        <HistoriesContext.Provider value={chartHistories}>
-          <TableChartHistory />
-        </HistoriesContext.Provider>
-      </Grid>
-      ) : 
-      ( 
-        <Skeleton width="100%"  height={200}/>
+      {chartHistories.blogs.length > 0 ? (
+        <Grid container wrap='nowrap'>
+          <HistoriesContext.Provider value={chartHistories}>
+            <TableChartHistory />
+          </HistoriesContext.Provider>
+        </Grid>
+      ) : (
+        <Skeleton width='100%' height={200} />
       )}
     </Box>
-  );
+  )
 
   return (
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <CardNewChart />
-        </Grid>
-        <Grid item xs={6}>
-            <SkeletonChartFormsLoading />
-        </Grid>
-        <Grid item xs={6}>
-          <SkeletonChartHistotiesLoading />
-        </Grid>
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
+        <CardNewChart />
       </Grid>
+      <Grid item xs={6}>
+        <SkeletonChartFormsLoading />
+      </Grid>
+      <Grid item xs={6}>
+        <SkeletonChartHistotiesLoading />
+      </Grid>
+    </Grid>
   )
 }
-
-
 
 export default FormLayouts

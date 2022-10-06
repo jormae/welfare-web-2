@@ -18,15 +18,14 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
 const StatisticChart = () => {
+  const [chartStats, setChartStats] = useState()
+  let totalChart = chartStats?.totalChart
+  let totalSummary = chartStats?.totalSummary
+  let totalReturn = chartStats?.totalReturn
+  let totalReaudit = chartStats?.totalReaudit
 
-    const [chartStats, setChartStats] = useState()
-    let totalChart = chartStats?.totalChart;
-    let totalSummary = chartStats?.totalSummary;
-    let totalReturn = chartStats?.totalReturn;
-    let totalReaudit = chartStats?.totalReaudit;
-
-    const date = "2022-09"
-    const fetchStatChart = async () => {
+  const date = '2022-10'
+  const fetchStatChart = async () => {
     let uri = apiConfig.baseURL + `/dashboard/stat/${date}`
     try {
       const { data } = await axios.get(uri)
@@ -39,7 +38,7 @@ const StatisticChart = () => {
   useEffect(() => {
     fetchStatChart()
   }, [setChartStats])
-  
+
   return (
     <Card>
       <CardHeader
@@ -67,90 +66,90 @@ const StatisticChart = () => {
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
         <Grid container spacing={[5, 0]}>
-            <Grid item xs={12} sm={3} >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                    variant='rounded'
-                    sx={{
-                        mr: 3,
-                        width: 44,
-                        height: 44,
-                        boxShadow: 3,
-                        color: 'common.white',
-                        backgroundColor: `primary.main`
-                    }}
-                    >
-                    <TrendingUp sx={{ fontSize: '1.75rem' }} />
-                    </Avatar>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='caption'>ชาร์ตทั้งหมด</Typography>
-                    <Typography variant='h6'>{totalChart}</Typography>
-                    </Box>
-                </Box>
-            </Grid>
-            <Grid item xs={12} sm={3} >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                    variant='rounded'
-                    sx={{
-                        mr: 3,
-                        width: 44,
-                        height: 44,
-                        boxShadow: 3,
-                        color: 'common.white',
-                        backgroundColor: `success.main`
-                    }}
-                    >
-                    <TrendingUp sx={{ fontSize: '1.75rem' }} />
-                    </Avatar>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='caption'>สรุปชาร์ต</Typography>
-                    <Typography variant='h6'>{totalSummary}</Typography>
-                    </Box>
-                </Box>
-            </Grid>
-            <Grid item xs={12} sm={3} >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                    variant='rounded'
-                    sx={{
-                        mr: 3,
-                        width: 44,
-                        height: 44,
-                        boxShadow: 3,
-                        color: 'common.white',
-                        backgroundColor: `info.main`
-                    }}
-                    >
-                    <TrendingUp sx={{ fontSize: '1.75rem' }} />
-                    </Avatar>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='caption'>รับคืนชาร์ต</Typography>
-                    <Typography variant='h6'>{totalReturn}</Typography>
-                    </Box>
-                </Box>
-            </Grid>
-            <Grid item xs={12} sm={3} >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar
-                    variant='rounded'
-                    sx={{
-                        mr: 3,
-                        width: 44,
-                        height: 44,
-                        boxShadow: 3,
-                        color: 'common.white',
-                        backgroundColor: `warning.main`
-                    }}
-                    >
-                    <TrendingUp sx={{ fontSize: '1.75rem' }} />
-                    </Avatar>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='caption'>รีออร์ดิตชาร์ต</Typography>
-                    <Typography variant='h6'>{totalReaudit}</Typography>
-                    </Box>
-                </Box>
-            </Grid>
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                variant='rounded'
+                sx={{
+                  mr: 3,
+                  width: 44,
+                  height: 44,
+                  boxShadow: 3,
+                  color: 'common.white',
+                  backgroundColor: `primary.main`
+                }}
+              >
+                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+              </Avatar>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant='caption'>ชาร์ตทั้งหมด</Typography>
+                <Typography variant='h6'>{totalChart}</Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                variant='rounded'
+                sx={{
+                  mr: 3,
+                  width: 44,
+                  height: 44,
+                  boxShadow: 3,
+                  color: 'common.white',
+                  backgroundColor: `success.main`
+                }}
+              >
+                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+              </Avatar>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant='caption'>สรุปชาร์ต</Typography>
+                <Typography variant='h6'>{totalSummary}</Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                variant='rounded'
+                sx={{
+                  mr: 3,
+                  width: 44,
+                  height: 44,
+                  boxShadow: 3,
+                  color: 'common.white',
+                  backgroundColor: `info.main`
+                }}
+              >
+                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+              </Avatar>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant='caption'>รับคืนชาร์ต</Typography>
+                <Typography variant='h6'>{totalReturn}</Typography>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
+                variant='rounded'
+                sx={{
+                  mr: 3,
+                  width: 44,
+                  height: 44,
+                  boxShadow: 3,
+                  color: 'common.white',
+                  backgroundColor: `warning.main`
+                }}
+              >
+                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+              </Avatar>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Typography variant='caption'>รีออร์ดิตชาร์ต</Typography>
+                <Typography variant='h6'>{totalReaudit}</Typography>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
       </CardContent>
     </Card>
