@@ -58,6 +58,7 @@ const FormChartDetail = () => {
   const dischargeStatusCode = chartDetail?.dischargeStatusCode
   const dischargeTypeCode = chartDetail?.dischargeTypeCode
   const doctorCode = chartDetail?.doctorCode ?? 190
+  const admitDuration = chartDetail?.admitDuration ?? 1
   // const doctorCode = 190
   const referCauseCode = chartDetail?.referCauseCode ?? 0
   const referHospitalCode = chartDetail?.referHospitalCode ?? 0

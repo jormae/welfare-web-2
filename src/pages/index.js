@@ -56,6 +56,7 @@ const Dashboard = () => {
   useEffect(() => {
     verifyToken()
   }, [])
+
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>

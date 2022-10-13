@@ -26,13 +26,21 @@ const defaultData = {
 }
 
 export const ChartContext = createContext()
+
 export const WardsContext = createContext()
+
 export const DischargeStutusesContext = createContext()
+
 export const DischargeTypesContext = createContext()
+
 export const DoctorsContext = createContext()
+
 export const ReferCausesContext = createContext()
+
 export const ReferHospitalsContext = createContext()
+
 export const PttypesContext = createContext()
+
 export const HistoriesContext = createContext()
 
 const FormLayouts = () => {
@@ -46,13 +54,9 @@ const FormLayouts = () => {
   const [referHospitals, setReferHospitals] = useState([])
   const [pttypes, setPttypes] = useState([])
   const [chartHistories, setChartHistories] = useState({ blogs: [] })
-  console.log(chartDetail.id)
-  // console.log(chartHistories)
-  // console.log(chartHistories.blogs.length)
 
   if (router.isReady) {
     const { an } = router.query
-    // console.log(an)
   }
 
   const fetchChartDetail = () => {

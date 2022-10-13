@@ -15,6 +15,7 @@ import apiConfig from 'src/configs/apiConfig'
 import TableAuditChart from 'src/views/tables/TableAuditChart'
 
 export const DataContext = createContext()
+
 export const CardContext = createContext()
 
 const FormLayouts = () => {
