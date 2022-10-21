@@ -6,6 +6,8 @@ import Poll from 'mdi-material-ui/Poll'
 import CurrencyUsd from 'mdi-material-ui/CurrencyUsd'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
 import BriefcaseVariantOutline from 'mdi-material-ui/BriefcaseVariantOutline'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 
 // ** Custom Components Imports
 import CardStatisticsVerticalComponent from 'src/@core/components/card-statistics/card-stats-vertical'
@@ -28,6 +30,7 @@ import Greeting from 'src/views/dashboard/Greeting'
 import apiConfig from 'src/configs/apiConfig'
 
 const Dashboard = () => {
+  const [err, setError] = useState()
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
@@ -50,6 +53,8 @@ const Dashboard = () => {
       })
       .catch(error => {
         console.error('Error:', error)
+        // setError(error.message)
+        setError('Unable to connect to database, please contact administrator')
       })
   }
 
@@ -60,6 +65,16 @@ const Dashboard = () => {
   return (
     <ApexChartWrapper>
       <Grid container spacing={6}>
+        {err ? (
+          <Grid item xs={12} md={12}>
+            <Alert severity='error'>
+              <AlertTitle>Error!</AlertTitle>
+              {err}
+            </Alert>
+          </Grid>
+        ) : (
+          ''
+        )}
         <Grid item xs={12} md={4}>
           <Greeting />
         </Grid>
@@ -121,10 +136,6 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        {/* <Grid item xs={12} md={12} lg={8}>
-          <DepositWithdraw />
-        </Grid> */}
         <Grid item xs={12}>
           <TableDoctorTask />
         </Grid>

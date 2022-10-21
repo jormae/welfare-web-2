@@ -9,7 +9,7 @@ import TableChartHistory from 'src/views/tables/TableChartHistory'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import CircularProgress from '@mui/material/CircularProgress'
+// import CircularProgress from '@mui/material/CircularProgress'
 
 const defaultData = {
   ptName: 'Loading',
@@ -45,6 +45,11 @@ export const HistoriesContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
+  if (router.isReady) {
+    router.query.an
+    // console.log(an)
+    // console.log(router.query.an)
+  }
   const [chartDetail, setChartDetail] = useState(defaultData)
   const [wards, setWards] = useState([])
   const [dischargeStatuses, setDischargeStatuses] = useState([])
@@ -55,18 +60,25 @@ const FormLayouts = () => {
   const [pttypes, setPttypes] = useState([])
   const [chartHistories, setChartHistories] = useState({ blogs: [] })
 
-  if (router.isReady) {
-    const { an } = router.query
-  }
-
   const fetchChartDetail = () => {
-    let uri = apiConfig.baseURL + `/chart/all-chart/${an}`
+    let uri = apiConfig.baseURL + `/chart/all-chart/${router.query.an}`
     console.log(uri)
 
     axios
       .get(uri)
       .then(result => setChartDetail(result.data[0]))
       .catch(error => console.log('An error occurred' + error))
+  }
+
+  const fetchChartHistories = async () => {
+    let uri = apiConfig.baseURL + `/chart/history/${router.query.an}`
+
+    try {
+      const { data } = await axios.get(uri)
+      setChartHistories({ blogs: data })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const fetchWards = async () => {
@@ -154,17 +166,6 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchChartHistories = async () => {
-    let uri = apiConfig.baseURL + `/chart/history/${an}`
-
-    try {
-      const { data } = await axios.get(uri)
-      setChartHistories({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
     if (router.isReady) {
       router.query
@@ -202,7 +203,7 @@ const FormLayouts = () => {
         </ChartContext.Provider>
       ) : (
         <Typography variant='h4'>
-          <CircularProgress />
+          {/* <CircularProgress /> */}
           <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
         </Typography>
       )}
@@ -225,9 +226,9 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <CardNewChart />
-      </Grid>
+      </Grid> */}
       <Grid item xs={6}>
         <SkeletonChartFormsLoading />
       </Grid>

@@ -45,6 +45,11 @@ const navigation = () => {
       path: '/return-chart'
     },
     {
+      title: 'ส่ง-รับคืนสรุปชาร์ต',
+      icon: BarcodeScan,
+      path: '/summary-return-chart'
+    },
+    {
       title: 'รับคืนออดิตชาร์ต',
       icon: BarcodeScan,
       path: '/audit-chart'
@@ -53,6 +58,16 @@ const navigation = () => {
       title: 'ส่งรีออดิตชาร์ต',
       icon: BarcodeScan,
       path: '/reaudit-chart'
+    },
+    {
+      title: 'ส่งงาน eclaim',
+      icon: Login,
+      path: '/submit-eclaim'
+    },
+    {
+      title: 'รับคืนงาน eclaim',
+      icon: BarcodeScan,
+      path: '/return-eclaim'
     },
 
     // {

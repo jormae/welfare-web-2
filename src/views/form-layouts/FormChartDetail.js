@@ -122,7 +122,7 @@ const FormChartDetail = () => {
   return (
     <Card>
       <CardHeader title='ข้อมูลผู้ป่วย' titleTypographyProps={{ variant: 'h6' }} />
-      <Toaster />
+      {/* <Toaster /> */}
       <CardContent>
         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={5}>
