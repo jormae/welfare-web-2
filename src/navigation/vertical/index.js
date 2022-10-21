@@ -69,6 +69,11 @@ const navigation = () => {
       icon: BarcodeScan,
       path: '/return-eclaim'
     },
+    {
+      title: 'จัดเก็บชาร์ต',
+      icon: BarcodeScan,
+      path: '/stock-chart'
+    },
 
     // {
     //   title: 'Login',
