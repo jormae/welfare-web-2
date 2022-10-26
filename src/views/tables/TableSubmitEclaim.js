@@ -3,6 +3,7 @@ import { forwardRef, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 // ** MUI Imports
+import { pink } from '@mui/material/colors'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
@@ -28,6 +29,9 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
+import EditIcon from '@mui/material/Icon'
+// import SendIcon from '@mui/material/Send'
 import { Input } from '@mui/material'
 
 // import BadgeIcon from '@mui/material/Badge'
@@ -50,8 +54,6 @@ const TableSubmitEclaim = () => {
     try {
       const { data } = await axios.get(uri)
       setCharts({ blogs: data })
-
-      // console.log(data)
     } catch (error) {
       console.log(error)
     }
@@ -61,14 +63,14 @@ const TableSubmitEclaim = () => {
     fetchCharts()
   }, [setCharts])
 
-  const submitSummaryChart = async doctorCode => {
-    // console.log(doctorCode)
+  const SubmitChartsToEclaim = async pttypeCode => {
+    console.log(pttypeCode)
 
     try {
       const chart = {
         staffName
       }
-      let uri = apiConfig.baseURL + `/chart/summary-chart/${doctorCode}`
+      let uri = apiConfig.baseURL + `/chart/submit-eclaim/${pttypeCode}`
 
       axios
         .put(uri, chart)
@@ -79,8 +81,6 @@ const TableSubmitEclaim = () => {
             fetchCharts()
           } else {
             toast.error(response.data.errors[0].msg)
-
-            // toast.error(response.data.errors.msg)
           }
         })
         .catch(error => {
@@ -90,8 +90,6 @@ const TableSubmitEclaim = () => {
             console.log(error.request)
           } else {
             console.log('Error', error.message)
-
-            // console.log('Error', error)
           }
           console.log(error.config)
         })
@@ -110,7 +108,7 @@ const TableSubmitEclaim = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='center'>ชื่อแพทย์</TableCell>
+                <TableCell align='center'>ชื่อสิทธ์การรักษา </TableCell>
                 <TableCell align='center'>จำนวนชาร์ต</TableCell>
                 <TableCell align='center'>Action</TableCell>
               </TableRow>
@@ -119,15 +117,16 @@ const TableSubmitEclaim = () => {
               {charts.blogs.map(row => (
                 <TableRow key={row.doctorCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                   <TableCell component='th' scope='row'>
-                    {row.mainPttypeName}
+                    {row.pttypeCode} - {row.mainPttypeName}
                   </TableCell>
                   <TableCell align='center'>{row.TOTAL_CHART}</TableCell>
                   <TableCell align='center'>
                     <Button
-                      variant='contained'
+                      variant='outlined'
+                      sx={{ color: 'red', weight: 'bold' }}
                       color='success'
                       size='large'
-                      onClick={() => submitSummaryChart(row.doctorCode)}
+                      onClick={() => SubmitChartsToEclaim(row.pttypeCode)}
                     >
                       ส่งชาร์ตงาน eclaim
                     </Button>

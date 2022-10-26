@@ -13,6 +13,13 @@ const themeOptions = settings => {
 
   const themeConfig = {
     palette: palette(mode, themeColor),
+    overrides: {
+      MuiButton: {
+        label: {
+          color: '#fff'
+        }
+      }
+    },
     typography: {
       fontFamily: [
         'Sarabun',

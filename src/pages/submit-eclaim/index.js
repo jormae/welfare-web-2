@@ -1,11 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import Grid from '@mui/material/Grid'
 import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import CardNewChart from 'src/views/cards/CardNewChart'
+import CardSubmitEclaim from 'src/views/cards/CardSubmitEclaim'
 import TableSubmitEclaim from 'src/views/tables/TableSubmitEclaim'
 import apiConfig from 'src/configs/apiConfig'
+import axios from 'axios'
+
+export const CardContext = createContext()
 
 const FormLayouts = () => {
+  const [statSubmitEclaim, setStatSubmitEclaim] = useState(0)
+
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
@@ -30,16 +35,32 @@ const FormLayouts = () => {
         console.error('Error:', error)
       })
   }
+
+  const fetchStatNewChart = async () => {
+    let uri = apiConfig.baseURL + '/stat/submit-eclaim'
+    try {
+      await axios
+        .get(uri)
+        .then(result => setStatSubmitEclaim(result.data[0]))
+        .catch(error => console.log('An error occurred' + error))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     verifyToken()
+    fetchStatNewChart()
   }, [])
 
   return (
     <DatePickerWrapper>
       <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <CardNewChart />
-        </Grid>
+        <CardContext.Provider value={statSubmitEclaim}>
+          <Grid item xs={12}>
+            <CardSubmitEclaim />
+          </Grid>
+        </CardContext.Provider>
 
         <Grid item xs={12}>
           <TableSubmitEclaim />
