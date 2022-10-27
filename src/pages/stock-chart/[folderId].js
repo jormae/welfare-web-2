@@ -5,12 +5,13 @@ import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import TableReturnEclaim from 'src/views/tables/TableReturnEclaim'
+import TableStockChart from 'src/views/tables/TableStockChart'
 import CardNewChart from 'src/views/cards/CardNewChart'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import { useEffect, useState, createContext } from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import apiConfig from 'src/configs/apiConfig'
 
@@ -19,28 +20,34 @@ export const DataContext = createContext()
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [returnEclaimCharts, setReturnEclaims] = useState({ blogs: [] })
-  const [statReturnEclaimChart, setStatReturnEclaimChart] = useState(0)
+  const router = useRouter()
+  if (router.isReady) {
+    router.query.folderId
+    console.log(router.query.folderId)
+  }
+
+  const [stockCharts, setStocks] = useState({ blogs: [] })
+  const [statStockChart, setStatStockChart] = useState(0)
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
-  const fetchReturnEclaimCharts = async () => {
-    let uri = apiConfig.baseURL + '/chart/return-eclaim'
+  const fetchStockCharts = async () => {
+    let uri = apiConfig.baseURL + `/chart/stock-folder/${router.query.folderId}`
     console.log(uri)
-
     try {
       const { data } = await axios.get(uri)
-      setReturnEclaims({ blogs: data })
+      console.log(data)
+      setStocks({ blogs: data })
     } catch (error) {
       // console.log(error)
     }
   }
 
-  const fetchStatReturnEclaimChart = async () => {
-    let uri = apiConfig.baseURL + '/stat/return-eclaim'
+  const fetchStatStockChart = async () => {
+    let uri = apiConfig.baseURL + '/stat/stock-chart'
     try {
       await axios
         .get(uri)
-        .then(result => setStatReturnEclaimChart(result.data[0]))
+        .then(result => setStatStockChart(result.data[0]))
         .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
@@ -55,7 +62,7 @@ const FormLayouts = () => {
   } = useForm()
 
   const onSubmit = data => {
-    let uri = apiConfig.baseURL + '/chart/return-eclaim/'
+    let uri = apiConfig.baseURL + '/chart/stock-chart/'
     fetch(uri, {
       method: 'PUT',
       headers: {
@@ -67,8 +74,8 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchReturnEclaimCharts()
-          fetchStatReturnEclaimChart()
+          fetchStockCharts()
+          fetchStatStockChart()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -106,21 +113,24 @@ const FormLayouts = () => {
   }
 
   useEffect(() => {
-    verifyToken()
-    fetchReturnEclaimCharts()
-    fetchStatReturnEclaimChart()
-  }, [])
+    if (router.isReady) {
+      router.query
+      verifyToken()
+      fetchStockCharts()
+      fetchStatStockChart()
+    }
+  }, [router.isReady, router.query])
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <CardContext.Provider value={statReturnEclaimChart}>
+        <CardContext.Provider value={statStockChart}>
           <CardNewChart />
         </CardContext.Provider>
       </Grid>
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='รับคืนชาร์ตจากงาน e-claim' titleTypographyProps={{ variant: 'h6' }} />
+          <CardHeader title='จัดเก็บชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
           <Toaster />
           <Divider sx={{ margin: 0 }} />
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -142,9 +152,9 @@ const FormLayouts = () => {
           </form>
         </Card>
       </Grid>
-      <DataContext.Provider value={returnEclaimCharts}>
+      <DataContext.Provider value={stockCharts}>
         <Grid item xs={12}>
-          <TableReturnEclaim />
+          <TableStockChart />
         </Grid>
       </DataContext.Provider>
     </Grid>

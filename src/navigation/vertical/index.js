@@ -72,7 +72,7 @@ const navigation = () => {
     {
       title: 'จัดเก็บชาร์ต',
       icon: BarcodeScan,
-      path: '/stock-chart'
+      path: '/stock-folder'
     },
 
     // {

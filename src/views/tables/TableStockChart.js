@@ -10,14 +10,20 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
-import { DataContext } from 'src/pages/stock-chart'
+import { DataContext } from 'src/pages/stock-chart//[folderId]'
 
 const TableStockChart = () => {
   const stockCharts = useContext(DataContext)
+  // console.log(stockCharts.blogs[0][folderLabel])
+  // let folderLabel = stockCharts.blogs[0].folderLabel
 
   return (
     <Card>
-      <CardHeader title='รายการรับคืนชาร์ตจากงาน e-claim' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader
+        title='รายการชาร์ตเก็บเข้าคลังหมายเลขอ้างอิง '
+        // {folderLabel}
+        titleTypographyProps={{ variant: 'h6' }}
+      />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>

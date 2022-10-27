@@ -4,9 +4,11 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
+import Button from '@mui/material/Button'
+
 import TextField from '@mui/material/TextField'
-import TableStockChart from 'src/views/tables/TableStockChart'
-import CardNewChart from 'src/views/cards/CardNewChart'
+import TableStockFolder from 'src/views/tables/TableStockFolder'
+// import CardNewFolder from 'src/views/cards/CardNewFolder'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -19,31 +21,33 @@ export const DataContext = createContext()
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [stockCharts, setStocks] = useState({ blogs: [] })
-  const [statStockChart, setStatStockChart] = useState(0)
+  const [stockFolders, setStocks] = useState({ blogs: [] })
+  // const [statStockFolder, setStatStockFolder] = useState(0)
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
-  const fetchStockCharts = async () => {
-    let uri = apiConfig.baseURL + '/chart/stock-chart'
+  const fetchStockFolders = async () => {
+    let uri = apiConfig.baseURL + '/chart/stock-folder'
+    console.log(uri)
     try {
       const { data } = await axios.get(uri)
+      console.log(data)
       setStocks({ blogs: data })
-    } catch (error) {
-      // console.log(error)
-    }
-  }
-
-  const fetchStatStockChart = async () => {
-    let uri = apiConfig.baseURL + '/stat/stock-chart'
-    try {
-      await axios
-        .get(uri)
-        .then(result => setStatStockChart(result.data[0]))
-        .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
     }
   }
+
+  // const fetchStatStockFolder = async () => {
+  //   let uri = apiConfig.baseURL + '/stat/stock-chart'
+  //   try {
+  //     await axios
+  //       .get(uri)
+  //       .then(result => setStatStockFolder(result.data[0]))
+  //       .catch(error => console.log('An error occurred' + error))
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const {
     register,
@@ -65,8 +69,8 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchStockCharts()
-          fetchStatStockChart()
+          fetchStockFolders()
+          // fetchStatStockFolder()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -75,7 +79,7 @@ const FormLayouts = () => {
         console.log(JSON.stringify(error))
       })
 
-    resetField('an')
+    // resetField('an')
   }
 
   const verifyToken = async () => {
@@ -105,27 +109,28 @@ const FormLayouts = () => {
 
   useEffect(() => {
     verifyToken()
-    fetchStockCharts()
-    fetchStatStockChart()
+    fetchStockFolders()
+    // fetchStatStockFolder()
   }, [])
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <CardContext.Provider value={statStockChart}>
-          <CardNewChart />
+      {/* <Grid item xs={12}>
+        <CardContext.Provider value={statStockFolder}>
+          <CardNewFolder />
         </CardContext.Provider>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
         <Card>
           <CardHeader title='จัดเก็บชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
           <Toaster />
           <Divider sx={{ margin: 0 }} />
-          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+          {/* <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}> */}
+          <form noValidate autoComplete='off'>
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={12}></Grid>
-                <Grid item xs={12} sm={12}>
+                {/* <Grid item xs={9} sm={9}>
                   <TextField
                     autoFocus
                     fullWidth
@@ -133,6 +138,17 @@ const FormLayouts = () => {
                     placeholder='สแกนบาร์โค้ด'
                     {...register('an', { required: true })}
                   />
+                </Grid> */}
+                <Grid item xs={3} sm={3}>
+                  <Button
+                    variant='contained'
+                    // sx={{ color: 'red', weight: 'bold' }}
+                    color='primary'
+                    size='large'
+                    onClick={() => SubmitInsertChartFolder()}
+                  >
+                    สร้างโฟลเดอร์ใหม่
+                  </Button>
                   <Input type='hidden' {...register('staffName', { value: staffName })} />
                 </Grid>
               </Grid>
@@ -140,9 +156,9 @@ const FormLayouts = () => {
           </form>
         </Card>
       </Grid>
-      <DataContext.Provider value={stockCharts}>
+      <DataContext.Provider value={stockFolders}>
         <Grid item xs={12}>
-          <TableStockChart />
+          <TableStockFolder />
         </Grid>
       </DataContext.Provider>
     </Grid>
