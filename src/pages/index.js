@@ -24,6 +24,7 @@ import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
+import TableChartStatuses from 'src/views/dashboard/TableChartStatus'
 import StatisticChart from 'src/views/dashboard/StatisticsChart'
 import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
 import Greeting from 'src/views/dashboard/Greeting'
@@ -93,25 +94,7 @@ const Dashboard = () => {
         <Grid item xs={12} md={8} lg={8}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$25.6k'
-                icon={<Poll />}
-                color='success'
-                trendNumber='+42%'
-                title='Total Profit'
-                subtitle='Weekly Profit'
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='$78'
-                title='Refunds'
-                trend='negative'
-                color='secondary'
-                trendNumber='-15%'
-                subtitle='Past Month'
-                icon={<CurrencyUsd />}
-              />
+              <TableChartStatuses></TableChartStatuses>
             </Grid>
             <Grid item xs={6}>
               <CardStatisticsVerticalComponent

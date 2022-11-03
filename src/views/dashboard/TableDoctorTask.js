@@ -12,6 +12,7 @@ import TableContainer from '@mui/material/TableContainer'
 import Avatar from '@mui/material/Avatar'
 import { Doctor } from 'mdi-material-ui'
 import axios from 'axios'
+import moment from 'moment'
 import apiConfig from 'src/configs/apiConfig'
 
 const rows = [
@@ -99,8 +100,10 @@ const statusObj = {
 
 const TableDoctorTask = () => {
   const [doctorTasks, setDoctorTasks] = useState({ blogs: [] })
-  const date = '2022-09'
-
+  // const date = '2022-09'
+  // const date = moment().format('YYYY-MM')
+  const date = moment().subtract(1, 'months').endOf('month').format('YYYY-MM')
+  // console.log(date2)
   const fetchDoctorTasks = async () => {
     let uri = apiConfig.baseURL + `/dashboard/doctor-summary/${date}`
     console.log(uri)

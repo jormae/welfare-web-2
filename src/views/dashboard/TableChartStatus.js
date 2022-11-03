@@ -15,71 +15,18 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 
-const data = [
-  {
-    sales: '894k',
-    trendDir: 'up',
-    subtitle: 'USA',
-    title: '$8,656k',
-    avatarText: 'US',
-    trendNumber: '25.8%',
-    avatarColor: 'success',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '645k',
-    subtitle: 'UK',
-    trendDir: 'down',
-    title: '$2,415k',
-    avatarText: 'UK',
-    trendNumber: '6.2%',
-    avatarColor: 'error',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '148k',
-    title: '$865k',
-    trendDir: 'up',
-    avatarText: 'IN',
-    subtitle: 'India',
-    trendNumber: '12.4%',
-    avatarColor: 'warning',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '86k',
-    title: '$745k',
-    trendDir: 'down',
-    avatarText: 'JA',
-    subtitle: 'Japan',
-    trendNumber: '11.9%',
-    avatarColor: 'secondary',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '42k',
-    title: '$45k',
-    trendDir: 'up',
-    avatarText: 'KO',
-    subtitle: 'Korea',
-    trendNumber: '16.2%',
-    avatarColor: 'error',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  }
-]
-
-const ChartChangeLogs = () => {
-  const [chartLogs, setChartChangeLogs] = useState({ blogs: [] })
+const TableChartStatuses = () => {
+  const [chartStatuses, setChartStatuses] = useState({ blogs: [] })
   // const date = '2022-10'
   const date = moment().format('YYYY-MM')
 
   const fetchChartLogs = async () => {
-    let uri = apiConfig.baseURL + `/dashboard/chart-log/${date}`
+    let uri = apiConfig.baseURL + `/dashboard/chart-status/${date}`
     console.log(uri)
 
     try {
       const { data } = await axios.get(uri)
-      setChartChangeLogs({ blogs: data })
+      setChartStatuses({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -92,7 +39,7 @@ const ChartChangeLogs = () => {
   return (
     <Card>
       <CardHeader
-        title='สถิติแก้ไขชาร์ตประจำเดือน'
+        title='รายงานสถาะนชาร์ตประจำเดือน'
         titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
@@ -101,14 +48,14 @@ const ChartChangeLogs = () => {
         }
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-        {chartLogs.blogs.map((item, index) => {
+        {chartStatuses.blogs.map((item, index) => {
           return (
             <Box
               key={item.action}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                ...(index !== chartLogs.length - 1 ? { mb: 5.875 } : {})
+                ...(index !== chartStatuses.length - 1 ? { mb: 5.875 } : {})
               }}
             >
               <Avatar
@@ -156,4 +103,4 @@ const ChartChangeLogs = () => {
   )
 }
 
-export default ChartChangeLogs
+export default TableChartStatuses
