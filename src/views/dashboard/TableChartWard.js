@@ -11,89 +11,35 @@ import CardContent from '@mui/material/CardContent'
 import ChevronUp from 'mdi-material-ui/ChevronUp'
 import ChevronDown from 'mdi-material-ui/ChevronDown'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
+import Bed from 'mdi-material-ui/Bed'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
-import { CheckCircle } from 'mdi-material-ui'
 
-const data = [
-  {
-    sales: '894k',
-    trendDir: 'up',
-    subtitle: 'USA',
-    title: '$8,656k',
-    avatarText: 'US',
-    trendNumber: '25.8%',
-    avatarColor: 'success',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '645k',
-    subtitle: 'UK',
-    trendDir: 'down',
-    title: '$2,415k',
-    avatarText: 'UK',
-    trendNumber: '6.2%',
-    avatarColor: 'error',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '148k',
-    title: '$865k',
-    trendDir: 'up',
-    avatarText: 'IN',
-    subtitle: 'India',
-    trendNumber: '12.4%',
-    avatarColor: 'warning',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '86k',
-    title: '$745k',
-    trendDir: 'down',
-    avatarText: 'JA',
-    subtitle: 'Japan',
-    trendNumber: '11.9%',
-    avatarColor: 'secondary',
-    trend: <ChevronDown sx={{ color: 'error.main', fontWeight: 600 }} />
-  },
-  {
-    sales: '42k',
-    title: '$45k',
-    trendDir: 'up',
-    avatarText: 'KO',
-    subtitle: 'Korea',
-    trendNumber: '16.2%',
-    avatarColor: 'error',
-    trend: <ChevronUp sx={{ color: 'success.main', fontWeight: 600 }} />
-  }
-]
+const TableChartWard = () => {
+  const [chartWards, setChartWards] = useState({ blogs: [] })
+  const date = moment().subtract(1, 'months').endOf('month').format('YYYY-MM')
 
-const ChartChangeLogs = () => {
-  const [chartLogs, setChartChangeLogs] = useState({ blogs: [] })
-  // const date = '2022-10'
-  const date = moment().format('YYYY-MM')
-
-  const fetchChartLogs = async () => {
-    let uri = apiConfig.baseURL + `/dashboard/chart-log/${date}`
+  const fetchChartWards = async () => {
+    let uri = apiConfig.baseURL + `/dashboard/chart-ward/${date}`
     console.log(uri)
 
     try {
       const { data } = await axios.get(uri)
-      setChartChangeLogs({ blogs: data })
+      setChartWards({ blogs: data })
     } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
-    fetchChartLogs()
+    fetchChartWards()
   }, [])
 
   return (
     <Card>
       <CardHeader
-        title='สถิติแก้ไขชาร์ตประจำเดือน'
+        title='จำนวนชาร์ตแยกตามหอผู้ป่วย'
         titleTypographyProps={{ sx: { lineHeight: '1.2 !important', letterSpacing: '0.31px !important' } }}
         action={
           <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
@@ -102,20 +48,20 @@ const ChartChangeLogs = () => {
         }
       />
       <CardContent sx={{ pt: theme => `${theme.spacing(2)} !important` }}>
-        {chartLogs.blogs.map((item, index) => {
+        {chartWards.blogs.map((item, index) => {
           return (
             <Box
               key={item.action}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                ...(index !== chartLogs.length - 1 ? { mb: 5.875 } : {})
+                ...(index !== chartWards.length - 1 ? { mb: 5.875 } : {})
               }}
             >
-              <CheckCircle
+              <Bed
                 sx={{
-                  width: 26,
-                  height: 26,
+                  width: 30,
+                  height: 30,
                   marginRight: 3,
                   fontSize: '1rem',
                   color: 'common.white',
@@ -135,16 +81,16 @@ const ChartChangeLogs = () => {
                 }}
               >
                 <Box sx={{ marginRight: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
-                    {item.action}
+                  <Typography variant='caption' sx={{ lineHeight: 0 }}>
+                    {item.wardName ? item.wardName : 'Unknown'}
                   </Typography>
                 </Box>
 
                 <Box sx={{ display: 'flex', textAlign: 'end', flexDirection: 'column' }}>
                   <Typography sx={{ fontWeight: 600, fontSize: '0.875rem', lineHeight: 1.72, letterSpacing: '0.22px' }}>
-                    {item.totalRecord}
+                    {item.totalChart}
                   </Typography>
-                  <Typography variant='caption' sx={{ lineHeight: 1.5 }}>
+                  <Typography variant='caption' sx={{ lineHeight: 0 }}>
                     รายการ
                   </Typography>
                 </Box>
@@ -157,4 +103,4 @@ const ChartChangeLogs = () => {
   )
 }
 
-export default ChartChangeLogs
+export default TableChartWard

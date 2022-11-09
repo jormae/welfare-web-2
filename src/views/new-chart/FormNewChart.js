@@ -93,38 +93,6 @@ const FormNewChart = () => {
           </Grid>
         </CardContent>
       </form>
-      {/* <CardHeader title='รายการรับชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
-      <Divider sx={{ margin: 0 }} />
-      <CardContent>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center'>AN</TableCell>
-                <TableCell align='center'>HN</TableCell>
-                <TableCell align='center'>ชื่อ-สกุล</TableCell>
-                <TableCell align='center'>หอผู้ป่วย</TableCell>
-                <TableCell align='center'>วันที่ Discharge</TableCell>
-                <TableCell align='center'>ชื่อแพทย์</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {charts.blogs.map(row => (
-                <TableRow key={row.an}>
-                  <TableCell component='th' scope='row'>
-                    {row.an}
-                  </TableCell>
-                  <TableCell align='center'>{row.hn}</TableCell>
-                  <TableCell align='left'>{row.ptName}</TableCell>
-                  <TableCell align='left'>{row.wardName}</TableCell>
-                  <TableCell align='center'>{row.dischargeDate}</TableCell>
-                  <TableCell align='left'>{row.dischargeDoctor}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent> */}
     </Card>
   )
 }

@@ -42,7 +42,7 @@ const TableStockFolder = () => {
                     {row.folderLabel}
                   </TableCell>
                   <TableCell align='left'>{row.stockName}</TableCell>
-                  <TableCell align='center'>{row?.totalChart ?? 0}</TableCell>
+                  <TableCell align='center'>{row?.totalCharts ?? 0}</TableCell>
                   <TableCell align='center'>{row.createdBy}</TableCell>
                   <TableCell align='center'>{row.createdAt}</TableCell>
                   <TableCell align='center'>

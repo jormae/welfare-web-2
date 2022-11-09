@@ -24,6 +24,7 @@ const TrophyImg = styled('img')({
 const Greeting = () => {
   // ** Hook
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  const userTypeName = typeof window !== 'undefined' ? localStorage.getItem('userTypeName') : null
   const theme = useTheme()
   const imageSrc = theme.palette.mode === 'light' ? '1.png' : '1.png'
 
@@ -32,13 +33,13 @@ const Greeting = () => {
       <CardContent>
         <Typography variant='h6'>สวัสดี</Typography>
         <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
-        {staffName}
+          {staffName}
         </Typography>
         <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
-          $42.8k
+          {userTypeName}
         </Typography>
         <Button size='small' variant='contained'>
-          View Sales
+          View Profile
         </Button>
         <TriangleImg alt='triangle background' src={`/images/avatars/${imageSrc}`} />
         {/* <TrophyImg alt='trophy' src='/images/avatars/1.png'  height='400'/> */}

@@ -86,6 +86,7 @@ const LoginPage = () => {
         if (data.status == 'success') {
           localStorage.setItem('token', data.token)
           localStorage.setItem('staffName', data.staffName)
+          localStorage.setItem('userTypeName', data.userTypeName)
           window.location = '/'
         }
       })
@@ -183,7 +184,7 @@ const LoginPage = () => {
               fullWidth
               label='ชื่อบัญชี'
               sx={{ marginBottom: 4 }}
-              {...register('email', { required: true})}
+              {...register('email', { required: true })}
             />
 
             <FormControl fullWidth>
@@ -192,7 +193,7 @@ const LoginPage = () => {
                 label='รหัสผ่าน'
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
-                {...register('password', { required: true})}
+                {...register('password', { required: true })}
                 endAdornment={
                   <InputAdornment position='end'>
                     <IconButton

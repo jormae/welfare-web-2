@@ -62,7 +62,7 @@ const FormLayouts = () => {
   } = useForm()
 
   const onSubmit = data => {
-    let uri = apiConfig.baseURL + '/chart/stock-chart/'
+    let uri = apiConfig.baseURL + `/chart/stock-chart/${router.query.folderId}`
     fetch(uri, {
       method: 'PUT',
       headers: {
@@ -77,7 +77,7 @@ const FormLayouts = () => {
           fetchStockCharts()
           fetchStatStockChart()
         } else {
-          toast.error(data.errors[0].msg)
+          toast.error(data.message)
         }
       })
       .catch(function (error) {

@@ -9,7 +9,6 @@ import TableChartHistory from 'src/views/tables/TableChartHistory'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-// import CircularProgress from '@mui/material/CircularProgress'
 
 const defaultData = {
   ptName: 'Loading',
@@ -47,8 +46,6 @@ const FormLayouts = () => {
   const router = useRouter()
   if (router.isReady) {
     router.query.an
-    // console.log(an)
-    // console.log(router.query.an)
   }
   const [chartDetail, setChartDetail] = useState(defaultData)
   const [wards, setWards] = useState([])

@@ -32,12 +32,10 @@ const TableStockChart = () => {
               <TableRow>
                 <TableCell align='center'>AN</TableCell>
                 <TableCell align='center'>HN</TableCell>
-                <TableCell align='center'>ชื่อ-สกุล</TableCell>
-                <TableCell align='center'>หอผู้ป่วย</TableCell>
-                <TableCell align='center'>สิทธิ์การรักษา</TableCell>
-                <TableCell align='center'>วันที่รับคืนชาร์ตจากงาน e-claim</TableCell>
-                <TableCell align='center'>จำนวนวัน</TableCell>
-                <TableCell align='center'>ชื่อผู้รับ</TableCell>
+                <TableCell align='left'>ชื่อ-สกุล</TableCell>
+                <TableCell align='center'>รหัสโฟลเดอร์</TableCell>
+                <TableCell align='center'>วันที่เก็บ</TableCell>
+                <TableCell align='left'>ผู้เก็บ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -48,11 +46,9 @@ const TableStockChart = () => {
                   </TableCell>
                   <TableCell align='center'>{row.hn}</TableCell>
                   <TableCell align='left'>{row.ptName}</TableCell>
-                  <TableCell align='left'>{row.wardName}</TableCell>
-                  <TableCell align='left'>{row.mainPttypeName}</TableCell>
-                  <TableCell align='center'>{row.returnEclaimDate}</TableCell>
-                  <TableCell align='center'>{row.eclaimDuration}</TableCell>
-                  <TableCell align='left'>{row.returnedEclaimBy}</TableCell>
+                  <TableCell align='center'>{row.folderLabel}</TableCell>
+                  <TableCell align='center'>{row.stockDate}</TableCell>
+                  <TableCell align='left'>{row.stockedBy}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

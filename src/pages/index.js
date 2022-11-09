@@ -24,7 +24,8 @@ import WeeklyOverview from 'src/views/dashboard/WeeklyOverview'
 import DepositWithdraw from 'src/views/dashboard/DepositWithdraw'
 import SalesByCountries from 'src/views/dashboard/SalesByCountries'
 import ChartChangeLogs from 'src/views/dashboard/ChartChangeLog'
-import TableChartStatuses from 'src/views/dashboard/TableChartStatus'
+import TableChartWard from 'src/views/dashboard/TableChartWard'
+import TableDashboardDischargeType from 'src/views/dashboard/TableDashboardDischargeType'
 import StatisticChart from 'src/views/dashboard/StatisticsChart'
 import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
 import Greeting from 'src/views/dashboard/Greeting'
@@ -32,6 +33,7 @@ import apiConfig from 'src/configs/apiConfig'
 
 const Dashboard = () => {
   const [err, setError] = useState()
+
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
@@ -54,7 +56,6 @@ const Dashboard = () => {
       })
       .catch(error => {
         console.error('Error:', error)
-        // setError(error.message)
         setError('Unable to connect to database, please contact administrator')
       })
   }
@@ -88,25 +89,18 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={4}>
           <TotalEarning />
         </Grid> */}
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={4} lg={4}>
           <ChartChangeLogs />
         </Grid>
         <Grid item xs={12} md={8} lg={8}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
-              <TableChartStatuses></TableChartStatuses>
+              <TableChartWard />
             </Grid>
             <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='862'
-                trend='negative'
-                trendNumber='-18%'
-                title='New Project'
-                subtitle='Yearly Project'
-                icon={<BriefcaseVariantOutline />}
-              />
+              <TableDashboardDischargeType />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <CardStatisticsVerticalComponent
                 stats='15'
                 color='warning'
@@ -116,7 +110,7 @@ const Dashboard = () => {
                 title='Sales Queries'
                 icon={<HelpCircleOutline />}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Grid item xs={12}>

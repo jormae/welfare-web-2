@@ -8,7 +8,6 @@ import Button from '@mui/material/Button'
 
 import TextField from '@mui/material/TextField'
 import TableStockFolder from 'src/views/tables/TableStockFolder'
-// import CardNewFolder from 'src/views/cards/CardNewFolder'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -22,7 +21,6 @@ export const CardContext = createContext()
 
 const FormLayouts = () => {
   const [stockFolders, setStocks] = useState({ blogs: [] })
-  // const [statStockFolder, setStatStockFolder] = useState(0)
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
   const fetchStockFolders = async () => {
@@ -37,29 +35,17 @@ const FormLayouts = () => {
     }
   }
 
-  // const fetchStatStockFolder = async () => {
-  //   let uri = apiConfig.baseURL + '/stat/stock-chart'
-  //   try {
-  //     await axios
-  //       .get(uri)
-  //       .then(result => setStatStockFolder(result.data[0]))
-  //       .catch(error => console.log('An error occurred' + error))
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   const {
     register,
-    resetField,
     handleSubmit,
     formState: { errors }
   } = useForm()
 
   const onSubmit = data => {
-    let uri = apiConfig.baseURL + '/chart/stock-chart/'
+    // console.log(data)
+    let uri = apiConfig.baseURL + '/chart/stock-folder/'
     fetch(uri, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -70,16 +56,13 @@ const FormLayouts = () => {
         if (data.status == 'success') {
           toast.success(data.message)
           fetchStockFolders()
-          // fetchStatStockFolder()
         } else {
-          toast.error(data.errors[0].msg)
+          toast.error(data.message)
         }
       })
       .catch(function (error) {
         console.log(JSON.stringify(error))
       })
-
-    // resetField('an')
   }
 
   const verifyToken = async () => {
@@ -110,7 +93,6 @@ const FormLayouts = () => {
   useEffect(() => {
     verifyToken()
     fetchStockFolders()
-    // fetchStatStockFolder()
   }, [])
 
   return (
@@ -125,31 +107,16 @@ const FormLayouts = () => {
           <CardHeader title='จัดเก็บชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
           <Toaster />
           <Divider sx={{ margin: 0 }} />
-          {/* <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}> */}
-          <form noValidate autoComplete='off'>
+          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={12}></Grid>
-                {/* <Grid item xs={9} sm={9}>
-                  <TextField
-                    autoFocus
-                    fullWidth
-                    label='สแกนบาร์โค้ด'
-                    placeholder='สแกนบาร์โค้ด'
-                    {...register('an', { required: true })}
-                  />
-                </Grid> */}
                 <Grid item xs={3} sm={3}>
-                  <Button
-                    variant='contained'
-                    // sx={{ color: 'red', weight: 'bold' }}
-                    color='primary'
-                    size='large'
-                    onClick={() => SubmitInsertChartFolder()}
-                  >
+                  <Button variant='contained' color='primary' size='large' type='submit'>
                     สร้างโฟลเดอร์ใหม่
                   </Button>
                   <Input type='hidden' {...register('staffName', { value: staffName })} />
+                  <Input type='hidden' {...register('stockId', { value: 1 })} />
                 </Grid>
               </Grid>
             </CardContent>

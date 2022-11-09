@@ -7,6 +7,9 @@ import CardHeader from '@mui/material/CardHeader'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
+import Icon from '@mdi/react'
+import { mdiAccount } from '@mdi/js'
+import { mdiFileSend } from '@mdi/js'
 
 // ** Icons Imports
 import TrendingUp from 'mdi-material-ui/TrendingUp'
@@ -29,8 +32,8 @@ const StatisticChart = () => {
   let totalReturnEclaim = chartStats?.totalReturnEclaim
   let totalStock = chartStats?.totalStock
 
-  const date = '2022-10'
-  // const date = moment().format('YYYY-MM')
+  // const date = '2022-10'
+  const date = moment().subtract(1, 'months').endOf('month').format('YYYY-MM')
   const fetchStatChart = async () => {
     let uri = apiConfig.baseURL + `/dashboard/chart-status/${date}`
     console.log(uri)
@@ -48,30 +51,8 @@ const StatisticChart = () => {
 
   return (
     <Card>
-      <CardHeader
-        title='Statistics Charts'
-        action={
-          <IconButton size='small' aria-label='settings' className='card-more-options' sx={{ color: 'text.secondary' }}>
-            <DotsVertical />
-          </IconButton>
-        }
-        // subheader={
-        // <Typography variant='body2'>
-        //   <Box component='span' sx={{ fontWeight: 600, color: 'text.primary' }}>
-        //     Total 48.5% growth
-        //   </Box>{' '}
-        //   😎 this month
-        // </Typography>
-        // }
-        titleTypographyProps={{
-          sx: {
-            mb: 2.5,
-            lineHeight: '2rem !important',
-            letterSpacing: '0.15px !important'
-          }
-        }}
-      />
-      <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
+      <CardHeader title='Report Chart Status :: สถานะชาร์ต' />
+      <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
         <Grid container spacing={[5, 0]}>
           <Grid item xs={12} sm={3}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -86,7 +67,7 @@ const StatisticChart = () => {
                   backgroundColor: `primary.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>ชาร์ตทั้งหมด</Typography>
@@ -104,10 +85,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `success.main`
+                  backgroundColor: `primary.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>ส่งสรุปชาร์ต</Typography>
@@ -125,10 +106,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `info.main`
+                  backgroundColor: `primary.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>รับคืนชาร์ต</Typography>
@@ -146,10 +127,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `warning.main`
+                  backgroundColor: `primary.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>รับคืนออร์ดิตชาร์ต</Typography>
@@ -169,10 +150,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `primary.main`
+                  backgroundColor: `success.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>รีออร์ดิตชาร์ต</Typography>
@@ -193,7 +174,7 @@ const StatisticChart = () => {
                   backgroundColor: `success.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>ส่งชาร์ตงาน e-claim</Typography>
@@ -211,10 +192,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `info.main`
+                  backgroundColor: `success.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>รับคืนจากงาน e-claim</Typography>
@@ -232,10 +213,10 @@ const StatisticChart = () => {
                   height: 44,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `warning.main`
+                  backgroundColor: `success.main`
                 }}
               >
-                <TrendingUp sx={{ fontSize: '1.75rem' }} />
+                <Icon path={mdiFileSend} title='User Profile' size={1} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Typography variant='caption'>เก็บเข้าคลัง</Typography>
