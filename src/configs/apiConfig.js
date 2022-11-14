@@ -1,6 +1,6 @@
 const apiConfig = {
   // ** Layout Configs
-  baseURL: 'http://192.168.2.22:3001' /* App Name */
+  baseURL: 'http://192.168.2.22:3035' /* App Name */
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,
   //   // ** Routing Configs
