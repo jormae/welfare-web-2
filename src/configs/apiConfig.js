@@ -1,6 +1,8 @@
 const apiConfig = {
   // ** Layout Configs
-  baseURL: 'http://192.168.2.22:3035' /* App Name */
+  // baseURL: 'http://192.168.1.200:3301'
+  // LOCALHOST
+  baseURL: 'http://localhost:3301'
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,
   //   // ** Routing Configs

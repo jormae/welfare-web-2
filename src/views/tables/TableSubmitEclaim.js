@@ -1,136 +1,48 @@
-// ** React Imports
-import { forwardRef, useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-
-// ** MUI Imports
-import { pink } from '@mui/material/colors'
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import CardHeader from '@mui/material/CardHeader'
-import InputLabel from '@mui/material/InputLabel'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import FormControl from '@mui/material/FormControl'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
-import Select from '@mui/material/Select'
-import Box from '@mui/material/Box'
-import axios from 'axios'
+import React, { useContext } from 'react'
+import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import Paper from '@mui/material/Paper'
-import Stack from '@mui/material/Stack'
-import EditIcon from '@mui/material/Icon'
-// import SendIcon from '@mui/material/Send'
-import { Input } from '@mui/material'
-
-// import BadgeIcon from '@mui/material/Badge'
-
-import apiConfig from 'src/configs/apiConfig'
-
-import moment from 'moment'
-import toast, { Toaster } from 'react-hot-toast'
+import Card from '@mui/material/Card'
+import CardHeader from '@mui/material/CardHeader'
+import CardContent from '@mui/material/CardContent'
+import Divider from '@mui/material/Divider'
+import { DataContext } from 'src/pages/submit-eclaim'
 
 const TableSubmitEclaim = () => {
-  moment.locale('th')
-  const today = moment().add(543, 'year').format('L')
-  const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
-
-  const [charts, setCharts] = useState({ blogs: [] })
-
-  const fetchCharts = async () => {
-    let uri = apiConfig.baseURL + '/chart/submit-eclaim'
-
-    try {
-      const { data } = await axios.get(uri)
-      setCharts({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchCharts()
-  }, [setCharts])
-
-  const SubmitChartsToEclaim = async pttypeCode => {
-    console.log(pttypeCode)
-
-    try {
-      const chart = {
-        staffName
-      }
-      let uri = apiConfig.baseURL + `/chart/submit-eclaim/${pttypeCode}`
-
-      axios
-        .put(uri, chart)
-        .then(response => {
-          console.log(response.data)
-          if (response.data.status == 'success') {
-            toast.success(response.data.message)
-            fetchCharts()
-          } else {
-            toast.error(response.data.errors[0].msg)
-          }
-        })
-        .catch(error => {
-          if (error.response) {
-            console.log(error)
-          } else if (error.request) {
-            console.log(error.request)
-          } else {
-            console.log('Error', error.message)
-          }
-          console.log(error.config)
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const submitEclaim = useContext(DataContext)
 
   return (
     <Card>
-      <Toaster />
-      <CardHeader title='รายการส่งชาร์ตงาน eclaim' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='รายการส่ง-รับคืนสรุปชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='center'>ชื่อสิทธ์การรักษา </TableCell>
-                <TableCell align='center'>จำนวนชาร์ต</TableCell>
-                <TableCell align='center'>Action</TableCell>
+                <TableCell align='center'>AN</TableCell>
+                <TableCell align='center'>HN</TableCell>
+                <TableCell align='center'>ชื่อ-สกุล</TableCell>
+                <TableCell align='center'>หอผู้ป่วย</TableCell>
+                <TableCell align='center'>สิทธิ์การรักษา</TableCell>
+                <TableCell align='center'>เจ้าหน้าที่</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {charts.blogs.map(row => (
-                <TableRow key={row.doctorCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              {submitEclaim.blogs.map(row => (
+                <TableRow key={row.an}>
                   <TableCell component='th' scope='row'>
-                    {row.pttypeCode} - {row.mainPttypeName}
+                    {row.an}
                   </TableCell>
-                  <TableCell align='center'>{row.TOTAL_CHART}</TableCell>
-                  <TableCell align='center'>
-                    <Button
-                      variant='outlined'
-                      sx={{ color: 'red', weight: 'bold' }}
-                      color='success'
-                      size='large'
-                      onClick={() => SubmitChartsToEclaim(row.pttypeCode)}
-                    >
-                      ส่งชาร์ตงาน eclaim
-                    </Button>
-                  </TableCell>
+                  <TableCell align='center'>{row.hn}</TableCell>
+                  <TableCell align='left'>{row.ptName}</TableCell>
+                  <TableCell align='left'>{row.wardName}</TableCell>
+                  <TableCell align='center'>{row.mainPttypeName}</TableCell>
+                  <TableCell align='left'>{row.submitedEclaimBy}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

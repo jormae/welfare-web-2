@@ -102,6 +102,21 @@ const navigation = () => {
       path: '/all-chart'
     },
     {
+      title: 'รายงานความครบถ้วน',
+      icon: FileDocumentMultipleOutline,
+      path: '/report-chart-status'
+    },
+    {
+      title: 'รายงานความทันเวลา',
+      icon: FileDocumentMultipleOutline,
+      path: '/report-chart-due'
+    },
+    {
+      title: 'รายงานความสมบูรณ์',
+      icon: FileDocumentMultipleOutline,
+      path: '/report-chart-complete'
+    },
+    {
       title: 'รายงานสรุป',
       icon: ChartLine,
       path: '/report-summary'
