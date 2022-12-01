@@ -38,7 +38,7 @@ import Link from 'next/link'
 import moment from 'moment'
 import toast, { Toaster } from 'react-hot-toast'
 
-const TableReportChartStatus = () => {
+const TableReportChartDue = () => {
   moment.locale('th')
   const today = moment().add(543, 'year').format('L')
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
@@ -102,7 +102,7 @@ const TableReportChartStatus = () => {
   return (
     <Card>
       <Toaster />
-      <CardHeader title='รายงานสรุปความครบถ้วนของชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='รายงานสรุปความทันเวลาของการรับ-ส่งชาร์ตตามระยะเวลาที่กำหนด' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
@@ -137,7 +137,7 @@ const TableReportChartStatus = () => {
                   <TableCell align='center'>{row.returnEclaimDate}</TableCell>
                   <TableCell align='center'>{row.stockDate}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`/report-chart-status/${row.dischargeDate}`} color='success'>
+                    <Link href={`/report-chart-due/${row.dischargeDate}`} color='success'>
                       <Button type='button' variant='outlined'>
                         เปิด
                       </Button>
@@ -153,4 +153,4 @@ const TableReportChartStatus = () => {
   )
 }
 
-export default TableReportChartStatus
+export default TableReportChartDue
