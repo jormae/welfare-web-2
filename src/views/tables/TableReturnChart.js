@@ -11,6 +11,8 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
+import moment from 'moment'
+
 import { DataContext } from 'src/pages/return-chart'
 
 const TableReturnChart = () => {
@@ -25,11 +27,11 @@ const TableReturnChart = () => {
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
+              <TableCell align='center'>วันที่คืนชาร์ต</TableCell>
                 <TableCell align='center'>AN</TableCell>
-                <TableCell align='center'>HN</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>หอผู้ป่วย</TableCell>
-                <TableCell align='center'>วันที่ Discharge</TableCell>
+                <TableCell align='center'>สถานะ</TableCell>
                 <TableCell align='center'>ชื่อแพทย์</TableCell>
               </TableRow>
             </TableHead>
@@ -37,12 +39,12 @@ const TableReturnChart = () => {
               {returnCharts.blogs.map(row => (
                 <TableRow key={row.an}>
                   <TableCell component='th' scope='row'>
-                    {row.an}
+                    {moment(row.returnSummaryDate).format("YYYY-MM-DD HH:mm")}
                   </TableCell>
-                  <TableCell align='center'>{row.hn}</TableCell>
+                  <TableCell align='center'>{row.an}</TableCell>
                   <TableCell align='left'>{row.ptName}</TableCell>
                   <TableCell align='left'>{row.wardName}</TableCell>
-                  <TableCell align='center'>{row.dischargeDate}</TableCell>
+                  <TableCell align='center'>{(row.returnSummaryDueStatus == 1) ? "ปกติ" : "เกินกำหนด"}</TableCell>
                   <TableCell align='left'>{row.dischargeDoctor}</TableCell>
                 </TableRow>
               ))}

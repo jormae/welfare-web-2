@@ -25,7 +25,7 @@ const FormLayouts = () => {
   const [an, setAn] = useState()
 
   const fetchCharts = async () => {
-    let uri = apiConfig.baseURL + '/chart/return-chart'
+    let uri = apiConfig.baseURL + `/chart/return-chart/${staffName}`
     try {
       const { data } = await axios.get(uri)
       setReturnCharts({ blogs: data })
@@ -55,7 +55,7 @@ const FormLayouts = () => {
 
   const onSubmit = data => {
     an = data.an
-    let uri = apiConfig.baseURL + '/chart/return-chart/${an}/${staffName}/${date}'
+    let uri = apiConfig.baseURL + `/chart/return-chart/${an}`
     fetch(uri, {
       method: 'PUT',
       headers: {
