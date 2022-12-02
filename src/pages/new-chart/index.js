@@ -24,7 +24,7 @@ const FormLayouts = () => {
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
   const fetchCharts = async () => {
-    let uri = apiConfig.baseURL + '/chart'
+    let uri = apiConfig.baseURL + `/chart/${staffName}`
     try {
       const { data } = await axios.get(uri)
       setCharts({ blogs: data })

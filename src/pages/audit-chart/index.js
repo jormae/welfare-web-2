@@ -55,7 +55,7 @@ const FormLayouts = () => {
 
   const onSubmit = data => {
     an = data.an
-    let uri = apiConfig.baseURL + '/chart/audit-chart/${an}/${staffName}/${date}'
+    let uri = apiConfig.baseURL + `/chart/audit-chart/${an}/${staffName}/${date}`
     fetch(uri, {
       method: 'PUT',
       headers: {
