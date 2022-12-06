@@ -46,7 +46,7 @@ const TableSummaryChart = () => {
 
   const fetchCharts = async () => {
     let uri = apiConfig.baseURL + '/chart/summary-chart'
-
+    console.log(uri)
     try {
       const { data } = await axios.get(uri)
       setCharts({ blogs: data })
