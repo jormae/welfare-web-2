@@ -12,6 +12,7 @@ import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
 import FileDocumentMultipleOutline from 'mdi-material-ui/FileDocumentMultipleOutline'
 import BarcodeScan from 'mdi-material-ui/BarcodeScan'
 import ChartLine from 'mdi-material-ui/ChartLine'
+import Profile from 'mdi-material-ui/FaceManProfile'
 
 const navigation = () => {
   return [
@@ -30,9 +31,9 @@ const navigation = () => {
       sectionTitle: 'Pages'
     },
     {
-      title: 'รับชาร์ต',
-      icon: BarcodeScan,
-      path: '/new-chart'
+      title: 'สมาชิก',
+      icon: Profile,
+      path: '/member'
     },
     {
       title: 'ส่งสรุปชาร์ต',

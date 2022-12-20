@@ -5,8 +5,8 @@ import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import TableNewChart from 'src/views/tables/TableNewChart'
-import CardNewChart from 'src/views/cards/CardNewChart'
+import TableMember from 'src/views/tables/TableMember'
+// import CardNewMember from 'src/views/cards/CardNewMember'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -19,29 +19,29 @@ export const DataContext = createContext()
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [charts, setCharts] = useState({ blogs: [] })
-  const [statNewChart, setStatNewChart] = useState(0)
+  const [members, setMembers] = useState({ blogs: [] })
+  const [statNewMember, setStatNewMember] = useState(0)
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
-  const fetchCharts = async () => {
-    let uri = apiConfig.baseURL + `/chart/new-chart/${staffName}`
+  const fetchMembers = async () => {
+    let uri = apiConfig.baseURL + `/members`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setCharts({ blogs: data })
+      setMembers({ blogs: data })
     } catch (error) {
       // console.log(error)
     }
   }
 
-  const fetchStatNewChart = async () => {
-    let uri = apiConfig.baseURL + `/stat/new-chart/${staffName}`
+  const fetchStatNewMember = async () => {
+    let uri = apiConfig.baseURL + `/stat/new-member/${staffName}`
     console.log(uri)
 
     try {
       await axios
         .get(uri)
-        .then(result => setStatNewChart(result.data[0]))
+        .then(result => setStatNewMember(result.data[0]))
         .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
@@ -56,7 +56,7 @@ const FormLayouts = () => {
   } = useForm()
 
   const onSubmit = data => {
-    let uri = apiConfig.baseURL + '/chart/upload/'
+    let uri = apiConfig.baseURL + '/member/upload/'
     fetch(uri, {
       method: 'POST',
       headers: {
@@ -68,8 +68,8 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchCharts()
-          fetchStatNewChart()
+          fetchMembers()
+          fetchStatNewMember()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -108,15 +108,15 @@ const FormLayouts = () => {
 
   useEffect(() => {
     verifyToken()
-    fetchCharts()
-    fetchStatNewChart()
+    fetchMembers()
+    fetchStatNewMember()
   }, [])
 
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <CardContext.Provider value={statNewChart}>
-          <CardNewChart />
+        <CardContext.Provider value={statNewMember}>
+          {/* <CardNewMember /> */}
         </CardContext.Provider>
       </Grid>
       <Grid item xs={12}>
@@ -143,9 +143,9 @@ const FormLayouts = () => {
           </form>
         </Card>
       </Grid>
-      <DataContext.Provider value={charts}>
+      <DataContext.Provider value={members}>
         <Grid item xs={12}>
-          <TableNewChart />
+          <TableMember />
         </Grid>
       </DataContext.Provider>
     </Grid>

@@ -1,8 +1,0 @@
-version: "3.3"
-services:
-  web:
-    ports:
-      - "3000:3000"
-    build: .
-    #left -> local, right ->container
-    #http://lcoalhost:8080 -p 8080:3000
