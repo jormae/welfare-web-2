@@ -1,4 +1,5 @@
 import { useEffect, useState, createContext } from 'react'
+import * as React from 'react'
 import { useRouter } from 'next/router'
 import Grid from '@mui/material/Grid'
 import apiConfig from 'src/configs/apiConfig'
@@ -9,6 +10,12 @@ import axios from 'axios'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Tab from '@mui/material/Tab'
+import TabContext from '@mui/lab/TabContext'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
+import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 
 const defaultData = {
   ptName: 'Loading',
@@ -40,7 +47,9 @@ export const ReferHospitalsContext = createContext()
 
 export const PttypesContext = createContext()
 
-export const HistoriesContext = createContext()
+export const InvesmentHistoryContext = createContext()
+
+export const SpouseContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
@@ -53,9 +62,14 @@ const FormLayouts = () => {
   const [memberRoles, setMemberRoles] = useState([])
   const [paymentTypes, setPaymentTypes] = useState([])
   const [MemberStatus, setReferCauses] = useState([])
-  // const [referHospitals, setReferHospitals] = useState([])
-  // const [pttypes, setPttypes] = useState([])
-  const [memberHistories, setMemberHistories] = useState({ blogs: [] })
+  const [spouseDetails, setSpouseDetails] = useState()
+  const [memberInvestmentHostories, setMemberInvestmentHostories] = useState({ blogs: [] })
+  const [memberLoanHostories, setMemberLoanHostories] = useState({ blogs: [] })
+  const [value, setValue] = React.useState('member')
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue)
+  }
 
   const fetchMemberDetail = () => {
     let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
@@ -65,17 +79,6 @@ const FormLayouts = () => {
       .get(uri)
       .then(result => setMemberDetail(result.data[0]))
       .catch(error => console.log('An error occurred' + error))
-  }
-
-  const fetchMemberInvestments = async () => {
-    let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
-
-    try {
-      const { data } = await axios.get(uri)
-      setMemberHistories({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   const fetchPositions = async () => {
@@ -139,29 +142,36 @@ const FormLayouts = () => {
     }
   }
 
-  // const fetchReferHospitals = async () => {
-  //   let uri = apiConfig.baseURL + `/utils/refer-hospital`
-  //   try {
-  //     await axios
-  //       .get(uri)
-  //       .then(result => setReferHospitals(result.data))
-  //       .catch(error => console.log('An error occurred' + error))
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const fetchSpouseDetail = () => {
+    let uri = apiConfig.baseURL + `/spouses/${router.query.nationalId}`
+    console.log(uri)
 
-  // const fetchPttypes = async () => {
-  //   let uri = apiConfig.baseURL + `/utils/pttype`
-  //   try {
-  //     await axios
-  //       .get(uri)
-  //       .then(result => setPttypes(result.data))
-  //       .catch(error => console.log('An error occurred' + error))
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+    axios
+      .get(uri)
+      .then(result => setSpouseDetails(result.data[0]))
+      .catch(error => console.log('An error occurred' + error))
+  }
+
+  const fetchMemberInvestments = async () => {
+    let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
+    try {
+      const { data } = await axios.get(uri)
+      setMemberInvestmentHostories({ blogs: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchMemberLoans = async () => {
+    let uri = apiConfig.baseURL + `/loans/${router.query.nationalId}`
+
+    try {
+      const { data } = await axios.get(uri)
+      setMemberLoanHostories({ blogs: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     if (router.isReady) {
@@ -172,54 +182,70 @@ const FormLayouts = () => {
       fetchMemberRoles()
       fetchPaymentTypes()
       fetchMemberStatus()
-      // fetchReferHospitals()
-      // fetchPttypes()
+      fetchSpouseDetail()
       fetchMemberInvestments()
+      fetchMemberLoans()
     }
   }, [router.isReady, router.query])
 
   const SkeletonMemberFormsLoading = () => (
-    <Box>
-      {memberDetail.nationalId ? (
-        <MemberContext.Provider value={memberDetail}>
-          <PositionsContext.Provider value={position}>
-            <MemberTypesContext.Provider value={memberTypes}>
-              <MemberRolesContext.Provider value={memberRoles}>
-                <PaymentTypesContext.Provider value={paymentTypes}>
-                  <MemberStatusContext.Provider value={MemberStatus}>
-                    {/* <ReferHospitalsContext.Provider value={referHospitals}> */}
-                      {/* <PttypesContext.Provider value={pttypes}> */}
+    <Box sx={{ width: '100%' }}>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label='lab API tabs example'>
+            <Tab label='ข้อมูลสมาชิก' value='member' />
+            <Tab label='ข้อมูลคู่สมรส' value='spouse' />
+          </TabList>
+        </Box>
+        <TabPanel value='member'>
+          {memberDetail.nationalId ? (
+            <MemberContext.Provider value={memberDetail}>
+              <PositionsContext.Provider value={position}>
+                <MemberTypesContext.Provider value={memberTypes}>
+                  <MemberRolesContext.Provider value={memberRoles}>
+                    <PaymentTypesContext.Provider value={paymentTypes}>
+                      <MemberStatusContext.Provider value={MemberStatus}>
                         <FormMemberDetail />
-                      {/* </PttypesContext.Provider> */}
-                    {/* </ReferHospitalsContext.Provider> */}
-                  </MemberStatusContext.Provider>
-                </PaymentTypesContext.Provider>
-              </MemberRolesContext.Provider>
-            </MemberTypesContext.Provider>
-          </PositionsContext.Provider>
-        </MemberContext.Provider>
-      ) : (
-        <Typography variant='h4'>
-          {/* <CircularProgress /> */}
-          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-        </Typography>
-      )}
+                      </MemberStatusContext.Provider>
+                    </PaymentTypesContext.Provider>
+                  </MemberRolesContext.Provider>
+                </MemberTypesContext.Provider>
+              </PositionsContext.Provider>
+            </MemberContext.Provider>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
+        <TabPanel value='spouse'>
+          {memberDetail.nationalId ? (
+            <SpouseContext.Provider value={spouseDetails}>
+              <FormSpouseDetail />
+            </SpouseContext.Provider>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
+      </TabContext>
     </Box>
   )
 
-  // const SkeletonMemberHistotiesLoading = () => (
-  //   <Box>
-  //     {memberHistories.blogs.length > 0 ? (
-  //       <Grid container wrap='nowrap'>
-  //         <HistoriesContext.Provider value={memberHistories}>
-  //           <TableMemberHistory />
-  //         </HistoriesContext.Provider>
-  //       </Grid>
-  //     ) : (
-  //       <Skeleton width='100%' height={200} />
-  //     )}
-  //   </Box>
-  // )
+  const SkeletonMemberInvestmentAndLoadHistotiesLoading = () => (
+    <Box>
+      {memberInvestmentHostories.blogs.length > 0 ? (
+        <Grid container wrap='nowrap'>
+          <InvesmentHistoryContext.Provider value={memberInvestmentHostories}>
+            <TableMemberInvestmentHistory />
+          </InvesmentHistoryContext.Provider>
+        </Grid>
+      ) : (
+        <Skeleton width='100%' height={200} />
+      )}
+    </Box>
+  )
 
   return (
     <Grid container spacing={6}>
@@ -229,9 +255,9 @@ const FormLayouts = () => {
       <Grid item xs={12}>
         <SkeletonMemberFormsLoading />
       </Grid>
-      {/* <Grid item xs={6}>
-        <SkeletonMemberHistotiesLoading />
-      </Grid> */}
+      <Grid item xs={12}>
+        <SkeletonMemberInvestmentAndLoadHistotiesLoading />
+      </Grid>
     </Grid>
   )
 }

@@ -1,0 +1,188 @@
+// ** React Imports
+import React, { useContext, useEffect } from 'react'
+import Skeleton from '@mui/material/Skeleton'
+import { Controller, useForm } from 'react-hook-form'
+// import { useParams } from 'react-router-dom'
+
+// ** MUI Imports
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import CardHeader from '@mui/material/CardHeader'
+import InputLabel from '@mui/material/InputLabel'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import CardContent from '@mui/material/CardContent'
+import FormControl from '@mui/material/FormControl'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputAdornment from '@mui/material/InputAdornment'
+import FormHelperText from '@mui/material/FormHelperText'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import toast, { Toaster } from 'react-hot-toast'
+import apiConfig from 'src/configs/apiConfig'
+
+// ** Icons Imports
+// import EyeOutline from 'mdi-material-ui/EyeOutline'
+import SaveIcon from 'mdi-material-ui/Plus'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import Divider from '@mui/material/Divider'
+import LoadingButton from '@mui/lab/LoadingButton'
+import moment from 'moment'
+
+import { SpouseContext } from 'src/pages/member/[nationalId]'
+
+const FormSpouseDetail = () => {
+  const spouseDetails = useContext(SpouseContext)
+
+  const { register, handleSubmit, formState, reset } = useForm()
+  const [loading, setLoading] = React.useState(false)
+
+  const memberNationalId = spouseDetails?.memberNationalId
+  const spouseNationalId = spouseDetails?.spouseNationalId
+  const spouseName = spouseDetails?.spouseName
+  const villageNo = spouseDetails?.villageNo
+  const subDistrict = spouseDetails?.subDistrict
+  const district = spouseDetails?.district
+  const province = spouseDetails?.province
+  const houseNo = spouseDetails?.houseNo
+  const postCode = spouseDetails?.postCode
+  const contactNo = spouseDetails?.contactNo
+  console.log(spouseDetails)
+  console.log(memberNationalId)
+
+  //   const updatedBy = typeof window !== 'undefined' ? localStorage?.getItem('staffName') : 'system'
+
+  useEffect(() => {
+    if (spouseDetails) {
+      reset({
+        memberNationalId: spouseDetails?.memberNationalId,
+        spouseNationalId: spouseDetails?.spouseNationalId,
+        spouseName: spouseDetails?.spouseName,
+        salary: spouseDetails?.salary,
+        houseNo: spouseDetails?.houseNo,
+        streetName: spouseDetails?.streetName,
+        villageName: spouseDetails?.villageName,
+        villageNo: spouseDetails?.villageNo,
+        subDistrict: spouseDetails?.subDistrict,
+        district: spouseDetails?.district,
+        province: spouseDetails?.province,
+        postCode: spouseDetails?.postCode,
+        contactNo: spouseDetails?.contactNo
+      })
+    }
+  }, [])
+  const onSubmit = data => {
+    setLoading(true)
+
+    let uri = apiConfig.baseURL + `/spouses/${memberNationalId}`
+    fetch(uri, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setLoading(false)
+
+        if (data.status == 'success') {
+          toast.success(data.message)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      })
+  }
+
+  return (
+    <Card>
+      <CardHeader title='ข้อมูลคู่สมรส' titleTypographyProps={{ variant: 'h6' }} />
+      <Toaster />
+      <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+        <CardContent>
+          <Grid container spacing={5}>
+            <Grid item xs={3}>
+              <TextField fullWidth label='เลขที่บัตรประชาชนคู่สมรส' {...register('spouseNationalId')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='ชื่อคู่สมรส' {...register('spouseName')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='อาชีพ' type='text' {...register('occupation')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='รายได้ต่อเดือน' type='number' {...register('income')} />
+            </Grid>
+          </Grid>
+        </CardContent>
+        <CardHeader title='ข้อมูลที่อยู่' titleTypographyProps={{ variant: 'h6' }} />
+        <CardContent>
+          <Grid container spacing={5}>
+            <Grid item xs={3}>
+              <TextField fullWidth label='บ้านเลขที่' type='text' {...register('houseNo')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='ถนน' type='text' {...register('streetName')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='หมู่บ้าน' type='text' {...register('villageName')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='หมู่ที่' type='text' {...register('villageNo')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='ตำบล' type='text' {...register('subDistrict')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='อำเภอ' type='text' {...register('district')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='จังหวัด' type='text' {...register('province')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='รหัสไปรษณีย์' type='text' {...register('postCode')} />
+            </Grid>
+            <Grid item xs={3}>
+              <TextField fullWidth label='โทรศัพท์' type='text' {...register('contactNo')} />
+            </Grid>
+            <Grid item xs={12}>
+              <Box
+                sx={{
+                  gap: 5,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Box sx={{ '& > button': { m: 1 } }}></Box>
+                <LoadingButton
+                  type='submit'
+                  color='primary'
+                  onClick={handleSubmit(onSubmit)}
+                  loading={loading}
+                  loadingPosition='start'
+                  startIcon={<SaveIcon />}
+                  variant='contained'
+                  size='large'
+                >
+                  บันทึก
+                </LoadingButton>
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </form>
+    </Card>
+  )
+}
+
+export default FormSpouseDetail
