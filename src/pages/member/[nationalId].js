@@ -16,6 +16,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
+import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 
 const defaultData = {
   ptName: 'Loading',
@@ -49,6 +50,8 @@ export const PttypesContext = createContext()
 
 export const InvesmentHistoryContext = createContext()
 
+export const LoanHistoryContext = createContext()
+
 export const SpouseContext = createContext()
 
 const FormLayouts = () => {
@@ -63,12 +66,17 @@ const FormLayouts = () => {
   const [paymentTypes, setPaymentTypes] = useState([])
   const [MemberStatus, setReferCauses] = useState([])
   const [spouseDetails, setSpouseDetails] = useState()
-  const [memberInvestmentHostories, setMemberInvestmentHostories] = useState({ blogs: [] })
-  const [memberLoanHostories, setMemberLoanHostories] = useState({ blogs: [] })
+  const [memberInvestmentHistories, setMemberInvestmentHistories] = useState({ blogs: [] })
+  const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
   const [value, setValue] = React.useState('member')
+  const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
+  }
+
+  const handleTabHistoryChange = (event, newValue) => {
+    setTabHistoryValue(newValue)
   }
 
   const fetchMemberDetail = () => {
@@ -156,7 +164,7 @@ const FormLayouts = () => {
     let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
     try {
       const { data } = await axios.get(uri)
-      setMemberInvestmentHostories({ blogs: data })
+      setMemberInvestmentHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -164,10 +172,10 @@ const FormLayouts = () => {
 
   const fetchMemberLoans = async () => {
     let uri = apiConfig.baseURL + `/loans/${router.query.nationalId}`
-
+    console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setMemberLoanHostories({ blogs: data })
+      setMemberLoanHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -195,6 +203,7 @@ const FormLayouts = () => {
           <TabList onChange={handleChange} aria-label='lab API tabs example'>
             <Tab label='ข้อมูลสมาชิก' value='member' />
             <Tab label='ข้อมูลคู่สมรส' value='spouse' />
+            <Tab label='ประวัติหุ้น' value='investment2' />
           </TabList>
         </Box>
         <TabPanel value='member'>
@@ -229,21 +238,57 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
+        <TabPanel value='investment2'>
+          {memberDetail.nationalId ? (
+            <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
+            <TableMemberInvestmentHistory />
+          </InvesmentHistoryContext.Provider>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
       </TabContext>
     </Box>
   )
 
   const SkeletonMemberInvestmentAndLoadHistotiesLoading = () => (
-    <Box>
-      {memberInvestmentHostories.blogs.length > 0 ? (
-        <Grid container wrap='nowrap'>
-          <InvesmentHistoryContext.Provider value={memberInvestmentHostories}>
-            <TableMemberInvestmentHistory />
-          </InvesmentHistoryContext.Provider>
-        </Grid>
-      ) : (
-        <Skeleton width='100%' height={200} />
-      )}
+    <Box sx={{ width: '100%' }}>
+      <TabContext value={tabHistoryValue}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleTabHistoryChange} aria-label='lab API tabs example'>
+            <Tab label='ประวัติกู้' value='loan' />
+            <Tab label='ประวัติหุ้น' value='investment' />
+          </TabList>
+        </Box>
+        <TabPanel value='loan'>
+           {memberLoanHistories.blogs.length > 0 ? (
+            <Grid container wrap='nowrap'>
+              <LoanHistoryContext.Provider value={memberLoanHistories}>
+                <TableMemberLoanHistory />
+              </LoanHistoryContext.Provider>
+            </Grid>
+            ) : (
+              <Typography variant='h4'>
+                <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+              </Typography>
+            )}
+        </TabPanel>
+        <TabPanel value='investment'>
+          {memberInvestmentHistories.blogs.length > 0 ? (
+            <Grid container wrap='nowrap'>
+              <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
+                <TableMemberInvestmentHistory />
+              </InvesmentHistoryContext.Provider>
+            </Grid>
+            ) : (
+              <Typography variant='h4'>
+                <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+              </Typography>
+            )}
+        </TabPanel>
+      </TabContext>
     </Box>
   )
 

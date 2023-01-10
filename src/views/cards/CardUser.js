@@ -16,10 +16,10 @@ const CardUser = () => {
         alt='Robert Meyer'
         src='/images/avatars/1.png'
         sx={{
-          width: 75,
-          height: 75,
-          left: '1.313rem',
-          top: '10.28125rem',
+          width: 120,
+          height: 120,
+          left: '7.313rem',
+          top: '8.28125rem',
           position: 'absolute',
           border: theme => `0.25rem solid ${theme.palette.common.white}`
         }}
@@ -32,14 +32,29 @@ const CardUser = () => {
             display: 'flex',
             flexWrap: 'wrap',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            alignContent:'center',
           }}
         >
-          <Box sx={{ mr: 2, mb: 1, display: 'flex', flexDirection: 'column' }}>
-            <Typography variant='h6'>Robert Meyer</Typography>
+          <Box sx={{ ml:23, mt:5, display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center',justifyContent: 'space-between', }}>
+            <Typography variant='h6' align='center'>Robert Meyer</Typography>
             <Typography variant='caption'>London, UK</Typography>
           </Box>
-          <Button variant='contained'>Send Request</Button>
+        </Box>
+        <Box
+          sx={{
+            mt: 5.75,
+            mb: 8.75,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Button variant='outlined'>ชำระเงินกู้</Button>
+          <Button variant='outlined'>ฝากหุ้น</Button>
+          <Button variant='outlined'>ถอนหุ้น</Button>
+          {/* <Button variant='contained'>ใบคำร้อง</Button> */}
         </Box>
         <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant='subtitle2' sx={{ whiteSpace: 'nowrap', color: 'text.primary' }}>

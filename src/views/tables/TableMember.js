@@ -48,11 +48,12 @@ const TableMember = () => {
                   <TableCell align='center'>{row.memberTypeName}</TableCell>
                   <TableCell align='center'>{row.memberStatus == 0 ? 'ปิดบัญชี' : 'ปกติ'}</TableCell>
                   <TableCell align='center'>
-                  <Link href={`member/${row.nationalId}`} color='success'>
+                    <Link href={`member/${row.nationalId}`} color='success'>
                       <Button type='button' variant='outlined'>
                         เปิด
                       </Button>
-                    </Link></TableCell>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
