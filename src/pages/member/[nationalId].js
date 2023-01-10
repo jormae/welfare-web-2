@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 import apiConfig from 'src/configs/apiConfig'
 import FormMemberDetail from 'src/views/form-layouts/FormMemberDetail'
 import axios from 'axios'
-// import CardNewMember from 'src/views/cards/CardNewMember'
+import CardUser from 'src/views/cards/CardUser'
 // import TableMemberHistory from 'src/views/tables/TableMemberHistory'
 import Skeleton from '@mui/material/Skeleton'
 import Box from '@mui/material/Box'
@@ -249,10 +249,10 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      {/* <Grid item xs={12}>
-        <CardNewMember />
-      </Grid> */}
-      <Grid item xs={12}>
+      <Grid item xs={4}>
+        <CardUser />
+      </Grid>
+      <Grid item xs={8}>
         <SkeletonMemberFormsLoading />
       </Grid>
       <Grid item xs={12}>
