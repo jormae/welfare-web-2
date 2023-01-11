@@ -34,25 +34,7 @@ const defaultData = {
 
 export const MemberContext = createContext()
 
-export const PositionsContext = createContext()
-
-export const MemberTypesContext = createContext()
-
-export const MemberRolesContext = createContext()
-
-export const PaymentTypesContext = createContext()
-
-export const MemberStatusContext = createContext()
-
-export const ReferHospitalsContext = createContext()
-
-export const PttypesContext = createContext()
-
-export const InvesmentHistoryContext = createContext()
-
 export const LoanHistoryContext = createContext()
-
-export const DividendHistoryContext = createContext()
 
 export const SpouseContext = createContext()
 
@@ -62,15 +44,7 @@ const FormLayouts = () => {
     router.query.nationalId
   }
   const [memberDetail, setMemberDetail] = useState(defaultData)
-  const [position, setPositions] = useState([])
-  const [memberTypes, setMemberTypes] = useState([])
-  const [memberRoles, setMemberRoles] = useState([])
-  const [paymentTypes, setPaymentTypes] = useState([])
-  const [MemberStatus, setReferCauses] = useState([])
-  const [spouseDetails, setSpouseDetails] = useState()
-  const [memberInvestmentHistories, setMemberInvestmentHistories] = useState({ blogs: [] })
   const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
-  const [memberDividendHistories, setMemberDividendHistories] = useState({ blogs: [] })
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
@@ -92,89 +66,8 @@ const FormLayouts = () => {
       .catch(error => console.log('An error occurred' + error))
   }
 
-  const fetchPositions = async () => {
-    let uri = apiConfig.baseURL + `/utils/positions`
-    console.log(uri)
-    try {
-      await axios
-        .get(uri)
-        .then(result => setPositions(result.data))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchMemberTypes = async () => {
-    let uri = apiConfig.baseURL + `/utils/member-types`
-    try {
-      await axios
-        .get(uri)
-        .then(result => setMemberTypes(result.data))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchMemberRoles = async () => {
-    let uri = apiConfig.baseURL + `/utils/member-roles`
-    try {
-      await axios
-        .get(uri)
-        .then(result => setMemberRoles(result.data))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchPaymentTypes = async () => {
-    let uri = apiConfig.baseURL + `/utils/payment-types`
-    try {
-      await axios
-        .get(uri)
-        .then(result => setPaymentTypes(result.data))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchMemberStatus = async () => {
-    let uri = apiConfig.baseURL + `/utils/member-status`
-    try {
-      await axios
-        .get(uri)
-        .then(result => setReferCauses(result.data))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchSpouseDetail = () => {
-    let uri = apiConfig.baseURL + `/spouses/${router.query.nationalId}`
-    console.log(uri)
-
-    axios
-      .get(uri)
-      .then(result => setSpouseDetails(result.data[0]))
-      .catch(error => console.log('An error occurred' + error))
-  }
-
-  const fetchMemberInvestments = async () => {
-    let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
-    try {
-      const { data } = await axios.get(uri)
-      setMemberInvestmentHistories({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchMemberLoans = async () => {
-    let uri = apiConfig.baseURL + `/loans/${router.query.nationalId}`
+  const fetchMemberLoansHistories = async () => {
+    let uri = apiConfig.baseURL + `/loans-history/${router.query.nationalId}/${router.query.loanId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
@@ -184,30 +77,11 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchMemberDividends = async () => {
-    let uri = apiConfig.baseURL + `/dividends/${router.query.nationalId}`
-    console.log(uri)
-    try {
-      const { data } = await axios.get(uri)
-      setMemberDividendHistories({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
     if (router.isReady) {
       router.query
       fetchMemberDetail()
-      fetchPositions()
-      fetchMemberTypes()
-      fetchMemberRoles()
-      fetchPaymentTypes()
-      fetchMemberStatus()
-      fetchSpouseDetail()
-      fetchMemberInvestments()
-      fetchMemberLoans()
-      fetchMemberDividends()
+      fetchMemberLoansHistories()
     }
   }, [router.isReady, router.query])
 
