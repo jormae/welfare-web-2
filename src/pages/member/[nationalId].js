@@ -174,7 +174,7 @@ const FormLayouts = () => {
   }
 
   const fetchMemberLoans = async () => {
-    let uri = apiConfig.baseURL + `/loans/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/loans/members/${router.query.nationalId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)

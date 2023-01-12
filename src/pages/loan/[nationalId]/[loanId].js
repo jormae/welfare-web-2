@@ -17,6 +17,7 @@ import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
+import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanRecordHistory'
 
 const defaultData = {
   ptName: 'Loading',
@@ -34,7 +35,7 @@ const defaultData = {
 
 export const MemberContext = createContext()
 
-export const LoanHistoryContext = createContext()
+export const LoanRecordHistoryContext = createContext()
 
 export const SpouseContext = createContext()
 
@@ -67,7 +68,7 @@ const FormLayouts = () => {
   }
 
   const fetchMemberLoansHistories = async () => {
-    let uri = apiConfig.baseURL + `/loans-history/${router.query.nationalId}/${router.query.loanId}`
+    let uri = apiConfig.baseURL + `/loans/loan-history/${router.query.nationalId}/${router.query.loanId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
@@ -85,113 +86,17 @@ const FormLayouts = () => {
     }
   }, [router.isReady, router.query])
 
-  const SkeletonMemberFormsLoading = () => (
+  const SkeletonMemberLoanLoading = () => (
     <Box sx={{ width: '100%' }}>
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label='lab API tabs example'>
-            <Tab label='ข้อมูลสมาชิก' value='member' />
-            <Tab label='ข้อมูลคู่สมรส' value='spouse' />
-            <Tab label='ประวัติหุ้น' value='investment2' />
-          </TabList>
-        </Box>
-        <TabPanel value='member'>
-          {memberDetail.nationalId ? (
-            <MemberContext.Provider value={memberDetail}>
-              <PositionsContext.Provider value={position}>
-                <MemberTypesContext.Provider value={memberTypes}>
-                  <MemberRolesContext.Provider value={memberRoles}>
-                    <PaymentTypesContext.Provider value={paymentTypes}>
-                      <MemberStatusContext.Provider value={MemberStatus}>
-                        <FormMemberDetail />
-                      </MemberStatusContext.Provider>
-                    </PaymentTypesContext.Provider>
-                  </MemberRolesContext.Provider>
-                </MemberTypesContext.Provider>
-              </PositionsContext.Provider>
-            </MemberContext.Provider>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-        <TabPanel value='spouse'>
-          {memberDetail.nationalId ? (
-            <SpouseContext.Provider value={spouseDetails}>
-              <FormSpouseDetail />
-            </SpouseContext.Provider>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-        <TabPanel value='investment2'>
-          {memberDetail.nationalId ? (
-            <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-              <TableMemberInvestmentHistory />
-            </InvesmentHistoryContext.Provider>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-      </TabContext>
-    </Box>
-  )
-
-  const SkeletonMemberInvestmentAndLoadHistotiesLoading = () => (
-    <Box sx={{ width: '100%' }}>
-      <TabContext value={tabHistoryValue}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleTabHistoryChange} aria-label='lab API tabs example'>
-            <Tab label='ประวัติกู้' value='loan' />
-            <Tab label='ประวัติหุ้น' value='investment' />
-            <Tab label='ประวัติปันผล' value='dividend' />
-          </TabList>
-        </Box>
-        <TabPanel value='loan'>
-          {memberLoanHistories.blogs.length > 0 ? (
-            <Grid container wrap='nowrap'>
-              <LoanHistoryContext.Provider value={memberLoanHistories}>
-                <TableMemberLoanHistory />
-              </LoanHistoryContext.Provider>
-            </Grid>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-        <TabPanel value='investment'>
-          {memberInvestmentHistories.blogs.length > 0 ? (
-            <Grid container wrap='nowrap'>
-              <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-                <TableMemberInvestmentHistory />
-              </InvesmentHistoryContext.Provider>
-            </Grid>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-        <TabPanel value='dividend'>
-          {memberDividendHistories.blogs.length > 0 ? (
-            <Grid container wrap='nowrap'>
-              <DividendHistoryContext.Provider value={memberDividendHistories}>
-                <TableMemberDividendHistory />
-              </DividendHistoryContext.Provider>
-            </Grid>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-        </TabPanel>
-      </TabContext>
+      {memberDetail.nationalId ? (
+        <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
+          <TableMemberLoanRecordHistory />
+        </LoanRecordHistoryContext.Provider>
+      ) : (
+        <Typography variant='h4'>
+          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+        </Typography>
+      )}
     </Box>
   )
 
@@ -201,10 +106,7 @@ const FormLayouts = () => {
         <CardUser />
       </Grid>
       <Grid item xs={8}>
-        <SkeletonMemberFormsLoading />
-      </Grid>
-      <Grid item xs={12}>
-        <SkeletonMemberInvestmentAndLoadHistotiesLoading />
+        <SkeletonMemberLoanLoading />
       </Grid>
     </Grid>
   )
