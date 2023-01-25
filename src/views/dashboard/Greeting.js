@@ -38,6 +38,9 @@ const Greeting = () => {
         <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
           {userTypeName}
         </Typography>
+        <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
+          {userTypeName}
+        </Typography>
         <Button size='small' variant='contained'>
           View Profile
         </Button>

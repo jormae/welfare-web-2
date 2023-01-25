@@ -40,7 +40,7 @@ const TableMemberInvestmentHistory = () => {
               {memberInvestmentHostories.blogs.map(row => (
                 <TableRow key={row.investmentId}>
                   <TableCell align='center' component='th' scope='row'>
-                    {moment(row.investmentDateTime).format('DD/MM/YYYY HH:mm:ss')}
+                    {moment(row.investmentDateTime).add(543,'year').format('DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
                   <TableCell align='center'>{row.investmentTypeName}</TableCell>
                   <TableCell align='center'>{row.shareQuantity}</TableCell>

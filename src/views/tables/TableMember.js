@@ -18,7 +18,7 @@ import moment from 'moment'
 import { DataContext } from 'src/pages/member'
 
 const TableMember = () => {
-  const charts = useContext(DataContext)
+  const members = useContext(DataContext)
 
   return (
     <Card>
@@ -38,7 +38,7 @@ const TableMember = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {charts.blogs.map(row => (
+              {members.blogs.map(row => (
                 <TableRow key={row.memberId}>
                   <TableCell align='center' component='th' scope='row'>
                   {row.nationalId}

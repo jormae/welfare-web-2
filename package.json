@@ -54,7 +54,8 @@
     "@mdi/react": "^1.6.1",
     "@mui/icons-material": "^5.11.0",
     "@mui/lab": "^5.0.0-alpha.70",
-    "@mui/material": "^5.10.12",
+    "@mui/material": "^5.11.4",
+    "@mui/styled-engine-sc": "^5.11.0",
     "@popperjs/core": "^2.11.2",
     "apexcharts-clevision": "3.28.5",
     "axios": "^0.27.2",
@@ -72,7 +73,8 @@
     "react-hook-form": "^7.34.2",
     "react-hot-toast": "^2.3.0",
     "react-perfect-scrollbar": "^1.5.8",
-    "react-popper": "^2.2.5"
+    "react-popper": "^2.2.5",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

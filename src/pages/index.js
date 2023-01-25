@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import Grid from '@mui/material/Grid'
 
 // ** Icons Imports
@@ -30,9 +30,42 @@ import StatisticChart from 'src/views/dashboard/StatisticsChart'
 import TableDoctorTask from 'src/views/dashboard/TableDoctorTask'
 import Greeting from 'src/views/dashboard/Greeting'
 import apiConfig from 'src/configs/apiConfig'
+import CardHorizontalRatings from 'src/views/cards/CardHorizontalRatings'
+import CardAppleWatch from 'src/views/cards/CardAppleWatch'
+import CardFacebook from 'src/views/cards/CardFacebook'
+import CardInfluencer from 'src/views/cards/CardInfluencer'
+import CardMembership from 'src/views/cards/CardMembership'
+import CardMobile from 'src/views/cards/CardMobile'
+import CardSupport from 'src/views/cards/CardSupport'
+import CardTwitter from 'src/views/cards/CardTwitter'
+import CardUser from 'src/views/cards/CardUser'
+import CardVerticalRatings from 'src/views/cards/CardVerticalRatings'
+import CardNavigation from 'src/views/cards/CardNavigation'
+import CardMember from 'src/views/cards/CardMember'
+import CardActiveLoan from 'src/views/cards/CardActiveLoan'
+import CardFollowUpLoan from 'src/views/cards/CardFollowUpLoan'
+import CardTotalMoney from 'src/views/cards/CardTotalMoney'
+import CardTotalLoan from 'src/views/cards/CardTotalLoan'
+import CardQueueLoan from 'src/views/cards/CardQueueLoan'
+import CardNews from 'src/views/cards/CardNews'
+import TableMember from 'src/views/tables/TableMember'
+
+export const DataContext = createContext()
 
 const Dashboard = () => {
   const [err, setError] = useState()
+  const [members, setMembers] = useState({ blogs: [] })
+
+  const fetchMembers = async () => {
+    let uri = apiConfig.baseURL + `/members`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      setMembers({ blogs: data })
+    } catch (error) {
+      // console.log(error)
+    }
+  }
 
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
@@ -62,6 +95,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     verifyToken()
+    fetchMembers()
   }, [])
 
   return (
@@ -80,19 +114,41 @@ const Dashboard = () => {
         <Grid item xs={12} md={4}>
           <Greeting />
         </Grid>
-        <Grid item xs={12} md={8}>
-          <StatisticChart />
+        <Grid item xs={12} md={12} lg={8}>
+          <Grid container spacing={6}>
+            <Grid item xs={6}>
+            <CardTotalMoney />
+            </Grid>
+            <Grid item xs={6}>
+            <CardTotalLoan />
+            </Grid>
+            <Grid item xs={6}>
+            <CardMember />
+            </Grid>
+            <Grid item xs={6}>
+            <CardActiveLoan />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardFollowUpLoan />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardQueueLoan />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardNews />
         </Grid>
         {/* <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <TotalEarning />
-        </Grid> */}
+        </Grid>
         <Grid item xs={12} md={4} lg={4}>
           <ChartChangeLogs />
-        </Grid>
-        <Grid item xs={12} md={8} lg={8}>
+        </Grid> */}
+        {/* <Grid item xs={12} md={8} lg={8}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
               <TableChartWard />
@@ -100,7 +156,7 @@ const Dashboard = () => {
             <Grid item xs={6}>
               <TableDashboardDischargeType />
             </Grid>
-            {/* <Grid item xs={6}>
+            <Grid item xs={6}>
               <CardStatisticsVerticalComponent
                 stats='15'
                 color='warning'
@@ -110,12 +166,14 @@ const Dashboard = () => {
                 title='Sales Queries'
                 icon={<HelpCircleOutline />}
               />
-            </Grid> */}
+            </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
+        <DataContext.Provider value={members}>
         <Grid item xs={12}>
-          <TableDoctorTask />
+          {/* <TableMember /> */}
         </Grid>
+      </DataContext.Provider>
       </Grid>
     </ApexChartWrapper>
   )
