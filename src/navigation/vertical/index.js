@@ -35,46 +35,46 @@ const navigation = () => {
       icon: Profile,
       path: '/member'
     },
-    {
-      title: 'ส่งสรุปชาร์ต',
-      icon: Login,
-      path: '/summary-chart'
-    },
-    {
-      title: 'รับคืนสรุปชาร์ต',
-      icon: BarcodeScan,
-      path: '/return-chart'
-    },
-    {
-      title: 'ส่ง-รับคืนสรุปชาร์ต',
-      icon: BarcodeScan,
-      path: '/summary-return-chart'
-    },
-    {
-      title: 'รับคืนออดิตชาร์ต',
-      icon: BarcodeScan,
-      path: '/audit-chart'
-    },
-    {
-      title: 'ส่งรีออดิตชาร์ต',
-      icon: BarcodeScan,
-      path: '/reaudit-chart'
-    },
-    {
-      title: 'ส่งงาน eclaim',
-      icon: Login,
-      path: '/submit-eclaim'
-    },
-    {
-      title: 'รับคืนงาน eclaim',
-      icon: BarcodeScan,
-      path: '/return-eclaim'
-    },
-    {
-      title: 'จัดเก็บชาร์ต',
-      icon: BarcodeScan,
-      path: '/stock-folder'
-    },
+    // {
+    //   title: 'ส่งสรุปชาร์ต',
+    //   icon: Login,
+    //   path: '/summary-chart'
+    // },
+    // {
+    //   title: 'รับคืนสรุปชาร์ต',
+    //   icon: BarcodeScan,
+    //   path: '/return-chart'
+    // },
+    // {
+    //   title: 'ส่ง-รับคืนสรุปชาร์ต',
+    //   icon: BarcodeScan,
+    //   path: '/summary-return-chart'
+    // },
+    // {
+    //   title: 'รับคืนออดิตชาร์ต',
+    //   icon: BarcodeScan,
+    //   path: '/audit-chart'
+    // },
+    // {
+    //   title: 'ส่งรีออดิตชาร์ต',
+    //   icon: BarcodeScan,
+    //   path: '/reaudit-chart'
+    // },
+    // {
+    //   title: 'ส่งงาน eclaim',
+    //   icon: Login,
+    //   path: '/submit-eclaim'
+    // },
+    // {
+    //   title: 'รับคืนงาน eclaim',
+    //   icon: BarcodeScan,
+    //   path: '/return-eclaim'
+    // },
+    // {
+    //   title: 'จัดเก็บชาร์ต',
+    //   icon: BarcodeScan,
+    //   path: '/stock-folder'
+    // },
 
     // {
     //   title: 'Login',
@@ -107,21 +107,21 @@ const navigation = () => {
       icon: FileDocumentMultipleOutline,
       path: '/report-chart-status'
     },
-    {
-      title: 'รายงานความทันเวลา',
-      icon: FileDocumentMultipleOutline,
-      path: '/report-chart-due'
-    },
-    {
-      title: 'รายงานความสมบูรณ์',
-      icon: FileDocumentMultipleOutline,
-      path: '/report-chart-complete'
-    },
-    {
-      title: 'รายงานสรุป',
-      icon: ChartLine,
-      path: '/report-summary'
-    }
+    // {
+    //   title: 'รายงานความทันเวลา',
+    //   icon: FileDocumentMultipleOutline,
+    //   path: '/report-chart-due'
+    // },
+    // {
+    //   title: 'รายงานความสมบูรณ์',
+    //   icon: FileDocumentMultipleOutline,
+    //   path: '/report-chart-complete'
+    // },
+    // {
+    //   title: 'รายงานสรุป',
+    //   icon: ChartLine,
+    //   path: '/report-summary'
+    // }
     // {
     //   title: 'Icons',
     //   path: '/icons',
