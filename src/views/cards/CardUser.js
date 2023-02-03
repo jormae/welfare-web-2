@@ -1,4 +1,5 @@
 // ** MUI Imports
+import React, { useContext } from 'react'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
@@ -7,8 +8,14 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import AvatarGroup from '@mui/material/AvatarGroup'
+import Link from 'next/link'
+
+import { MemberContext } from 'src/pages/member/[nationalId]'
 
 const CardUser = () => {
+
+  const memberDetail = useContext(MemberContext)
+
   return (
     <Card sx={{ position: 'relative' }}>
       <CardMedia sx={{ height: '12.625rem' }} image='/images/cards/background-user.png' />
@@ -37,8 +44,8 @@ const CardUser = () => {
           }}
         >
           <Box sx={{ ml:23, mt:5, display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center',justifyContent: 'space-between', }}>
-            <Typography variant='h6' align='center'>Robert Meyer</Typography>
-            <Typography variant='caption'>London, UK</Typography>
+            <Typography variant='h6' align='center' sx={{ color: 'primary.main' }}>{memberDetail?.memberName}</Typography>
+            <Typography variant='caption' sx={{ color: 'primary.main' }}>{memberDetail?.memberTypeName}</Typography>
           </Box>
         </Box>
         <Box
@@ -51,7 +58,9 @@ const CardUser = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Button variant='outlined'>ชำระเงินกู้</Button>
+          <Link href={`../loan-payment/${memberDetail.nationalId}`} color='primary'>
+            <Button variant='outlined'>ชำระเงินกู้</Button>
+          </Link>
           <Button variant='outlined'>ฝากหุ้น</Button>
           <Button variant='outlined'>ถอนหุ้น</Button>
           {/* <Button variant='contained'>ใบคำร้อง</Button> */}

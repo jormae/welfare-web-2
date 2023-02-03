@@ -49,15 +49,15 @@ const TableMemberLoanHistory = () => {
                     {moment(row.approveAt).add(543,'year').format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align='center'>{row.loanTypeName}</TableCell>
-                  <TableCell align='center'>{row.loanDuration}</TableCell>
-                  <TableCell align='center'>{moment(row.startLoanDate).add(543, 'year').format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align='center'>{moment(row.endLoanDate).add(543,'year').format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align='center'>{row.loanDuration ?? '-'}</TableCell>
+                  <TableCell align='center'>{row.startLoanDate ? moment(row.startLoanDate).add(543, 'year').format('DD/MM/YYYY') : '-'}</TableCell>
+                  <TableCell align='center'>{row.endLoanDate ? moment(row.endLoanDate).add(543,'year').format('DD/MM/YYYY') : '-'}</TableCell>
                   <TableCell align='center'>{row.loanAmount}</TableCell>
-                  <TableCell align='center' color='success'>{row.totalPayment ?? 0}</TableCell>
-                  <TableCell align='center' color='danger'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
-                  <TableCell align='center'>{row.loanStatusName}</TableCell>
+                  <TableCell align='center' color='primary'>{row.totalPayment ?? 0}</TableCell>
+                  <TableCell align='center' color='primary'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
+                  <TableCell align='center'>{row.loanStatusName ?? 'รออนุมัติ'}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='success'>
+                    <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
                         <Button type='button' variant='outlined'>
                             เปิด
                         </Button>

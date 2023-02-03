@@ -49,6 +49,7 @@ import CardTotalLoan from 'src/views/cards/CardTotalLoan'
 import CardQueueLoan from 'src/views/cards/CardQueueLoan'
 import CardNews from 'src/views/cards/CardNews'
 import TableMember from 'src/views/tables/TableMember'
+import TableLoanRequest from 'src/views/tables/TableLoanRequest'
 
 export const DataContext = createContext()
 
@@ -169,11 +170,9 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid> */}
-        <DataContext.Provider value={members}>
         <Grid item xs={12}>
-          {/* <TableMember /> */}
+          <TableLoanRequest />
         </Grid>
-      </DataContext.Provider>
       </Grid>
     </ApexChartWrapper>
   )

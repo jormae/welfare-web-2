@@ -47,7 +47,7 @@ const TableMemberLoanRecordHistory = () => {
                   <TableCell align='center'>{row.paymentTypeName}</TableCell>
                   <TableCell align='center'>{row.paymentAmount}</TableCell>
                   <TableCell align='center'></TableCell>
-                  <TableCell align='center'>{row.approvedBy ?? รออนุมัติ}</TableCell>
+                  <TableCell align='center'>{row.approvedBy ?? 'รออนุมัติ'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

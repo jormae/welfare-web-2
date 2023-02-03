@@ -211,6 +211,20 @@ const FormLayouts = () => {
     }
   }, [router.isReady, router.query])
 
+  const SkeletonMemberCardLoading = () => (
+    <Box sx={{ width: '100%' }}>
+          {memberDetail.nationalId ? (
+            <MemberContext.Provider value={memberDetail}>
+              <CardUser />
+            </MemberContext.Provider>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+    </Box>
+  )
+
   const SkeletonMemberFormsLoading = () => (
     <Box sx={{ width: '100%' }}>
       <TabContext value={value}>
@@ -221,7 +235,7 @@ const FormLayouts = () => {
             <Tab label='ประวัติหุ้น' value='investment2' />
           </TabList>
         </Box>
-        <TabPanel value='member'>
+      <TabPanel value='member'>
           {memberDetail.nationalId ? (
             <MemberContext.Provider value={memberDetail}>
               <PositionsContext.Provider value={position}>
@@ -324,7 +338,7 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={4}>
-        <CardUser />
+        <SkeletonMemberCardLoading />
       </Grid>
       <Grid item xs={8}>
         <SkeletonMemberFormsLoading />
