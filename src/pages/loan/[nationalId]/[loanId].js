@@ -18,6 +18,7 @@ import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestment
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
 import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanRecordHistory'
+import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 
 const defaultData = {
   ptName: 'Loading',
@@ -37,7 +38,7 @@ export const MemberContext = createContext()
 
 export const LoanRecordHistoryContext = createContext()
 
-export const SpouseContext = createContext()
+export const LoanContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
@@ -46,6 +47,10 @@ const FormLayouts = () => {
   }
   const [memberDetail, setMemberDetail] = useState(defaultData)
   const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
+  const [loanDetail, setLoanDetail] = useState()
+  // const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
+  
+  // console.log(loanDetail)
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
@@ -78,13 +83,37 @@ const FormLayouts = () => {
     }
   }
 
+  const fetchLoanDetail = () => {
+    let uri = apiConfig.baseURL + `/loans/request/${router.query.nationalId}`
+    console.log(uri)
+    axios
+      .get(uri)
+      .then(result => setLoanDetail(result.data[0]))
+      .catch(error => console.log('An error occurred' + error))
+  }
+
   useEffect(() => {
     if (router.isReady) {
       router.query
       fetchMemberDetail()
       fetchMemberLoansHistories()
+      fetchLoanDetail()
     }
   }, [router.isReady, router.query])
+
+  const SkeletonMemberLoanFormLoading = () => (
+    <Box sx={{ width: '100%' }}>
+      {memberDetail.nationalId ? (
+        <LoanContext.Provider value={loanDetail}>
+          <FormLoanDetail />
+        </LoanContext.Provider>
+      ) : (
+        <Typography variant='h4'>
+          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+        </Typography>
+      )}
+    </Box>
+  )
 
   const SkeletonMemberLoanLoading = () => (
     <Box sx={{ width: '100%' }}>
@@ -106,6 +135,9 @@ const FormLayouts = () => {
         <CardUser />
       </Grid>
       <Grid item xs={8}>
+        <SkeletonMemberLoanFormLoading />
+      </Grid>
+      <Grid item xs={12}>
         <SkeletonMemberLoanLoading />
       </Grid>
     </Grid>

@@ -58,7 +58,7 @@ const CardUser = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Link href={`../loan-payment/${memberDetail.nationalId}`} color='primary'>
+          <Link href={`../loan-payment/${memberDetail?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link>
           <Button variant='outlined'>ฝากหุ้น</Button>

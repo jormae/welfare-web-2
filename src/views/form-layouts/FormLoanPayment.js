@@ -41,6 +41,7 @@ const FormLoanPayment = () => {
   const [paymentTypes, setPaymentTypes] = useState([])
   const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
 //   const loanPaymentMonth = moment(paymentSuggestionInfo?.loanPaymentMonth).format('DD/MM/YYYY')
+console.log(paymentSuggestionInfo?.loanId)
 
   const fetchPaymentTypes = async () => {
     let uri = apiConfig.baseURL + `/utils/payment-types`
@@ -97,20 +98,34 @@ const FormLoanPayment = () => {
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={6}>
-            {paymentSuggestionInfo?.nationalId ? (
-              <TextField fullWidth defaultValue={paymentSuggestionInfo?.nationalId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
+                {paymentSuggestionInfo?.loanId ? (
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanId} label='รหัสสวัสดิการ' {...register('loanId')} />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
             </Grid>
             <Grid item xs={6}>
-            {paymentSuggestionInfo?.memberName ? (
-                <TextField fullWidth defaultValue={paymentSuggestionInfo?.memberName} label='ชื่อสมาชิก' />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
-              <input type='hidden' {...register('loanId')} value={paymentSuggestionInfo?.loanId} />
+                {paymentSuggestionInfo?.refId ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.refId} label='เลขที่สัญญา' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+              
             </Grid>
+            <Grid item xs={6}>
+                {paymentSuggestionInfo?.nationalId ? (
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.nationalId} label='เลขประจำตัวประชาชน'  />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={6}>
+                {paymentSuggestionInfo?.memberName ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.memberName} label='ชื่อสมาชิก' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+                </Grid>
             <Grid item xs={6}>
                 {paymentSuggestionInfo?.monthNo ? (
                     <TextField fullWidth defaultValue={paymentSuggestionInfo?.monthNo} label='งวดที่' {...register('monthNo')}/>

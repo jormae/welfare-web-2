@@ -69,7 +69,7 @@ const TableLoanRequest = () => {
                   <TableCell align='center' color='success'>{row.loanTypeName}</TableCell>
                   <TableCell align='center' color='success'>{row.loanAmount}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`loan-form/${row.loanId}`} color='success'>
+                    <Link href={`loan/${row.nationalId}/${row.loanId}`} color='success'>
                       <Button type='button' variant='outlined'>
                         รายละเอียด
                       </Button>
