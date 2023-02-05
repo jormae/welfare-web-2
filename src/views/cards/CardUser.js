@@ -61,7 +61,9 @@ const CardUser = () => {
           <Link href={`../loan-payment/${memberDetail?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link>
-          <Button variant='outlined'>ฝากหุ้น</Button>
+          <Link href={`../investment-payment/${memberDetail?.nationalId}`} color='primary'>
+            <Button variant='outlined'>ฝากหุ้น</Button>
+          </Link>
           <Button variant='outlined'>ถอนหุ้น</Button>
           {/* <Button variant='contained'>ใบคำร้อง</Button> */}
         </Box>

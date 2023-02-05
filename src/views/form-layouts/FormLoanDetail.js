@@ -41,26 +41,26 @@ const FormLoanDetail = () => {
     console.log(data)
     let uri = apiConfig.baseURL + `/loans/${data.loanId}`
     console.log(uri)
-    // fetch(uri, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(data)
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     setLoading(false)
-    //     if (data.status == 'success') {
-    //       toast.success(data.message)
-    //     } else {
-    //       toast.error(data.message || data.errors[0].msg)
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.log(JSON.stringify(error))
-    //   })
+    fetch(uri, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setLoading(false)
+        if (data.status == 'success') {
+          toast.success(data.message)
+        } else {
+          toast.error(data.message || data.errors[0].msg)
+        }
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      })
   }
 
   return (
