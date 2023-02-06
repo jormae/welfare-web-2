@@ -39,7 +39,7 @@ const defaultData = {
 
 export const MemberContext = createContext()
 
-export const MemberInvestmentHistoryContext = createContext()
+export const InvesmentPaymentHistoryContext = createContext()
 
 const FormLayouts = () => {
   const router = useRouter()
@@ -52,8 +52,8 @@ const FormLayouts = () => {
   // const [loanDetail, setLoanDetail] = useState()
   // const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
 
-  const fetchMemberDetail = () => {
-    let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
+  const fetchMemberInvestmentDetail = () => {
+    let uri = apiConfig.baseURL + `/investments/summary/${router.query.nationalId}`
     console.log(uri)
 
     axios
@@ -76,10 +76,10 @@ const FormLayouts = () => {
   useEffect(() => {
     if (router.isReady) {
       router.query
-      fetchMemberDetail()
+      fetchMemberInvestmentDetail()
       fetchInvestmentsHistories()
     }
-  }, [router.isReady, router.query])
+  }, [router.isReady, router.query, ])
 
   const SkeletonMemberCardLoading = () => (
     <Box sx={{ width: '100%' }}>
@@ -111,9 +111,9 @@ const FormLayouts = () => {
   const SkeletonInvestmentHistoryLoading = () => (
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
-        <MemberInvestmentHistoryContext.Provider value={memberInvestmentHistories}>
+        <InvesmentPaymentHistoryContext.Provider value={memberInvestmentHistories}>
           <TableMemberInvestmentHistory />
-        </MemberInvestmentHistoryContext.Provider>
+        </InvesmentPaymentHistoryContext.Provider>
       ) : (
         <Typography variant='h4'>
           <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -131,7 +131,7 @@ const FormLayouts = () => {
         <SkeletonInvestmentPaymentFormLoading />
       </Grid>
       <Grid item xs={12}>
-        {/* <SkeletonInvestmentHistoryLoading /> */}
+        <SkeletonInvestmentHistoryLoading />
       </Grid>
     </Grid>
   )

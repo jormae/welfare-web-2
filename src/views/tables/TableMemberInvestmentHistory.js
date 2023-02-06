@@ -16,9 +16,15 @@ import Link from 'next/link'
 import moment from 'moment'
 
 import { InvesmentHistoryContext } from 'src/pages/member/[nationalId]'
+import { InvesmentPaymentHistoryContext } from 'src/pages/investment-payment/[nationalId]'
 
 const TableMemberInvestmentHistory = () => {
+
   const memberInvestmentHostories = useContext(InvesmentHistoryContext)
+  
+  const invesmentPaymentHistoryContext = useContext(InvesmentPaymentHistoryContext)
+
+  const records = invesmentPaymentHistoryContext ?? memberInvestmentHostories
 
   return (
     <Card>
@@ -37,7 +43,7 @@ const TableMemberInvestmentHistory = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {memberInvestmentHostories.blogs.map(row => (
+              {records.blogs.map(row => (
                 <TableRow key={row.investmentId}>
                   <TableCell align='center' component='th' scope='row'>
                     {moment(row.investmentDateTime).add(543,'year').format('DD/MM/YYYY HH:mm:ss')}

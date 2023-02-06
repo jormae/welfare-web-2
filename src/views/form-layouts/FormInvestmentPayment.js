@@ -112,6 +112,20 @@ const FormInvestmentPayment = () => {
                 )}
             </Grid>
             <Grid item xs={6}>
+                {memberDetail?.nationalId ? (
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShareQuantity} label='ยอดหุ้นทั้งหมด' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={6}>
+                {memberDetail?.nationalId ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShare} label='ยอดเงินลงทุนทั้งหมด' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={6}>
                     <FormControl fullWidth>
                         <InputLabel>ประเภทธุรกรรม</InputLabel>
                         <Select label='ประเภทธุรกรรม' defaultValue="1" {...register('investmentTypeId', { required: true })}>
@@ -154,7 +168,7 @@ const FormInvestmentPayment = () => {
                   variant='contained'
                   size='large'
                 >
-                  บันทึกการชำระเงิน
+                  บันทึก
                 </LoadingButton>
               </Box>
             </Grid>
