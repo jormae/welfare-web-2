@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -10,10 +11,31 @@ import CardContent from '@mui/material/CardContent'
 import Icon from '@mdi/react'
 import { mdiAccount } from '@mdi/js'
 import { mdiFileSend } from '@mdi/js'
+import axios from 'axios'
+import apiConfig from 'src/configs/apiConfig'
 
 const CardTotalMoney = () => {
+  const [totalShare, setTotalShare] = useState(0)
+  console.log(totalShare)
+
+  const fetchTotalShare = async () => {
+    let uri = apiConfig.baseURL + `/dashboard/totalShare`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data[0].totalShare)
+      setTotalShare(data[0].totalShare)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchTotalShare()
+  }, [])
+
   return (
-    <Card sx={{pt:5}} direction="column">
+    <Card sx={{ pt: 5 }} direction='column'>
       <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
         <Grid container spacing={[5, 0]}>
           <Grid item xs={12} sm={6}>
@@ -31,14 +53,16 @@ const CardTotalMoney = () => {
               >
                 <Icon path={mdiAccount} title='User Profile' size={2} />
               </Avatar>
-              <Box sx={{ display: 'flex', flexDirection: 'column', width:30 }}>
-                <Typography variant='h6' sx={{width:300}}>ยอดเงินทั้งหมด</Typography>
-                <Typography variant='h6'>8000000</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
+                <Typography variant='h6' sx={{ width: 300 }}>
+                  ยอดเงินทั้งหมด
+                </Typography>
+                <Typography variant='h6'>{totalShare}</Typography>
               </Box>
             </Box>
           </Grid>
         </Grid>
-        </CardContent>
+      </CardContent>
     </Card>
   )
 }

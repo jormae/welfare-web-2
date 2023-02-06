@@ -118,16 +118,16 @@ const Dashboard = () => {
         <Grid item xs={12} md={12} lg={8}>
           <Grid container spacing={6}>
             <Grid item xs={6}>
-            <CardTotalMoney />
+              <CardTotalMoney />
             </Grid>
             <Grid item xs={6}>
-            <CardTotalLoan />
+              <CardTotalLoan />
             </Grid>
             <Grid item xs={6}>
-            <CardMember />
+              <CardMember />
             </Grid>
             <Grid item xs={6}>
-            <CardActiveLoan />
+              <CardActiveLoan />
             </Grid>
           </Grid>
         </Grid>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -10,10 +11,30 @@ import CardContent from '@mui/material/CardContent'
 import Icon from '@mdi/react'
 import { mdiAccount } from '@mdi/js'
 import { mdiFileSend } from '@mdi/js'
+import axios from 'axios'
+import apiConfig from 'src/configs/apiConfig'
 
 const CardMember = () => {
+  const [totalMember, setTotalMember] = useState(0)
+  console.log(totalMember)
+
+  const fetchTotalMember = async () => {
+    let uri = apiConfig.baseURL + `/dashboard/totalMember`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data[0].totalMember)
+      setTotalMember(data[0].totalMember)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchTotalMember()
+  }, [])
   return (
-    <Card sx={{pt:5}} direction="column">
+    <Card sx={{ pt: 5 }} direction='column'>
       <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
         <Grid container spacing={[5, 0]}>
           <Grid item xs={12} sm={6}>
@@ -31,14 +52,16 @@ const CardMember = () => {
               >
                 <Icon path={mdiAccount} title='User Profile' size={2} />
               </Avatar>
-              <Box sx={{ display: 'flex', flexDirection: 'column', width:30 }}>
-                <Typography variant='h6' sx={{width:300}}>สมาชิกทั้งหมด</Typography>
-                <Typography variant='h6'>300</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
+                <Typography variant='h6' sx={{ width: 300 }}>
+                  สมาชิกทั้งหมด
+                </Typography>
+                <Typography variant='h6'>{totalMember}</Typography>
               </Box>
             </Box>
           </Grid>
         </Grid>
-        </CardContent>
+      </CardContent>
     </Card>
   )
 }
