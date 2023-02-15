@@ -30,74 +30,32 @@ import {
   MemberRolesContext,
   PaymentTypesContext,
   MemberStatusContext
-} from 'src/pages/member/[nationalId]'
+} from 'src/pages/member-form'
 
-const FormMemberDetail = () => {
-  const memberDetail = useContext(MemberContext)
+const FormMember = () => {
 
-  const positions = useContext(PositionsContext)
+    const positions = useContext(PositionsContext)
 
-  const memberTypes = useContext(MemberTypesContext)
-
-  const memberRoles = useContext(MemberRolesContext)
-
-  const paymentTypes = useContext(PaymentTypesContext)
-
-  const memberStatus = useContext(MemberStatusContext)
+    const memberTypes = useContext(MemberTypesContext)
+  
+    const memberRoles = useContext(MemberRolesContext)
+  
+    const paymentTypes = useContext(PaymentTypesContext)
+  
+    const memberStatus = useContext(MemberStatusContext)
 
   const { register, handleSubmit, reset } = useForm()
   const [loading, setLoading] = React.useState(false)
 
-  const nationalId = memberDetail?.nationalId
-  const memberName = memberDetail?.memberName
-  const villageNo = memberDetail?.villageNo
-  const subDistrict = memberDetail?.subDistrict
-  const district = memberDetail?.district
-  const province = memberDetail?.province
-  const houseNo = memberDetail?.houseNo
-  const postCode = memberDetail?.postCode
-  const contactNo = memberDetail?.contactNo
-  const positionId = memberDetail?.positionId
-  const memberTypeId = memberDetail?.memberTypeId
-  const memberRoleId = memberDetail?.memberRoleId
-  const paymentTypeId = memberDetail?.paymentTypeId
-  const memberStatusId = memberDetail?.memberStatusId
-  //   const updatedBy = typeof window !== 'undefined' ? localStorage?.getItem('staffName') : 'system'
-
-  useEffect(() => {
-    if (memberDetail) {
-      reset({
-        nationalId: memberDetail?.nationalId,
-        memberName: memberDetail?.memberName,
-        salary: memberDetail?.salary,
-        houseNo: memberDetail?.houseNo,
-        streetName: memberDetail?.streetName,
-        villageName: memberDetail?.villageName,
-        villageNo: memberDetail?.villageNo,
-        subDistrict: memberDetail?.subDistrict,
-        district: memberDetail?.district,
-        province: memberDetail?.province,
-        postCode: memberDetail?.postCode,
-        contactNo: memberDetail?.contactNo,
-        positionId: memberDetail?.positionId,
-        memberTypeId: memberDetail?.memberTypeId,
-        memberRoleId: memberDetail?.memberRoleId,
-        paymentTypeId: memberDetail?.paymentTypeId,
-        memberStatusId: memberDetail?.memberStatusId
-      })
-    }
-  }, [])
-
   const onSubmit = data => {
     setLoading(true)
     console.log(data)
-    let memberId = memberDetail?.nationalId
-    console.log(memberId)
 
-    let uri = apiConfig.baseURL + `/members/${nationalId}`
+    let uri = apiConfig.baseURL + `/members`
+    console.log(uri)
 
     fetch(uri, {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -126,19 +84,10 @@ const FormMemberDetail = () => {
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={3}>
-              {memberDetail.nationalId ? (
-                <TextField fullWidth label='เลขที่บัตรประชาชน' {...register('nationalId')} />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
+              <TextField fullWidth label='เลขที่บัตรประชาชน' {...register('nationalId')} />
             </Grid>
             <Grid item xs={3}>
-              {memberDetail.memberName ? (
-                <TextField fullWidth label='ชื่อสมาชิก' {...register('memberName')} />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
-              {/* <input type='hidden' {...register('updatedBy')} value={updatedBy} /> */}
+              <TextField fullWidth label='ชื่อสมาชิก' {...register('memberName')} />
             </Grid>
             <Grid item xs={3}>
               <TextField fullWidth label='เงินเดือน' type='number' {...register('salary')} />
@@ -146,7 +95,7 @@ const FormMemberDetail = () => {
             <Grid item xs={3}>
               <FormControl fullWidth>
                 <InputLabel>ตำแหน่ง</InputLabel>
-                <Select label='ตำแหน่ง' defaultValue={positionId ?? ''} {...register('positionId', { required: true })}>
+                <Select label='ตำแหน่ง' {...register('positionId', { required: true })}>
                   {positions.map(item => {
                     return (
                       <MenuItem key={item.positionId} value={item.positionId}>
@@ -162,7 +111,6 @@ const FormMemberDetail = () => {
                 <InputLabel>ประเภทสมาชิก</InputLabel>
                 <Select
                   label='ประเภทสมาชิก'
-                  defaultValue={memberTypeId ?? ''}
                   {...register('memberTypeId', { required: true })}
                 >
                   {memberTypes.map(item => {
@@ -180,7 +128,6 @@ const FormMemberDetail = () => {
                 <InputLabel>ประเภทการชำระเงิน</InputLabel>
                 <Select
                   label='ประเภทการชำระเงิน'
-                  defaultValue={paymentTypeId ?? ''}
                   {...register('paymentTypeId', { required: true })}
                 >
                   {paymentTypes.map(item => {
@@ -198,7 +145,6 @@ const FormMemberDetail = () => {
                 <InputLabel>ประเภทบัญชีผู้ใช้</InputLabel>
                 <Select
                   label='ประเภทบัญชีผู้ใช้'
-                  defaultValue={memberRoleId ?? ''}
                   {...register('memberRoleId', { required: true })}
                 >
                   {memberRoles.map(item => {
@@ -216,7 +162,6 @@ const FormMemberDetail = () => {
                 <InputLabel>สถานะสมาชิก</InputLabel>
                 <Select
                   label='สถานะสมาชิก'
-                  defaultValue={memberStatusId ?? ''}
                   {...register('memberStatusId', { required: true })}
                 >
                   {memberStatus.map(item => {
@@ -295,4 +240,4 @@ const FormMemberDetail = () => {
   )
 }
 
-export default FormMemberDetail
+export default FormMember
