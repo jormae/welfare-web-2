@@ -11,10 +11,15 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Link from 'next/link'
 
 import { MemberContext } from 'src/pages/member/[nationalId]'
+import { LoanMemberContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
 const CardUser = () => {
 
-  const memberDetail = useContext(MemberContext)
+  const memberDetail = useContext(MemberContext) 
+  const loanMemberDetail = useContext(LoanMemberContext) 
+  // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  const user = typeof memberDetail !== 'undefined' ? memberDetail : loanMemberDetail
+  // console.log('memberDetail = '+memberDetail)
 
   return (
     <Card sx={{ position: 'relative' }}>
@@ -44,8 +49,8 @@ const CardUser = () => {
           }}
         >
           <Box sx={{ ml:23, mt:5, display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center',justifyContent: 'space-between', }}>
-            <Typography variant='h6' align='center' sx={{ color: 'primary.main' }}>{memberDetail?.memberName}</Typography>
-            <Typography variant='caption' sx={{ color: 'primary.main' }}>{memberDetail?.memberTypeName}</Typography>
+            <Typography variant='h6' align='center' sx={{ color: 'primary.main' }}>{user?.memberName}</Typography>
+            <Typography variant='caption' sx={{ color: 'primary.main' }}>{user?.memberTypeName}</Typography>
           </Box>
         </Box>
         <Box
@@ -58,13 +63,15 @@ const CardUser = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Link href={`../loan-payment/${memberDetail?.nationalId}`} color='primary'>
+          <Link href={`../../loan-payment/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link>
-          <Link href={`../investment-payment/${memberDetail?.nationalId}`} color='primary'>
-            <Button variant='outlined'>ฝากหุ้น</Button>
+          <Link href={`../../investment-payment/${user?.nationalId}`} color='primary'>
+            <Button variant='outlined'>ฝาก-ถอนหุ้น</Button>
           </Link>
-          <Button variant='outlined'>ถอนหุ้น</Button>
+          <Link href={`../../loan-form/`} color='primary'>
+            <Button variant='outlined'>ใบคำร้อง</Button>
+          </Link>
           {/* <Button variant='contained'>ใบคำร้อง</Button> */}
         </Box>
         <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>

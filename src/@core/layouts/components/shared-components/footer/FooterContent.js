@@ -11,37 +11,28 @@ const FooterContent = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
       <Typography sx={{ mr: 2 }}>
-        {`© ${new Date().getFullYear()}, Made with `}
-        <Box component='span' sx={{ color: 'error.main' }}>
+        {`© ${new Date().getFullYear()}, developed `}
+        {/* <Box component='span' sx={{ color: 'error.main' }}>
           ❤️
-        </Box>
+        </Box> */}
         {` by `}
-        <Link target='_blank' href='https://themeselection.com/'>
-          ThemeSelection
+        <Link target='_blank' href='https://maheedeen.com/'>
+          maheedeen.com
         </Link>
       </Typography>
       {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
           <Link
             target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/LICENSE'
+            href='#'
           >
-            MIT License
-          </Link>
-          <Link target='_blank' href='https://themeselection.com/'>
-            More Themes
+            คู่มือ
           </Link>
           <Link
             target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/blob/main/README.md'
+            href='https://facebook.com/jormae'
           >
-            Documentation
-          </Link>
-          <Link
-            target='_blank'
-            href='https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free/issues'
-          >
-            Support
+            ติดต่อผู้พัฒนา
           </Link>
         </Box>
       )}

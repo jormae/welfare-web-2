@@ -22,6 +22,7 @@ import LogoutVariant from 'mdi-material-ui/LogoutVariant'
 import AccountOutline from 'mdi-material-ui/AccountOutline'
 import MessageOutline from 'mdi-material-ui/MessageOutline'
 import HelpCircleOutline from 'mdi-material-ui/HelpCircleOutline'
+import HomeOutline from 'mdi-material-ui/HomeOutline'
 
 // ** Styled Components
 const BadgeContentSpan = styled('span')(({ theme }) => ({
@@ -50,6 +51,19 @@ const UserDropdown = () => {
     setAnchorEl(null)
   }
 
+  const handleDropdownCloseAndLogout = url => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('memberRoleId');
+    localStorage.removeItem('memberRoleName');
+    localStorage.removeItem('memberName');
+    localStorage.removeItem('username');
+
+    if (url) {
+      router.push(url)
+    }
+    setAnchorEl(null)
+  }
+
   const styles = {
     py: 2,
     px: 4,
@@ -63,6 +77,10 @@ const UserDropdown = () => {
       color: 'text.secondary'
     }
   }
+
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
+  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const memberRoleName = typeof window !== 'undefined' ? localStorage.getItem('memberRoleName') : null
 
   return (
     <Fragment>
@@ -98,18 +116,24 @@ const UserDropdown = () => {
               <Avatar alt='John Doe' src='/images/avatars/1.png' sx={{ width: '2.5rem', height: '2.5rem' }} />
             </Badge>
             <Box sx={{ display: 'flex', marginLeft: 3, alignItems: 'flex-start', flexDirection: 'column' }}>
-              <Typography sx={{ fontWeight: 600 }}>John Doe</Typography>
+              <Typography sx={{ fontWeight: 600 }}>{memberName}</Typography>
               <Typography variant='body2' sx={{ fontSize: '0.8rem', color: 'text.disabled' }}>
-                Admin
+                {memberRoleName}
               </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/`)}>
+          <Box sx={styles}>
+            <HomeOutline sx={{ marginRight: 2 }} />
+            Dashboard
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/member/${username}`)}>
           <Box sx={styles}>
             <AccountOutline sx={{ marginRight: 2 }} />
-            Profile
+            ข้อมูลของฉัน
           </Box>
         </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose('/loan-form')}>
@@ -118,7 +142,7 @@ const UserDropdown = () => {
             คำร้องขอสวัสดิการ
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <MessageOutline sx={{ marginRight: 2 }} />
             Chat
@@ -142,12 +166,16 @@ const UserDropdown = () => {
             <HelpCircleOutline sx={{ marginRight: 2 }} />
             FAQ
           </Box>
-        </MenuItem>
+        </MenuItem> */}
         <Divider />
-        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownClose('/pages/login')}>
+        <MenuItem sx={{ py: 2 }} onClick={() => handleDropdownCloseAndLogout('/pages/login')}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
           Logout
         </MenuItem>
+        {/* <MenuItem sx={{ py: 2 }} onClickCapture={logout}>
+          <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
+          Logout
+        </MenuItem> */}
       </Menu>
     </Fragment>
   )

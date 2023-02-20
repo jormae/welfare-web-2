@@ -4,15 +4,14 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import Avatar from '@mui/material/Avatar'
-import CardHeader from '@mui/material/CardHeader'
-import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Icon from '@mdi/react'
 import { mdiAccount } from '@mdi/js'
-import { mdiFileSend } from '@mdi/js'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
+import Link from 'next/link'
+import { CardActionArea } from '@mui/material';
 
 const CardQueueLoan = () => {
   const [totalQueueLoan, setTotalQueueLoan] = useState(0)
@@ -33,6 +32,8 @@ const CardQueueLoan = () => {
     fetchTotalQueueLoan()
   }, [])
   return (
+    <Link href="/loan-request" color='success'>
+    <CardActionArea>
     <Card sx={{ pt: 5 }}>
       <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
         <Grid container spacing={[5, 0]}>
@@ -62,6 +63,8 @@ const CardQueueLoan = () => {
         </Grid>
       </CardContent>
     </Card>
+    </CardActionArea>
+    </Link>
   )
 }
 

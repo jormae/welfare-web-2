@@ -17,6 +17,7 @@ import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
+import TableMemberSuretyHistory from 'src/views/tables/TableMemberSuretyHistory'
 
 const defaultData = {
   ptName: 'Loading',
@@ -54,6 +55,8 @@ export const LoanHistoryContext = createContext()
 
 export const DividendHistoryContext = createContext()
 
+export const SuretyHistoryContext = createContext()
+
 export const SpouseContext = createContext()
 
 const FormLayouts = () => {
@@ -71,6 +74,7 @@ const FormLayouts = () => {
   const [memberInvestmentHistories, setMemberInvestmentHistories] = useState({ blogs: [] })
   const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
   const [memberDividendHistories, setMemberDividendHistories] = useState({ blogs: [] })
+  const [memberSuretyHistories, setMemberSuretyHistories] = useState({ blogs: [] })
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
@@ -195,6 +199,18 @@ const FormLayouts = () => {
     }
   }
 
+  const fetchMemberSureties = async () => {
+    let uri = apiConfig.baseURL + `/loans/surety/${router.query.nationalId}`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data)
+      setMemberSuretyHistories({ blogs: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (router.isReady) {
       router.query
@@ -208,6 +224,7 @@ const FormLayouts = () => {
       fetchMemberInvestments()
       fetchMemberLoans()
       fetchMemberDividends()
+      fetchMemberSureties()
     }
   }, [router.isReady, router.query])
 
@@ -290,6 +307,7 @@ const FormLayouts = () => {
             <Tab label='ประวัติกู้' value='loan' />
             <Tab label='ประวัติหุ้น' value='investment' />
             <Tab label='ประวัติปันผล' value='dividend' />
+            <Tab label='ประวัติค้ำประกัน' value='surety' />
           </TabList>
         </Box>
         <TabPanel value='loan'>
@@ -331,19 +349,32 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
+        <TabPanel value='surety'>
+          {memberSuretyHistories.blogs.length > 0 ? (
+            <Grid container wrap='nowrap'>
+              <SuretyHistoryContext.Provider value={memberSuretyHistories}>
+                <TableMemberSuretyHistory />
+              </SuretyHistoryContext.Provider>
+            </Grid>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
       </TabContext>
     </Box>
   )
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={4}>
+      <Grid item md={4} xs={12}>
         <SkeletonMemberCardLoading />
       </Grid>
-      <Grid item xs={8}>
+      <Grid item md={8}  xs={12}>
         <SkeletonMemberFormsLoading />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item md={12} xs={12}>
         <SkeletonMemberInvestmentAndLoadHistotiesLoading />
       </Grid>
     </Grid>

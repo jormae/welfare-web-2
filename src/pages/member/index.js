@@ -2,6 +2,8 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
+import { Box, Avatar, Icon, Typography, Link , Button} from 'mdi-material-ui'
+import { mdiAccount } from '@mdi/js'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
@@ -13,6 +15,11 @@ import axios from 'axios'
 import { useEffect, useState, createContext } from 'react'
 import { useForm } from 'react-hook-form'
 import apiConfig from 'src/configs/apiConfig'
+import CardFollowUpLoan from 'src/views/cards/CardFollowUpLoan'
+import CardQueueLoan from 'src/views/cards/CardQueueLoan'
+import CardMember from 'src/views/cards/CardMember'
+import CardTotalLoan from 'src/views/cards/CardTotalLoan'
+import CardAddMember from 'src/views/cards/CardAddMember'
 
 export const DataContext = createContext()
 
@@ -114,35 +121,16 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <CardContext.Provider value={statNewMember}>
-          {/* <CardNewMember /> */}
-        </CardContext.Provider>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <CardHeader title='รับชาร์ต' titleTypographyProps={{ variant: 'h6' }} />
-          <Toaster />
-          <Divider sx={{ margin: 0 }} />
-          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-            <CardContent>
-              <Grid container spacing={5}>
-                <Grid item xs={12}></Grid>
-                <Grid item xs={12} sm={12}>
-                  <TextField
-                    autoFocus
-                    fullWidth
-                    label='สแกนบาร์โค้ด'
-                    placeholder='สแกนบาร์โค้ด'
-                    {...register('an', { required: true })}
-                  />
-                  <Input type='hidden' {...register('staffName', { value: staffName })} />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </form>
-        </Card>
-      </Grid>
+      <Grid item xs={12} md={6} lg={4}>
+          <CardMember />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardTotalLoan />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardAddMember/>
+        </Grid>
+
       <DataContext.Provider value={members}>
         <Grid item xs={12}>
           <TableMember />

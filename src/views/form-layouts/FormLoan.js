@@ -37,18 +37,19 @@ const FormLoan = () => {
   const [value, setValue] = useState(firstRefMember?.value);
   const [value2, setValue2] = useState(secondRefMember?.value);
     // const [val,setVal]=useState({})
-  const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
+  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
   
   console.log(memberDetail)
   console.log(loanTypes)
-    const nationalId = memberDetail?.nationalId
-    const memberName = memberDetail?.memberName
+    const nationalId = username
+    // const memberName = memberDetail?.memberName
     const loanTypeId = loanTypes?.loanTypeId
-    console.log(nationalId)
+    // console.log(nationalId)
     console.log(memberName)
 
   const fetchMemberDetail = () => {
-    let uri = apiConfig.baseURL + `/members/${userName}`
+    let uri = apiConfig.baseURL + `/members/${memberName}`
     console.log(uri)
     axios
       .get(uri)
@@ -142,22 +143,22 @@ const FormLoan = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={4}>
-            {memberDetail?.nationalId ? (
-              <TextField fullWidth defaultValue={nationalId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
+            <Grid item xs={12} md={6}>
+            {nationalId ? (
+              <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={nationalId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
-            {memberDetail?.memberName ? (
-                <TextField fullWidth defaultValue={memberName} label='ชื่อสมาชิก' />
+            <Grid item xs={12} md={6}>
+            {memberName ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={memberName} label='ชื่อสมาชิก' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
-              {/* <input type='hidden' {...register('updatedBy')} value={updatedBy} /> */}
+              {/* <input type='hidden' {...register('approvedBy')} value={userName} /> */}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6}>
               <FormControl fullWidth>
                 <InputLabel>ประเภทสสวัสดิการ</InputLabel>
                 {loanTypes? (
@@ -175,7 +176,7 @@ const FormLoan = () => {
                   )}
               </FormControl>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6}>
               <FormControl fullWidth>
                 {/* <InputLabel>ตำแหน่ง</InputLabel> */}
                 {firstRefMember? (
@@ -199,7 +200,7 @@ const FormLoan = () => {
                       )}
               </FormControl>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6}>
               <FormControl >
                 <Autocomplete
                 //  value={secondRefMember.find((option) => option.value2 === value2)}

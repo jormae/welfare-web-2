@@ -56,6 +56,11 @@ export const DataContext = createContext()
 const Dashboard = () => {
   const [err, setError] = useState()
   const [members, setMembers] = useState({ blogs: [] })
+  // const [userRoleId, setUserRoleId] = useState()
+  const userRole = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
+  // setUserRoleId(userRole)
+  console.log('userRole : '+userRole)
+  // console.log('userRoleId : '+userRoleId)
 
   const fetchMembers = async () => {
     let uri = apiConfig.baseURL + `/members`
@@ -97,6 +102,7 @@ const Dashboard = () => {
   useEffect(() => {
     verifyToken()
     fetchMembers()
+
   }, [])
 
   return (
@@ -112,34 +118,51 @@ const Dashboard = () => {
         ) : (
           ''
         )}
+
         <Grid item xs={12} md={4}>
           <Greeting />
         </Grid>
         <Grid item xs={12} md={12} lg={8}>
+        {userRole != 4 ? (
           <Grid container spacing={6}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardTotalMoney />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardTotalLoan />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardMember />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardActiveLoan />
-            </Grid>
+            </Grid> 
           </Grid>
+          ) : (
+          ''
+        )}
         </Grid>
+        {userRole != 4 ? (
         <Grid item xs={12} md={6} lg={4}>
           <CardFollowUpLoan />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+                 ) : (
+                  ''
+                )}
+         {userRole != 4 ? (
+         <Grid item xs={12} md={6} lg={4}>
           <CardQueueLoan />
         </Grid>
+        ) : (
+          ''
+        )}
+         {userRole != 4 ? (
         <Grid item xs={12} md={6} lg={4}>
           <CardNews />
         </Grid>
+        ) : (
+          ''
+        )}
         {/* <Grid item xs={12} md={6} lg={4}>
           <WeeklyOverview />
         </Grid>
@@ -151,13 +174,13 @@ const Dashboard = () => {
         </Grid> */}
         {/* <Grid item xs={12} md={8} lg={8}>
           <Grid container spacing={6}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={4}>
               <TableChartWard />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={4}>
               <TableDashboardDischargeType />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6} lg={4}>
               <CardStatisticsVerticalComponent
                 stats='15'
                 color='warning'
@@ -170,9 +193,13 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid> */}
+         {userRole != 4 ? (
         <Grid item xs={12}>
           <TableLoanRequest />
         </Grid>
+        ) : (
+          ''
+        )}
       </Grid>
     </ApexChartWrapper>
   )

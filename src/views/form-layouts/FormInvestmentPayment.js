@@ -41,7 +41,7 @@ const FormInvestmentPayment = () => {
   
     const [loading, setLoading] = React.useState(false)
     const [paymentTypes, setPaymentTypes] = useState([])
-    const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
+    const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
 //   const loanPaymentMonth = moment(paymentSuggestionInfo?.loanPaymentMonth).format('DD/MM/YYYY')
 // console.log(paymentSuggestionInfo?.loanId)
 
@@ -97,35 +97,35 @@ const FormInvestmentPayment = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
                 <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.nationalId} label='เลขประจำตัวประชาชน' {...register('nationalId')} />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 {memberDetail?.memberName ? (
                     <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.memberName} label='ชื่อสมาชิก' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
                 <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShareQuantity} label='ยอดหุ้นทั้งหมด' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
                     <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShare} label='ยอดเงินลงทุนทั้งหมด' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
                         <InputLabel>ประเภทธุรกรรม</InputLabel>
                         <Select label='ประเภทธุรกรรม' defaultValue="1" {...register('investmentTypeId', { required: true })}>
@@ -135,15 +135,15 @@ const FormInvestmentPayment = () => {
                         </Select>
                     </FormControl>
             </Grid> 
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <TextField fullWidth defaultValue="0" label='จำนวนหุ้น' type='number' {...register('shareQuantity')} onChange={handleChangeShareQuantity} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                     <TextField fullWidth defaultValue="100" label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <TextField fullWidth InputProps={{ readOnly: true }} value={totalShare} label='จำนวนเงินลงทุนทั้งหมด' />
-                <input type="hidden" value={userName} {...register('username')}/>
+                <input type="hidden" value={memberName} {...register('memberName')}/>
             </Grid>
 
             <Grid item xs={12}>

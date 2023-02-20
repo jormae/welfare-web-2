@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -7,35 +6,16 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import Icon from '@mdi/react'
-import { mdiAccount } from '@mdi/js'
-import axios from 'axios'
-import apiConfig from 'src/configs/apiConfig'
 import Link from 'next/link'
+import { mdiAccount } from '@mdi/js'
 import { CardActionArea } from '@mui/material';
 
-const CardMember = () => {
-  const [totalMember, setTotalMember] = useState(0)
-  console.log(totalMember)
+const CardAddMember = () => {
 
-  const fetchTotalMember = async () => {
-    let uri = apiConfig.baseURL + `/dashboard/totalMember`
-    console.log(uri)
-    try {
-      const { data } = await axios.get(uri)
-      console.log(data[0].totalMember)
-      setTotalMember(data[0].totalMember)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchTotalMember()
-  }, [])
   return (
-    <Link href="/member" color='success'>
+    <Link href="/member-form" color='success'>
     <CardActionArea>
-    <Card sx={{ pt: 5 }} direction='column'>
+    <Card sx={{ pt: 5 }}>
       <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
         <Grid container spacing={[5, 0]}>
           <Grid item xs={12} sm={6}>
@@ -55,9 +35,9 @@ const CardMember = () => {
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
                 <Typography variant='h6' sx={{ width: 300 }}>
-                  สมาชิกทั้งหมด
+                  Add new member
                 </Typography>
-                <Typography variant='h6'>{totalMember}</Typography>
+                    <Typography variant='h6' sx={{ width: 300 }}>ลงทะเบียนสมาชิกใหม่</Typography>
               </Box>
             </Box>
           </Grid>
@@ -66,8 +46,7 @@ const CardMember = () => {
     </Card>
     </CardActionArea>
     </Link>
-    
   )
 }
 
-export default CardMember
+export default CardAddMember

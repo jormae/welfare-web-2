@@ -83,16 +83,16 @@ const FormMember = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='เลขที่บัตรประชาชน' {...register('nationalId')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='ชื่อสมาชิก' {...register('memberName')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='เงินเดือน' type='number' {...register('salary')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>ตำแหน่ง</InputLabel>
                 <Select label='ตำแหน่ง' {...register('positionId', { required: true })}>
@@ -106,7 +106,7 @@ const FormMember = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>ประเภทสมาชิก</InputLabel>
                 <Select
@@ -123,7 +123,7 @@ const FormMember = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>ประเภทการชำระเงิน</InputLabel>
                 <Select
@@ -140,7 +140,7 @@ const FormMember = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>ประเภทบัญชีผู้ใช้</InputLabel>
                 <Select
@@ -157,7 +157,7 @@ const FormMember = () => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <FormControl fullWidth>
                 <InputLabel>สถานะสมาชิก</InputLabel>
                 <Select
@@ -179,31 +179,31 @@ const FormMember = () => {
         <CardHeader title='ข้อมูลที่อยู่' titleTypographyProps={{ variant: 'h6' }} />
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='บ้านเลขที่' type='text' {...register('houseNo')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='ถนน' type='text' {...register('streetName')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='หมู่บ้าน' type='text' {...register('villageName')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='หมู่ที่' type='text' {...register('villageNo')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='ตำบล' type='text' {...register('subDistrict')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='อำเภอ' type='text' {...register('district')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='จังหวัด' type='text' {...register('province')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='รหัสไปรษณีย์' type='text' {...register('postCode')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='โทรศัพท์' type='text' {...register('contactNo')} />
             </Grid>
 

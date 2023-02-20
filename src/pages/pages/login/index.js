@@ -85,8 +85,10 @@ const LoginPage = () => {
         console.log('Success:', data)
         if (data.status == 'success') {
           localStorage.setItem('token', data.token)
-          localStorage.setItem('staffName', data.staffName)
-          localStorage.setItem('userTypeName', data.userTypeName)
+          localStorage.setItem('username', data.username)
+          localStorage.setItem('memberName', data.memberName)
+          localStorage.setItem('memberRoleId', data.memberRoleId)
+          localStorage.setItem('memberRoleName', data.memberRoleName)
           window.location = '/'
         }
       })
@@ -184,7 +186,7 @@ const LoginPage = () => {
               fullWidth
               label='ชื่อบัญชี'
               sx={{ marginBottom: 4 }}
-              {...register('email', { required: true })}
+              {...register('username', { required: true })}
             />
 
             <FormControl fullWidth>

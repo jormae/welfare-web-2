@@ -13,40 +13,44 @@ import axios from 'axios'
 import { useEffect, useState, createContext } from 'react'
 import { useForm } from 'react-hook-form'
 import apiConfig from 'src/configs/apiConfig'
-
-export const DataContext = createContext()
-
-export const CardContext = createContext()
+import TableLoan from 'src/views/tables/TableLoan'
+import CardMember from 'src/views/cards/CardMember'
+import CardTotalLoan from 'src/views/cards/CardTotalLoan'
+import CardAddMember from 'src/views/cards/CardAddMember'
 
 const FormLayouts = () => {
-  const [loanRequests, setLoanRequests] = useState({ blogs: [] })
-  const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  const [loans, setLoans] = useState({ blogs: [] })
+  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
 
-  const fetchLoanRequests = async () => {
-    let uri = apiConfig.baseURL + `/loans/request`
+  const fetchLoans = async () => {
+    let uri = apiConfig.baseURL + `/loans`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setLoanRequests({ blogs: data })
+      setLoans({ blogs: data })
     } catch (error) {
       // console.log(error)
     }
   }
 
   useEffect(() => {
-    fetchLoanRequests()
+    fetchLoans()
   }, [])
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
-          {/* <CardNewLoanRequest /> */}
-      </Grid>
-      <DataContext.Provider value={loanRequests}>
-        <Grid item xs={12}>
-          <TableLoanRequest />
+        <Grid item xs={12} md={6} lg={4}>
+          <CardMember />
         </Grid>
-      </DataContext.Provider>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardTotalLoan />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <CardAddMember/>
+        </Grid>
+        <Grid item xs={12}>
+          <TableLoan />
+        </Grid>
     </Grid>
   )
 }

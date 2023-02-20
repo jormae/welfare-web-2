@@ -33,7 +33,7 @@ const FormLoanDetail = () => {
 
     const { register, handleSubmit, control } = useForm();
     const [loading, setLoading] = React.useState(false)
-    const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
+    const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     
 
   const onSubmit = data => {
@@ -167,7 +167,7 @@ const FormLoanDetail = () => {
                     <MenuItem key='2' value='2'> ไม่อนุมัติ</MenuItem>
                 </Select>
             </FormControl>
-            <input type='hidden' defaultValue={userName}  {...register('userName')} />
+            <input type='hidden' defaultValue={userName}  {...register('approvedBy')} />
             </Grid>
             <Grid item xs={4}>
             {loanDetail?.nationalId ? (
@@ -187,6 +187,8 @@ const FormLoanDetail = () => {
                   justifyContent: 'space-between'
                 }}
               >
+              <input type='hidden' {...register('approvedBy')} value={userName} />
+
                 <Box sx={{ '& > button': { m: 1 } }}></Box>
                 <LoadingButton
                   type='submit'

@@ -44,13 +44,13 @@ const FormSpouseDetail = () => {
   const memberNationalId = spouseDetails?.memberNationalId
   const spouseNationalId = spouseDetails?.spouseNationalId
   const spouseName = spouseDetails?.spouseName
-  const villageNo = spouseDetails?.villageNo
-  const subDistrict = spouseDetails?.subDistrict
-  const district = spouseDetails?.district
-  const province = spouseDetails?.province
-  const houseNo = spouseDetails?.houseNo
-  const postCode = spouseDetails?.postCode
-  const contactNo = spouseDetails?.contactNo
+  const spouseVillageNo = spouseDetails?.spouseVillageNo
+  const spouseSubDistrict = spouseDetails?.spouseSubDistrict
+  const spouseDistrict = spouseDetails?.spouseDistrict
+  const spouseProvince = spouseDetails?.spouseProvince
+  const spouseHouseNo = spouseDetails?.spouseHouseNo
+  const spousePostCode = spouseDetails?.spousePostCode
+  const spouseContactNo = spouseDetails?.spouseContactNo
   console.log(spouseDetails)
   console.log(memberNationalId)
 
@@ -62,16 +62,17 @@ const FormSpouseDetail = () => {
         memberNationalId: spouseDetails?.memberNationalId,
         spouseNationalId: spouseDetails?.spouseNationalId,
         spouseName: spouseDetails?.spouseName,
-        salary: spouseDetails?.salary,
-        houseNo: spouseDetails?.houseNo,
-        streetName: spouseDetails?.streetName,
-        villageName: spouseDetails?.villageName,
-        villageNo: spouseDetails?.villageNo,
-        subDistrict: spouseDetails?.subDistrict,
-        district: spouseDetails?.district,
-        province: spouseDetails?.province,
-        postCode: spouseDetails?.postCode,
-        contactNo: spouseDetails?.contactNo
+        spouseIncome: spouseDetails?.spouseIncome,
+        spouseOccupation: spouseDetails?.spouseOccupation,
+        spouseHouseNo: spouseDetails?.spouseHouseNo,
+        spouseStreetName: spouseDetails?.spouseStreetName,
+        spouseVillageName: spouseDetails?.spouseVillageName,
+        spouseVillageNo: spouseDetails?.spouseVillageNo,
+        spouseSubDistrict: spouseDetails?.spouseSubDistrict,
+        spouseDistrict: spouseDetails?.spouseDistrict,
+        spouseProvince: spouseDetails?.spouseProvince,
+        spousePostCode: spouseDetails?.spousePostCode,
+        spouseContactNo: spouseDetails?.spouseContactNo
       })
     }
   }, [])
@@ -109,49 +110,49 @@ const FormSpouseDetail = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='เลขที่บัตรประชาชนคู่สมรส' {...register('spouseNationalId')} />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <TextField fullWidth label='ชื่อคู่สมรส' {...register('spouseName')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='อาชีพ' type='text' {...register('occupation')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='อาชีพ' type='text' {...register('spouseOccupation')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='รายได้ต่อเดือน' type='number' {...register('income')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='รายได้ต่อเดือน' type='number' {...register('spouseIncome')} />
             </Grid>
           </Grid>
         </CardContent>
         <CardHeader title='ข้อมูลที่อยู่' titleTypographyProps={{ variant: 'h6' }} />
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={3}>
-              <TextField fullWidth label='บ้านเลขที่' type='text' {...register('houseNo')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='บ้านเลขที่' type='text' {...register('spouseHouseNo')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='ถนน' type='text' {...register('streetName')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='ถนน' type='text' {...register('spouseStreetName')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='หมู่บ้าน' type='text' {...register('villageName')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='หมู่บ้าน' type='text' {...register('spouseVillageName')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='หมู่ที่' type='text' {...register('villageNo')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='หมู่ที่' type='text' {...register('spouseVillageNo')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='ตำบล' type='text' {...register('subDistrict')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='ตำบล' type='text' {...register('spouseSubDistrict')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='อำเภอ' type='text' {...register('district')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='อำเภอ' type='text' {...register('spouseDistrict')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='จังหวัด' type='text' {...register('province')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='จังหวัด' type='text' {...register('spouseProvince')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='รหัสไปรษณีย์' type='text' {...register('postCode')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='รหัสไปรษณีย์' type='text' {...register('spousePostCode')} />
             </Grid>
-            <Grid item xs={3}>
-              <TextField fullWidth label='โทรศัพท์' type='text' {...register('contactNo')} />
+            <Grid item xs={12} md={3}>
+              <TextField fullWidth label='โทรศัพท์' type='text' {...register('spouseContactNo')} />
             </Grid>
             <Grid item xs={12}>
               <Box

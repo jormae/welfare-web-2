@@ -20,21 +20,7 @@ import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHist
 import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanRecordHistory'
 import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 
-const defaultData = {
-  ptName: 'Loading',
-  admitDate: '2022-04-09T17:00:00.000Z',
-  dischargeDate: '2022-04-11T17:00:00.000Z',
-  doctorCode: 'Loading',
-  wardCode: 'Loading',
-  dischargeStatusCode: 'Loading',
-  dischargeTypeCode: 'Loading',
-  referCauseCode: 0,
-  referHospitalCode: 0,
-  pttypeCode: 'Loading',
-  admitDuration: 'Loading'
-}
-
-export const MemberContext = createContext()
+export const LoanMemberContext = createContext()
 
 export const LoanRecordHistoryContext = createContext()
 
@@ -45,12 +31,13 @@ const FormLayouts = () => {
   if (router.isReady) {
     router.query.nationalId
   }
-  const [memberDetail, setMemberDetail] = useState(defaultData)
   const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
+  const [memberDetail, setMemberDetail] = useState()
   const [loanDetail, setLoanDetail] = useState()
   // const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
-  
-  // console.log(loanDetail)
+  // const nationalId = typeof memberDetail !=='undefined' && typeof memberDetail.nationalId !=='undefined'
+  // console.log(nationalId)
+
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
@@ -61,15 +48,34 @@ const FormLayouts = () => {
   const handleTabHistoryChange = (event, newValue) => {
     setTabHistoryValue(newValue)
   }
-
-  const fetchMemberDetail = () => {
+  
+  const fetchMemberDetail = async () => {
     let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
     console.log(uri)
+    try{
+     const res = await axios.get(uri)
+      console.log(res.data[0])
+      setMemberDetail(res.data[0])
+      // .then(result => setMemberDetail(result.data[0]))
+      // .catch(error => console.log('An error occurred' + error))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
-    axios
-      .get(uri)
-      .then(result => setMemberDetail(result.data[0]))
-      .catch(error => console.log('An error occurred' + error))
+  const fetchLoanDetail = async () => {
+    let uri = apiConfig.baseURL + `/loans/request/${router.query.nationalId}`
+    console.log(uri)
+    try{
+    const res = await axios.get(uri)
+    console.log(res.data[0])
+    setLoanDetail(res.data[0])
+
+      // .then(result => setLoanDetail(result.data[0]))
+      // .catch(error => console.log('An error occurred' + error))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const fetchMemberLoansHistories = async () => {
@@ -77,19 +83,11 @@ const FormLayouts = () => {
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
+      console.log(data)
       setMemberLoanHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const fetchLoanDetail = () => {
-    let uri = apiConfig.baseURL + `/loans/request/${router.query.nationalId}`
-    console.log(uri)
-    axios
-      .get(uri)
-      .then(result => setLoanDetail(result.data[0]))
-      .catch(error => console.log('An error occurred' + error))
   }
 
   useEffect(() => {
@@ -101,9 +99,26 @@ const FormLayouts = () => {
     }
   }, [router.isReady, router.query])
 
+  console.log('memberLoanHistories = '+memberLoanHistories)
+  console.log('memberDetail = '+memberDetail)
+  console.log('loanDetail = '+loanDetail)
+
+  const SkeletonMemberCardLoading = () => (
+    <Box sx={{ width: '100%' }}>
+          {memberDetail?.nationalId ? (
+            <LoanMemberContext.Provider value={memberDetail}>
+              <CardUser />
+            </LoanMemberContext.Provider>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+    </Box>
+  )
   const SkeletonMemberLoanFormLoading = () => (
     <Box sx={{ width: '100%' }}>
-      {memberDetail.nationalId ? (
+      {memberDetail?.nationalId ? (
         <LoanContext.Provider value={loanDetail}>
           <FormLoanDetail />
         </LoanContext.Provider>
@@ -117,7 +132,7 @@ const FormLayouts = () => {
 
   const SkeletonMemberLoanLoading = () => (
     <Box sx={{ width: '100%' }}>
-      {memberDetail.nationalId ? (
+      {memberDetail?.nationalId ? (
         <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
           <TableMemberLoanRecordHistory />
         </LoanRecordHistoryContext.Provider>
@@ -132,7 +147,7 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={4}>
-        <CardUser />
+        <SkeletonMemberCardLoading />
       </Grid>
       <Grid item xs={8}>
         <SkeletonMemberLoanFormLoading />

@@ -23,8 +23,8 @@ const TrophyImg = styled('img')({
 
 const Greeting = () => {
   // ** Hook
-  const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
-  const userTypeName = typeof window !== 'undefined' ? localStorage.getItem('userTypeName') : null
+  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const memberRoleName = typeof window !== 'undefined' ? localStorage.getItem('memberRoleName') : null
   const theme = useTheme()
   const imageSrc = theme.palette.mode === 'light' ? '1.png' : '1.png'
 
@@ -33,13 +33,13 @@ const Greeting = () => {
       <CardContent>
         <Typography variant='h6'>สวัสดี</Typography>
         <Typography variant='body2' sx={{ letterSpacing: '0.25px' }}>
-          {staffName}
+          {memberName}
         </Typography>
         <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
-          {userTypeName}
+          {memberRoleName}
         </Typography>
         <Typography variant='h5' sx={{ my: 4, color: 'primary.main' }}>
-          {userTypeName}
+          {memberRoleName}
         </Typography>
         <Button size='small' variant='contained'>
           View Profile
