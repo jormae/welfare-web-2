@@ -62,8 +62,8 @@ const FormMemberDetail = () => {
   const memberRoleId = memberDetail?.memberRoleId
   const paymentTypeId = memberDetail?.paymentTypeId
   const memberStatusId = memberDetail?.memberStatusId
-  //   const updatedBy = typeof window !== 'undefined' ? localStorage?.getItem('staffName') : 'system'
-
+  const memberRole = typeof window !== 'undefined' ? localStorage?.getItem('memberRoleId') : ''
+console.log(memberRole)
   useEffect(() => {
     if (memberDetail) {
       reset({
@@ -158,7 +158,7 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled>
                 <InputLabel>ประเภทสมาชิก</InputLabel>
                 <Select
                   label='ประเภทสมาชิก'
@@ -194,7 +194,7 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled>
                 <InputLabel>ประเภทบัญชีผู้ใช้</InputLabel>
                 <Select
                   label='ประเภทบัญชีผู้ใช้'
@@ -212,7 +212,7 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled>
                 <InputLabel>สถานะสมาชิก</InputLabel>
                 <Select
                   label='สถานะสมาชิก'

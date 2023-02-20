@@ -34,6 +34,7 @@ const FormLoanDetail = () => {
     const { register, handleSubmit, control } = useForm();
     const [loading, setLoading] = React.useState(false)
     const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+    const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
     
 
   const onSubmit = data => {
@@ -71,42 +72,42 @@ const FormLoanDetail = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.loanId ? (
               <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.loanId} label='รหัสสวัสดิการ' {...register('loanId')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
               <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.nationalId} label='เลขที่บัตรประชาชน' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.loanMemberName ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.loanMemberName} label='ชื่อสมาชิก' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
               <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.contactNo} label='โทรศัพท์' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.memberTypeName} label='ประเภทบุคลากร' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.loanTypeName +' '+ loanDetail.loanAmount} label='ประเภทสวัสดิการ' />
               ) : (
@@ -114,21 +115,21 @@ const FormLoanDetail = () => {
               )}
             </Grid>
             
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.firstReferenceName} label='ชื่อผู้ค้ำคนที่ 1' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.firstReferenceId} label='เลขบัตรประชาชน' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.firstReferenceContactNo} label='โทรศัพท์' />
               ) : (
@@ -136,29 +137,29 @@ const FormLoanDetail = () => {
               )}
             </Grid>
             
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.secondReferenceName} label='ชื่อผู้ค้ำคนที่ 2' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.secondReferenceId} label='เลขบัตรประชาชน' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.secondReferenceContactNo} label='โทรศัพท์' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
-
-            <Grid item xs={4}>
+            {memberRoleId != 4 ? (
+            <Grid item xs={12} md={6} lg={4}>
             <FormControl fullWidth>
                 <InputLabel>สถานะการอนุมัติ</InputLabel>
                 <Select label='สถานะการอนุมัติ' defaultValue={loanDetail?.loanRequestStatusId ?? '0'} {...register('loanRequestStatusId', { required: true })}>
@@ -169,13 +170,18 @@ const FormLoanDetail = () => {
             </FormControl>
             <input type='hidden' defaultValue={userName}  {...register('approvedBy')} />
             </Grid>
-            <Grid item xs={4}>
+              ) : ''
+            }
+            {memberRoleId != 4 ? (
+            <Grid item xs={12} md={6} lg={4}>
             {loanDetail?.nationalId ? (
                 <TextField fullWidth defaultValue={loanDetail?.refId} label='เลขที่สัญญา' {...register('refId')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
+            ) : ''
+            }
 
             <Grid item xs={12}>
               <Box
@@ -188,8 +194,8 @@ const FormLoanDetail = () => {
                 }}
               >
               <input type='hidden' {...register('approvedBy')} value={userName} />
-
                 <Box sx={{ '& > button': { m: 1 } }}></Box>
+                {memberRoleId != 4 ? (
                 <LoadingButton
                   type='submit'
                   color='primary'
@@ -201,9 +207,11 @@ const FormLoanDetail = () => {
                   variant='contained'
                   size='large'
                 >
-                  บันทึกการส่งคำขอ
+                  บันทึกการอนุมัติ
                 </LoadingButton>
-              </Box>
+              ) : ''
+            }              </Box>
+
             </Grid>
           </Grid>
         </CardContent>

@@ -146,15 +146,15 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={4}>
+      {/* <Grid item xs={4}>
         <SkeletonMemberCardLoading />
-      </Grid>
-      <Grid item xs={8}>
+      </Grid> */}
+      <Grid item xs={12}>
         <SkeletonMemberLoanFormLoading />
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <SkeletonMemberLoanLoading />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }

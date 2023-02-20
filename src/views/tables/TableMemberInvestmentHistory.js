@@ -40,6 +40,7 @@ const TableMemberInvestmentHistory = () => {
                 <TableCell align='center'>จำนวนหุ้น</TableCell>
                 <TableCell align='center'>ราคาต่อหน่วย</TableCell>
                 <TableCell align='center'>ยอดหุ้น</TableCell>
+                <TableCell align='center'>สถานะ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -52,6 +53,7 @@ const TableMemberInvestmentHistory = () => {
                   <TableCell align='center'>{row.shareQuantity}</TableCell>
                   <TableCell align='center'>{row.valuePerShare}</TableCell>
                   <TableCell align='center'>{row.totalShare}</TableCell>
+                  <TableCell align='center'>{row.investmentStatusName}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

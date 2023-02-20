@@ -24,18 +24,21 @@ const CardUser = () => {
   return (
     <Card sx={{ position: 'relative' }}>
       <CardMedia sx={{ height: '12.625rem' }} image='/images/cards/background-user.png' />
+      <Box sx={{ width:'100%', display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center'}}>
+
       <Avatar
         alt='Robert Meyer'
         src='/images/avatars/1.png'
+        style={{ display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center' }}
         sx={{
           width: 120,
           height: 120,
-          left: '7.313rem',
           top: '8.28125rem',
           position: 'absolute',
           border: theme => `0.25rem solid ${theme.palette.common.white}`
         }}
       />
+      </Box>
       <CardContent>
         <Box
           sx={{
@@ -48,9 +51,9 @@ const CardUser = () => {
             alignContent:'center',
           }}
         >
-          <Box sx={{ ml:23, mt:5, display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center',justifyContent: 'space-between', }}>
-            <Typography variant='h6' align='center' sx={{ color: 'primary.main' }}>{user?.memberName}</Typography>
-            <Typography variant='caption' sx={{ color: 'primary.main' }}>{user?.memberTypeName}</Typography>
+          <Box sx={{mt:5, width:'100%', display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center'}}>
+            <Typography variant='h6' align='center' sx={{ color: 'primary.main',display: 'flex', alignItems: 'center', justifyContent: 'center', }}>{user?.memberName}</Typography>
+            <Typography align="right" sx={{ color: 'primary.main' }}>{user?.memberTypeName}</Typography>
           </Box>
         </Box>
         <Box

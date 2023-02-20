@@ -50,6 +50,7 @@ import CardQueueLoan from 'src/views/cards/CardQueueLoan'
 import CardNews from 'src/views/cards/CardNews'
 import TableMember from 'src/views/tables/TableMember'
 import TableLoanRequest from 'src/views/tables/TableLoanRequest'
+import TableInvestmentRequest from 'src/views/tables/TableInvestmentRequest'
 
 export const DataContext = createContext()
 
@@ -193,9 +194,16 @@ const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid> */}
-         {userRole != 4 ? (
+        {userRole != 4 ? (
         <Grid item xs={12}>
           <TableLoanRequest />
+        </Grid>
+        ) : (
+          ''
+        )}
+        {userRole != 4 ? (
+        <Grid item xs={12}>
+          <TableInvestmentRequest />
         </Grid>
         ) : (
           ''

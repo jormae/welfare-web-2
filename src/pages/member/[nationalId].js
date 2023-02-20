@@ -168,7 +168,7 @@ const FormLayouts = () => {
   }
 
   const fetchMemberInvestments = async () => {
-    let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/investments/history/${router.query.nationalId}`
     try {
       const { data } = await axios.get(uri)
       setMemberInvestmentHistories({ blogs: data })
