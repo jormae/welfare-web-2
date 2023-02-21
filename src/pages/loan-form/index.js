@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import TableMember from 'src/views/tables/TableMember'
-// import CardNewMember from 'src/views/cards/CardNewMember'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -109,8 +108,6 @@ const FormLayouts = () => {
 
   useEffect(() => {
     verifyToken()
-    // fetchMembers()
-    // fetchStatNewMember()
   }, [])
 
   return (

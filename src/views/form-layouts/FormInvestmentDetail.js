@@ -27,9 +27,9 @@ import SaveIcon from 'mdi-material-ui/Plus'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
-import {MemberContext} from 'src/pages/investment-payment/[nationalId]'
+import {MemberContext} from 'src/pages/investment-approval/[investmentId]'
 
-const FormInvestmentPayment = () => {
+const FormInvestmentDetail = () => {
 
     // const paymentSuggestionInfo = useContext(PaymentSuggestionContext)
    
@@ -46,10 +46,10 @@ const FormInvestmentPayment = () => {
 //   const loanPaymentMonth = moment(paymentSuggestionInfo?.loanPaymentMonth).format('DD/MM/YYYY')
 // console.log(paymentSuggestionInfo?.loanId)
 
-    const [shareQuantity, setShareQuantity] = useState()
-    const [valuePerShare, setValuePerShare] = useState()
-    const [netTotalShare, setNetTotalShare] = useState()
-    const totalShare = (parseInt(shareQuantity, 10) * parseInt(valuePerShare, 10))
+    // const [shareQuantity, setShareQuantity] = useState()
+    // const [valuePerShare, setValuePerShare] = useState()
+    // const [netTotalShare, setNetTotalShare] = useState()
+    // const totalShare = (parseInt(shareQuantity, 10) * parseInt(valuePerShare, 10))
 
     const handleChangeShareQuantity = (event) => {
         setShareQuantity(event.target.value);
@@ -66,10 +66,11 @@ const FormInvestmentPayment = () => {
     const onSubmit = data => {
         setLoading(true)
         console.log(data)
-        let uri = apiConfig.baseURL + `/investments`
+        let uri = apiConfig.baseURL + `/investments/${data.investmentId}`
+        console.log(uri)
 
         fetch(uri, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -99,8 +100,15 @@ const FormInvestmentPayment = () => {
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
+                {memberDetail?.investmentId ? (
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.investmentId} label='รหัส' {...register('investmentId')} />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
-                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.nationalId} label='เลขประจำตัวประชาชน' {...register('nationalId')} />
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.nationalId} label='เลขประจำตัวประชาชน' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
@@ -114,22 +122,22 @@ const FormInvestmentPayment = () => {
             </Grid>
             <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
-                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShareQuantity} label='ยอดหุ้นทั้งหมด' />
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.netTotalShareQuantity} label='ยอดหุ้นทั้งหมด' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
             <Grid item xs={12} md={6}>
                 {memberDetail?.nationalId ? (
-                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShare} label='ยอดเงินลงทุนทั้งหมด' />
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.netTotalShare} label='ยอดเงินลงทุนทั้งหมด' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
             <Grid item xs={12} md={6}>
-                    <FormControl fullWidth>
+                    <FormControl fullWidth disabled>
                         <InputLabel>ประเภทธุรกรรม</InputLabel>
-                        <Select label='ประเภทธุรกรรม' defaultValue="1" {...register('investmentTypeId', { required: true })}>
+                        <Select label='ประเภทธุรกรรม' defaultValue="1">
                             <MenuItem key="1" value="1">ฝากหุ้น</MenuItem>
                             <MenuItem key="2" value="2">ถอนหุ้น</MenuItem>
                             <MenuItem key="3" value="3">ลาหุ้น</MenuItem>
@@ -137,16 +145,27 @@ const FormInvestmentPayment = () => {
                     </FormControl>
             </Grid> 
             <Grid item xs={12} md={6}>
-                <TextField fullWidth defaultValue="0" label='จำนวนหุ้น' type='number' {...register('shareQuantity')} onChange={handleChangeShareQuantity} />
+                <TextField fullWidth InputProps={{ readOnly: true }}  defaultValue={memberDetail?.shareQuantity} label='จำนวนหุ้น' type='number'  />
             </Grid>
             <Grid item xs={12} md={6}>
-                    <TextField fullWidth label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
+                    <TextField fullWidth InputProps={{ readOnly: true }}  defaultValue={memberDetail?.valuePerShare} label='ราคาหุ้นต่อหน่วย'  />
             </Grid>
             <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} value={totalShare} label='จำนวนเงินลงทุนทั้งหมด' />
+                <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={memberDetail?.totalShare} label='จำนวนเงินลงทุนทั้งหมด' />
                 <input type="hidden" value={memberName} {...register('username')}/>
                 <input type="hidden" value={memberRoleId} {...register('memberRoleId')}/>
+                {/* <input type="hidden" value={memberDetail?.investmentId} {...register('investmentId')}/> */}
             </Grid>
+
+            <Grid item xs={12} md={6}>
+                    <FormControl fullWidth>
+                        <InputLabel>ผลการพิจารณาอนุมัติ</InputLabel>
+                        <Select label='ผลการพิจารณาอนุมัติ' defaultValue="1" {...register('investmentStatusId', { required: true })}>
+                            <MenuItem key="1" value="1">อนุมัติ</MenuItem>
+                            <MenuItem key="2" value="2">ไม่อนุมัติ</MenuItem>
+                        </Select>
+                    </FormControl>
+            </Grid> 
 
             <Grid item xs={12}>
               <Box
@@ -170,7 +189,7 @@ const FormInvestmentPayment = () => {
                   variant='contained'
                   size='large'
                 >
-                  บันทึก
+                  บันทึกการพิจารณา
                 </LoadingButton>
               </Box>
             </Grid>
@@ -181,4 +200,4 @@ const FormInvestmentPayment = () => {
   )
 }
 
-export default FormInvestmentPayment
+export default FormInvestmentDetail

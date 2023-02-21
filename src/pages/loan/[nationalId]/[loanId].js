@@ -34,9 +34,7 @@ const FormLayouts = () => {
   const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
   const [memberDetail, setMemberDetail] = useState()
   const [loanDetail, setLoanDetail] = useState()
-  // const userName = typeof window !== 'undefined' ? localStorage.getItem('userName') : null
-  // const nationalId = typeof memberDetail !=='undefined' && typeof memberDetail.nationalId !=='undefined'
-  // console.log(nationalId)
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
@@ -54,10 +52,7 @@ const FormLayouts = () => {
     console.log(uri)
     try{
      const res = await axios.get(uri)
-      console.log(res.data[0])
       setMemberDetail(res.data[0])
-      // .then(result => setMemberDetail(result.data[0]))
-      // .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
     }
@@ -103,19 +98,19 @@ const FormLayouts = () => {
   console.log('memberDetail = '+memberDetail)
   console.log('loanDetail = '+loanDetail)
 
-  const SkeletonMemberCardLoading = () => (
-    <Box sx={{ width: '100%' }}>
-          {memberDetail?.nationalId ? (
-            <LoanMemberContext.Provider value={memberDetail}>
-              <CardUser />
-            </LoanMemberContext.Provider>
-          ) : (
-            <Typography variant='h4'>
-              <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
-            </Typography>
-          )}
-    </Box>
-  )
+  // const SkeletonMemberCardLoading = () => (
+  //   <Box sx={{ width: '100%' }}>
+  //         {memberDetail?.nationalId ? (
+  //           <LoanMemberContext.Provider value={memberDetail}>
+  //             <CardUser />
+  //           </LoanMemberContext.Provider>
+  //         ) : (
+  //           <Typography variant='h4'>
+  //             <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
+  //           </Typography>
+  //         )}
+  //   </Box>
+  // )
   const SkeletonMemberLoanFormLoading = () => (
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
@@ -130,19 +125,19 @@ const FormLayouts = () => {
     </Box>
   )
 
-  const SkeletonMemberLoanLoading = () => (
-    <Box sx={{ width: '100%' }}>
-      {memberDetail?.nationalId ? (
-        <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
-          <TableMemberLoanRecordHistory />
-        </LoanRecordHistoryContext.Provider>
-      ) : (
-        <Typography variant='h4'>
-          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-        </Typography>
-      )}
-    </Box>
-  )
+  // const SkeletonMemberLoanLoading = () => (
+  //   <Box sx={{ width: '100%' }}>
+  //     {memberDetail?.nationalId ? (
+  //       <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
+  //         <TableMemberLoanRecordHistory />
+  //       </LoanRecordHistoryContext.Provider>
+  //     ) : (
+  //       <Typography variant='h4'>
+  //         <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+  //       </Typography>
+  //     )}
+  //   </Box>
+  // )
 
   return (
     <Grid container spacing={6}>

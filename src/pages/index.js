@@ -57,11 +57,7 @@ export const DataContext = createContext()
 const Dashboard = () => {
   const [err, setError] = useState()
   const [members, setMembers] = useState({ blogs: [] })
-  // const [userRoleId, setUserRoleId] = useState()
   const userRole = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-  // setUserRoleId(userRole)
-  console.log('userRole : '+userRole)
-  // console.log('userRoleId : '+userRoleId)
 
   const fetchMembers = async () => {
     let uri = apiConfig.baseURL + `/members`
@@ -70,7 +66,7 @@ const Dashboard = () => {
       const { data } = await axios.get(uri)
       setMembers({ blogs: data })
     } catch (error) {
-      // console.log(error)
+      console.log(error)
     }
   }
 

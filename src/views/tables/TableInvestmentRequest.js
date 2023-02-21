@@ -69,7 +69,7 @@ const TableInvestmentRequest = () => {
                   <TableCell align='center' color='success'>{row.valuePerShare}</TableCell>
                   <TableCell align='center' color='success'>{row.totalShare}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`investment/${row.nationalId}/${row.investmentId}`} color='success'>
+                    <Link href={`investment-approval/${row.investmentId}`} color='success'>
                       <Button type='button' variant='outlined'>
                         รายละเอียด
                       </Button>

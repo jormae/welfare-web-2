@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import TableMember from 'src/views/tables/TableMember'
-// import CardNewMember from 'src/views/cards/CardNewMember'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -29,8 +28,6 @@ const FormLayouts = () => {
   if (router.isReady) {
     router.query.nationalId
   }
-
-  // console.log( router.query.nationalId)
 
   const [member, setMember] = useState()
   const [paymentSuggestionInfo, setPaymentSuggestionInfo] = useState()
@@ -131,11 +128,6 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      {/* <Grid item xs={12}>
-        <CardContext.Provider value={statNewMember}>
-          <CardNewMember /> 
-        </CardContext.Provider>
-      </Grid> */}
       <Grid item xs={12}>
         <MemberContext.Provider value={member}>
           <PaymentSuggestionContext.Provider value={paymentSuggestionInfo}>

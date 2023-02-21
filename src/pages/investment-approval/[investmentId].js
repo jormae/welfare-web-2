@@ -22,6 +22,7 @@ import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 import FormLoan from 'src/views/form-layouts/FormLoan'
 import FormLoanPayment from 'src/views/form-layouts/FormLoanPayment'
 import FormInvestmentPayment from 'src/views/form-layouts/FormInvestmentPayment'
+import FormInvestmentDetail from 'src/views/form-layouts/FormInvestmentDetail'
 
 const defaultData = {
   ptName: 'Loading',
@@ -44,44 +45,31 @@ export const InvesmentPaymentHistoryContext = createContext()
 const FormLayouts = () => {
   const router = useRouter()
   if (router.isReady) {
-    router.query.nationalId
+    router.query.investmentId
   }
-  const [memberDetail, setMemberDetail] = useState()
-  const [memberInvestmentHistories, setInvestmentHistories] = useState({ blogs: [] })
+  const [investmentDetail, setInvestmentDetail] = useState()
   const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
   const fetchMemberInvestmentDetail = () => {
-    let uri = apiConfig.baseURL + `/investments/summary/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/investments/detail/${router.query.investmentId}`
     console.log(uri)
 
     axios
       .get(uri)
-      .then(result => setMemberDetail(result.data[0]))
+      .then(result => setInvestmentDetail(result.data[0]))
       .catch(error => console.log('An error occurred' + error))
-  }
-
-  const fetchInvestmentsHistories = async () => {
-    let uri = apiConfig.baseURL + `/investments/${router.query.nationalId}`
-    console.log(uri)
-    try {
-      const { data } = await axios.get(uri)
-      setInvestmentHistories({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   useEffect(() => {
     if (router.isReady) {
       router.query
       fetchMemberInvestmentDetail()
-      fetchInvestmentsHistories()
     }
   }, [router.isReady, router.query, ])
 
   // const SkeletonMemberCardLoading = () => (
   //   <Box sx={{ width: '100%' }}>
-  //     {memberDetail?.nationalId ? (
+  //     {memberDetail?.investmentId ? (
   //       <MemberContext.Provider value={memberDetail}>
   //         <CardUser />
   //       </MemberContext.Provider>
@@ -95,9 +83,9 @@ const FormLayouts = () => {
   
   const SkeletonInvestmentPaymentFormLoading = () => (
     <Box sx={{ width: '100%' }}>
-      {memberDetail?.nationalId ? (
-        <MemberContext.Provider value={memberDetail}>
-          <FormInvestmentPayment />
+      {investmentDetail?.investmentId ? (
+        <MemberContext.Provider value={investmentDetail}>
+          <FormInvestmentDetail />
         </MemberContext.Provider>
       ) : (
         <Typography variant='h4'>
@@ -109,7 +97,7 @@ const FormLayouts = () => {
 
   const SkeletonInvestmentHistoryLoading = () => (
     <Box sx={{ width: '100%' }}>
-      {memberDetail?.nationalId ? (
+      {memberDetail?.investmentId ? (
         <InvesmentPaymentHistoryContext.Provider value={memberInvestmentHistories}>
           <TableMemberInvestmentHistory />
         </InvesmentPaymentHistoryContext.Provider>
@@ -129,9 +117,9 @@ const FormLayouts = () => {
       <Grid item xs={12}>
         <SkeletonInvestmentPaymentFormLoading />
       </Grid>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <SkeletonInvestmentHistoryLoading />
-      </Grid>
+      </Grid> */}
     </Grid>
   )
 }
