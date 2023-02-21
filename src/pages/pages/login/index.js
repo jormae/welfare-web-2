@@ -171,14 +171,14 @@ const LoginPage = () => {
                 fontSize: '1.5rem !important'
               }}
             >
-              {themeConfig.templateName}
+              {/* {themeConfig.templateName} */}
             </Typography>
           </Box>
           <Box sx={{ mb: 6 }}>
-            {/* <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Welcome to {themeConfig.templateName}! 👋🏻
-            </Typography> */}
-            <Typography variant='body2'>Please sign-in to your account and start the adventure</Typography>
+            <Typography variant='h5' textAlign='center' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
+               {themeConfig.templateName}
+            </Typography> 
+            {/* <Typography variant='body2'>กรุณาล็อกอินเพื่อเข้าสู่ระบบ</Typography> */}
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
             <TextField

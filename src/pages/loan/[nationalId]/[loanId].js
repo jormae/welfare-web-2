@@ -17,7 +17,7 @@ import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
-import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanRecordHistory'
+import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
 import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 
 export const LoanMemberContext = createContext()
@@ -125,19 +125,19 @@ const FormLayouts = () => {
     </Box>
   )
 
-  // const SkeletonMemberLoanLoading = () => (
-  //   <Box sx={{ width: '100%' }}>
-  //     {memberDetail?.nationalId ? (
-  //       <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
-  //         <TableMemberLoanRecordHistory />
-  //       </LoanRecordHistoryContext.Provider>
-  //     ) : (
-  //       <Typography variant='h4'>
-  //         <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-  //       </Typography>
-  //     )}
-  //   </Box>
-  // )
+  const SkeletonMemberLoanLoading = () => (
+    <Box sx={{ width: '100%' }}>
+      {memberDetail?.nationalId ? (
+        <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
+          <TableMemberLoanRecordHistory />
+        </LoanRecordHistoryContext.Provider>
+      ) : (
+        <Typography variant='h4'>
+          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+        </Typography>
+      )}
+    </Box>
+  )
 
   return (
     <Grid container spacing={6}>
@@ -147,9 +147,9 @@ const FormLayouts = () => {
       <Grid item xs={12}>
         <SkeletonMemberLoanFormLoading />
       </Grid>
-      {/* <Grid item xs={12}>
+      <Grid item xs={12}>
         <SkeletonMemberLoanLoading />
-      </Grid> */}
+      </Grid>
     </Grid>
   )
 }

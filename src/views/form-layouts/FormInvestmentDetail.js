@@ -93,7 +93,7 @@ const FormInvestmentDetail = () => {
 
   return (
     <Card>
-      <CardHeader title='ข้อมูลเพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='ข้อมูลพิจารณาอนุมัติ เพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <Toaster />
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>

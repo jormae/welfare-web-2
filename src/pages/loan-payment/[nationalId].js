@@ -132,7 +132,7 @@ const FormLayouts = () => {
         <MemberContext.Provider value={member}>
           <PaymentSuggestionContext.Provider value={paymentSuggestionInfo}>
             <Card>
-              <CardHeader title='คำร้องขอกู้เงินสวัสดิการ' titleTypographyProps={{ variant: 'h6' }} />
+              <CardHeader title='แจ้งข้อมูลการชำระเงินกู้สวัสดิการ' titleTypographyProps={{ variant: 'h6' }} />
               <Toaster />
               <Divider sx={{ margin: 0 }} />
                 <FormLoanPayment/>

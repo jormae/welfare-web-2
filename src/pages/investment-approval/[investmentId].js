@@ -17,11 +17,11 @@ import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
-import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanRecordHistory'
+import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
 import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 import FormLoan from 'src/views/form-layouts/FormLoan'
 import FormLoanPayment from 'src/views/form-layouts/FormLoanPayment'
-import FormInvestmentPayment from 'src/views/form-layouts/FormInvestmentPayment'
+import FormInvestmentPayment from 'src/views/form-layouts/FormInvestment'
 import FormInvestmentDetail from 'src/views/form-layouts/FormInvestmentDetail'
 
 const defaultData = {

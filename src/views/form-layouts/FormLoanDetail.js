@@ -35,7 +35,7 @@ const FormLoanDetail = () => {
     const [loading, setLoading] = React.useState(false)
     const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-    
+    console.log("loanStatus : "+loanDetail?.loanStatusId)
 
   const onSubmit = data => {
     setLoading(true)
@@ -158,11 +158,21 @@ const FormLoanDetail = () => {
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
+            {memberRoleId == 4 ? (
+            <Grid item xs={12} md={6} lg={4}>
+            {loanDetail?.nationalId ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={loanDetail?.loanStatusName} label='สถานะการอนุมัติ' />
+              ) : (
+                <Skeleton variant='rectangular' width={250} height={55} />
+              )}
+            </Grid>
+             ) : ''
+            }
             {memberRoleId != 4 ? (
             <Grid item xs={12} md={6} lg={4}>
             <FormControl fullWidth>
                 <InputLabel>สถานะการอนุมัติ</InputLabel>
-                <Select label='สถานะการอนุมัติ' defaultValue={loanDetail?.loanRequestStatusId ?? '0'} {...register('loanRequestStatusId', { required: true })}>
+                <Select label='สถานะการอนุมัติ' defaultValue={loanDetail?.loanStatusId ?? '0'} {...register('loanStatusId', { required: true })}>
                     <MenuItem key='0' value='0'> รออนุมัติ</MenuItem>
                     <MenuItem key='1' value='1'> อนุมัติ</MenuItem>
                     <MenuItem key='2' value='2'> ไม่อนุมัติ</MenuItem>
@@ -195,7 +205,7 @@ const FormLoanDetail = () => {
               >
               <input type='hidden' {...register('approvedBy')} value={userName} />
                 <Box sx={{ '& > button': { m: 1 } }}></Box>
-                {memberRoleId != 4 ? (
+                {(memberRoleId != 4 ) ? (
                 <LoadingButton
                   type='submit'
                   color='primary'
@@ -210,7 +220,8 @@ const FormLoanDetail = () => {
                   บันทึกการอนุมัติ
                 </LoadingButton>
               ) : ''
-            }              </Box>
+            }              
+            </Box>
 
             </Grid>
           </Grid>

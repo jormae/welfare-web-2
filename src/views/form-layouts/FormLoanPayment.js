@@ -39,10 +39,9 @@ const FormLoanPayment = () => {
   
   const [loading, setLoading] = React.useState(false)
   const [paymentTypes, setPaymentTypes] = useState([])
-  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-//   const loanPaymentMonth = moment(paymentSuggestionInfo?.loanPaymentMonth).format('DD/MM/YYYY')
-console.log(paymentSuggestionInfo?.loanId)
-
+  const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
+  console.log('monthno : '+paymentSuggestionInfo?.monthNo)
   const fetchPaymentTypes = async () => {
     let uri = apiConfig.baseURL + `/utils/payment-types`
     console.log(uri)
@@ -92,7 +91,6 @@ console.log(paymentSuggestionInfo?.loanId)
 
   return (
     <Card>
-      {/* <CardHeader title='ข้อมูลสมาชิก' titleTypographyProps={{ variant: 'h6' }} /> */}
       <Toaster />
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
@@ -127,24 +125,20 @@ console.log(paymentSuggestionInfo?.loanId)
                 )}
                 </Grid>
             <Grid item xs={12} md={6}>
-                {paymentSuggestionInfo?.monthNo ? (
-                    <TextField fullWidth defaultValue={paymentSuggestionInfo?.monthNo} label='งวดที่' {...register('monthNo')}/>
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                )}
-            </Grid>
+            {paymentSuggestionInfo?.monthNo ? (
+                    <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthNo} label='งวดที่' {...register('monthNo')}/>
+                    ) : (
+                      <Skeleton variant='rectangular' width={250} height={55} />
+                  )}
+                  </Grid>
             <Grid item xs={12} md={6}>
-                {paymentSuggestionInfo?.loanPaymentMonth ? (
                     <TextField fullWidth defaultValue={moment(paymentSuggestionInfo?.loanPaymentMonth).format('YYYY-MM-DD')} label='เดือน' type='date' {...register('loanPaymentMonth')} InputLabelProps={{
                       shrink: true,
                     }} />
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                )}
             </Grid>
             <Grid item xs={12} md={6}>
-                {paymentSuggestionInfo?.paymentAmount ? (
-                    <TextField fullWidth defaultValue={paymentSuggestionInfo?.paymentAmount} label='จำนวนเงิน' {...register('paymentAmount')}/>
+                {paymentSuggestionInfo?.monthlyPayment ? (
+                    <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthlyPayment} label='จำนวนเงิน' {...register('paymentAmount')}/>
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
@@ -167,6 +161,8 @@ console.log(paymentSuggestionInfo?.loanId)
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
+              <input type='hidden' {...register('userName')} value={userName} />
+              <input type='hidden' {...register('memberRoleId')} value={memberRoleId} />
 
             <Grid item xs={12}>
               <Box
@@ -190,7 +186,7 @@ console.log(paymentSuggestionInfo?.loanId)
                   variant='contained'
                   size='large'
                 >
-                  บันทึกการชำระเงิน
+                  บันทึกการแจ้งชำระเงิน
                 </LoadingButton>
               </Box>
             </Grid>

@@ -14,7 +14,7 @@
 // }
 
 const themeConfig = {
-  templateName: 'Materio',
+  templateName: 'ระบบสวัสดิการครูดารุสสาลาม',
   layout: 'horizontal',
   mode: 'light',
   direction: 'ltr',

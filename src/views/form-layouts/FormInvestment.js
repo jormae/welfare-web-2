@@ -29,7 +29,7 @@ import moment from 'moment'
 
 import {MemberContext} from 'src/pages/investment-payment/[nationalId]'
 
-const FormInvestmentPayment = () => {
+const FormInvestment = () => {
 
     // const paymentSuggestionInfo = useContext(PaymentSuggestionContext)
    
@@ -92,7 +92,7 @@ const FormInvestmentPayment = () => {
 
   return (
     <Card>
-      <CardHeader title='ข้อมูลเพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='ข้อมูลแจ้ง เพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <Toaster />
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
@@ -137,10 +137,10 @@ const FormInvestmentPayment = () => {
                     </FormControl>
             </Grid> 
             <Grid item xs={12} md={6}>
-                <TextField fullWidth defaultValue="0" label='จำนวนหุ้น' type='number' {...register('shareQuantity')} onChange={handleChangeShareQuantity} />
+                <TextField fullWidth defaultValue="0" type='number' label='จำนวนหุ้น' {...register('shareQuantity')} onChange={handleChangeShareQuantity} />
             </Grid>
             <Grid item xs={12} md={6}>
-                    <TextField fullWidth label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
+                    <TextField fullWidth  type='number' label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <TextField fullWidth InputProps={{ readOnly: true }} value={totalShare} label='จำนวนเงินลงทุนทั้งหมด' />
@@ -181,4 +181,4 @@ const FormInvestmentPayment = () => {
   )
 }
 
-export default FormInvestmentPayment
+export default FormInvestment
