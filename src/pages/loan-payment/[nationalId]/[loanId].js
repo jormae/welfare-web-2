@@ -27,8 +27,9 @@ const FormLayouts = () => {
   const router = useRouter()
   if (router.isReady) {
     router.query.nationalId
+    router.query.loanId
   }
-
+  console.log('link = '+router.query.loanId)
   const [member, setMember] = useState()
   const [paymentSuggestionInfo, setPaymentSuggestionInfo] = useState()
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
@@ -46,7 +47,7 @@ const FormLayouts = () => {
 
   const fetchPaymentSuggestionInfo = async () => {
     // let uri = apiConfig.baseURL + `/loans/payment-suggestion/1960500015821`
-    let uri = apiConfig.baseURL + `/loans/payment-suggestion/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/loans/payment-suggestion/${router.query.loanId}`
     console.log(uri)
 
     try {

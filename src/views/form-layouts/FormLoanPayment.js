@@ -26,14 +26,14 @@ import SaveIcon from 'mdi-material-ui/Plus'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
-import {PaymentSuggestionContext, MemberContext} from 'src/pages/loan-payment/[nationalId]'
+import {PaymentSuggestionContext, MemberContext} from 'src/pages/loan-payment/[nationalId]/[loanId]'
 
 const FormLoanPayment = () => {
 
     const paymentSuggestionInfo = useContext(PaymentSuggestionContext)
    
     const member = useContext(MemberContext)
-    console.log(paymentSuggestionInfo?.nationalId)
+    console.log(paymentSuggestionInfo)
 
     const { register, handleSubmit, control } = useForm();
   
@@ -42,6 +42,7 @@ const FormLoanPayment = () => {
   const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
   const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
   console.log('monthno : '+paymentSuggestionInfo?.monthNo)
+
   const fetchPaymentTypes = async () => {
     let uri = apiConfig.baseURL + `/utils/payment-types`
     console.log(uri)

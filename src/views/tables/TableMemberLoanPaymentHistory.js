@@ -1,5 +1,6 @@
 // ** MUI Imports
 import React, { useContext } from 'react'
+import { useRouter } from 'next/router'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -18,11 +19,22 @@ import moment from 'moment'
 import { LoanRecordHistoryContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
 const TableMemberLoanPaymentHistory = () => {
+  const router = useRouter()
+  if (router.isReady) {
+    router.query.nationalId
+  }
+  console.log(router.query.nationalId)
+  console.log(router.query.loanId)
   const memberLoanRecordHistories = useContext(LoanRecordHistoryContext)
 
   return (
     <Card>
       <CardHeader title='ประวัติการชำระเงินกู้สวัสดิการ' titleTypographyProps={{ variant: 'h6' }} />
+      <Link href={`../../loan-payment/${router.query.nationalId}/${router.query.loanId}`} color='primary' sx={{ align:'right'}}>
+          <Button type='button' variant='outlined'>
+              เปิด
+          </Button>
+        </Link>
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
@@ -61,6 +73,7 @@ const TableMemberLoanPaymentHistory = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        
       </CardContent>
     </Card>
   )

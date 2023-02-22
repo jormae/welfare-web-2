@@ -97,7 +97,7 @@ const FormLayouts = () => {
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
         <MemberContext.Provider value={memberDetail}>
-          <FormInvestmentPayment />
+          <FormLoan />
         </MemberContext.Provider>
       ) : (
         <Typography variant='h4'>
@@ -109,7 +109,7 @@ const FormLayouts = () => {
 
   const SkeletonInvestmentHistoryLoading = () => (
     <Box sx={{ width: '100%' }}>
-      {memberDetail?.nationalId ? (
+      {memberInvestmentHistories?.investmentId ? (
         <InvesmentPaymentHistoryContext.Provider value={memberInvestmentHistories}>
           <TableMemberInvestmentHistory />
         </InvesmentPaymentHistoryContext.Provider>
@@ -127,10 +127,11 @@ const FormLayouts = () => {
         <SkeletonMemberCardLoading />
       </Grid> */}
       <Grid item xs={12}>
-        <SkeletonInvestmentPaymentFormLoading />
+        {/* <SkeletonInvestmentPaymentFormLoading /> */}
+        <FormLoan />
       </Grid>
       <Grid item xs={12}>
-        <SkeletonInvestmentHistoryLoading />
+        {/* <SkeletonInvestmentHistoryLoading /> */}
       </Grid>
     </Grid>
   )

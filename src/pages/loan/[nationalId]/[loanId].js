@@ -17,7 +17,7 @@ import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
 import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
-import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
+import TableMemberLoanPaymentHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
 import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 
 export const LoanMemberContext = createContext()
@@ -59,7 +59,7 @@ const FormLayouts = () => {
   }
 
   const fetchLoanDetail = async () => {
-    let uri = apiConfig.baseURL + `/loans/request/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/loans/request/${router.query.nationalId}/${router.query.loanId}`
     console.log(uri)
     try{
     const res = await axios.get(uri)
@@ -129,7 +129,7 @@ const FormLayouts = () => {
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
         <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
-          <TableMemberLoanRecordHistory />
+          <TableMemberLoanPaymentHistory />
         </LoanRecordHistoryContext.Provider>
       ) : (
         <Typography variant='h4'>

@@ -1,5 +1,6 @@
 // ** React Imports
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Skeleton from '@mui/material/Skeleton'
 import { useForm } from 'react-hook-form'
 
@@ -27,7 +28,12 @@ import moment from 'moment'
 
 const FormLoan = () => {
 
-    const { register, handleSubmit, control } = useForm();
+  const router = useRouter()
+  if (router.isReady) {
+    router.query.nationalId
+  }
+
+  const { register, handleSubmit, control } = useForm();
   
   const [loading, setLoading] = React.useState(false)
   const [memberDetail, setMemberDetail] = useState()
@@ -36,20 +42,16 @@ const FormLoan = () => {
   const [secondRefMember, setSecondMember] = useState()
   const [value, setValue] = useState(firstRefMember?.value);
   const [value2, setValue2] = useState(secondRefMember?.value);
-    // const [val,setVal]=useState({})
-  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
+
+    const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+    const userName = typeof window !== 'undefined' ? localStorage.getItem('username') : null
+    const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
   
-  console.log(memberDetail)
-  console.log(loanTypes)
-    const nationalId = username
-    // const memberName = memberDetail?.memberName
-    const loanTypeId = loanTypes?.loanTypeId
-    // console.log(nationalId)
-    console.log(memberName)
+    const loanRequestId = memberDetail?.nationalId ? memberDetail?.nationalId : userName
+    const loanRequestName = memberDetail?.memberName ? memberDetail?.memberName : memberName
 
   const fetchMemberDetail = () => {
-    let uri = apiConfig.baseURL + `/members/${memberName}`
+    let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
     console.log(uri)
     axios
       .get(uri)
@@ -97,15 +99,15 @@ const FormLoan = () => {
   }
 
   useEffect(() => {
+    if (router.isReady) {
+      router.query
+      fetchMemberDetail()
+    }
     fetchMemberDetail()
     fetchLoanTypes()
     fetchFirstMember()
     fetchSecondMember()
-  }, [])
-
-//   const handleClick = () => {
-//     setVal(firstRefMember[1]);
-//  };
+  }, [router.isReady, router.query, ])
 
   const onSubmit = data => {
     setLoading(true)
@@ -138,31 +140,29 @@ const FormLoan = () => {
 
   return (
     <Card>
-      {/* <CardHeader title='ข้อมูลสมาชิก' titleTypographyProps={{ variant: 'h6' }} /> */}
       <Toaster />
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
-            {nationalId ? (
-              <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={nationalId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
+            {loanRequestId ? (
+              <TextField fullWidth InputProps={{ readOnly: true }} value={ loanRequestId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
             <Grid item xs={12} md={6}>
-            {memberName ? (
-                <TextField fullWidth InputProps={{ readOnly: true }} defaultValue={memberName} label='ชื่อสมาชิก' />
+            {loanRequestName ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestName} label='ชื่อสมาชิก' />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
-              {/* <input type='hidden' {...register('approvedBy')} value={userName} /> */}
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl fullWidth>
                 <InputLabel>ประเภทสสวัสดิการ</InputLabel>
                 {loanTypes? (
-                <Select label='ประเภทสสวัสดิการ' defaultValue={loanTypeId ?? ''} {...register('loanTypeId', { required: true })}>
+                <Select label='ประเภทสสวัสดิการ' defaultValue={loanTypes?.loanTypeId ?? ''} {...register('loanTypeId', { required: true })}>
                   {loanTypes.map(item => {
                     return (
                       <MenuItem key={item.loanTypeId} value={item.loanTypeId}>
@@ -178,10 +178,8 @@ const FormLoan = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <FormControl fullWidth>
-                {/* <InputLabel>ตำแหน่ง</InputLabel> */}
                 {firstRefMember? (
                 <Autocomplete
-                    // value={firstRefMember.find((option) => option.value === value)}
                     onChange={(_, v) => setValue(v?.value)}
                     disablePortal
                     id="combo-box-demo"
@@ -200,10 +198,11 @@ const FormLoan = () => {
                       )}
               </FormControl>
             </Grid>
+            <input type="hidden" value={memberName} {...register('username')}/>
+            <input type="hidden" value={memberRoleId} {...register('memberRoleId')}/>
             <Grid item xs={12} md={6}>
               <FormControl >
                 <Autocomplete
-                //  value={secondRefMember.find((option) => option.value2 === value2)}
                  onChange={(_, v) => setValue2(v?.value)}
                     disablePortal
                     id="combo-box-demo"

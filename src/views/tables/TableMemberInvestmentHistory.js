@@ -16,7 +16,7 @@ import Link from 'next/link'
 import moment from 'moment'
 
 import { InvesmentHistoryContext } from 'src/pages/member/[nationalId]'
-import { InvesmentPaymentHistoryContext } from 'src/pages/investment-payment/[nationalId]'
+import { InvesmentPaymentHistoryContext } from 'src/pages/investment-form/[nationalId]'
 
 const TableMemberInvestmentHistory = () => {
 

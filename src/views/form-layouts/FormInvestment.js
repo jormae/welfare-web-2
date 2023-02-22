@@ -1,5 +1,6 @@
 // ** React Imports
 import React, { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import Skeleton from '@mui/material/Skeleton'
 import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
@@ -27,20 +28,24 @@ import SaveIcon from 'mdi-material-ui/Plus'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
-import {MemberContext} from 'src/pages/investment-payment/[nationalId]'
+import {MemberContext} from 'src/pages/investment-form/[nationalId]'
 
 const FormInvestment = () => {
 
-    // const paymentSuggestionInfo = useContext(PaymentSuggestionContext)
+  const router = useRouter()
+  if (router.isReady) {
+    router.query.nationalId
+  }
    
-    const memberDetail = useContext(MemberContext)
+    const investmentDetail = useContext(MemberContext)
     
-    console.log(memberDetail)
+    console.log(investmentDetail)
 
     const { register, handleSubmit, control } = useForm();
   
     const [loading, setLoading] = React.useState(false)
     const [paymentTypes, setPaymentTypes] = useState([])
+    const [memberDetail, setMemberDetail] = useState()
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
 //   const loanPaymentMonth = moment(paymentSuggestionInfo?.loanPaymentMonth).format('DD/MM/YYYY')
@@ -58,10 +63,15 @@ const FormInvestment = () => {
         setValuePerShare(event.target.value);
     }
 
-    // useEffect(() => {
-    //     // setTotalShare(parseInt(shareQuantity, 10) * parseInt(valuePerShare, 10))
-    //     setNetTotalShare(totalShare)
-    //   }, [])
+    const fetchMemberDetail = () => {
+      let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
+      console.log(uri)
+  
+      axios
+        .get(uri)
+        .then(result => setMemberDetail(result.data[0]))
+        .catch(error => console.log('An error occurred' + error))
+    }
 
     const onSubmit = data => {
         setLoading(true)
@@ -90,6 +100,13 @@ const FormInvestment = () => {
         })
     }
 
+    useEffect(() => {
+      if (router.isReady) {
+        router.query
+        fetchMemberDetail()
+      }
+    }, [router.isReady, router.query, ])
+
   return (
     <Card>
       <CardHeader title='ข้อมูลแจ้ง เพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
@@ -113,18 +130,10 @@ const FormInvestment = () => {
                 )}
             </Grid>
             <Grid item xs={12} md={6}>
-                {memberDetail?.nationalId ? (
-                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShareQuantity} label='ยอดหุ้นทั้งหมด' />
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                )}
+                <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={investmentDetail?.totalShareQuantity ?? 0} label='ยอดหุ้นทั้งหมด' />
             </Grid>
             <Grid item xs={12} md={6}>
-                {memberDetail?.nationalId ? (
-                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={memberDetail?.totalShare} label='ยอดเงินลงทุนทั้งหมด' />
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                )}
+              <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={investmentDetail?.totalShare ?? 0} label='ยอดเงินลงทุนทั้งหมด' />
             </Grid>
             <Grid item xs={12} md={6}>
                     <FormControl fullWidth>
