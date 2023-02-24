@@ -66,7 +66,7 @@ const CardUser = () => {
             justifyContent: 'space-between',
           }}
         >
-          {/* <Link href={`../../loan-payment/${user?.nationalId}`} color='primary'>
+          <Link href={`../../loan-payment/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link>
           <Link href={`../../investment-payment/${user?.nationalId}`} color='primary'>
@@ -74,7 +74,7 @@ const CardUser = () => {
           </Link>
           <Link href={`../../loan-form/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ใบคำร้อง</Button>
-          </Link> */}
+          </Link>
         </Box>
         <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant='subtitle2' sx={{ whiteSpace: 'nowrap', color: 'text.primary' }}>

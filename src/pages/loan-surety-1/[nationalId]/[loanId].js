@@ -22,9 +22,10 @@ import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
 import CardAddLoanPayment from 'src/views/cards/CardLoanPayment'
 import CardLoanAgreement from 'src/views/cards/CardLoanAgreement'
 import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'
-import CardLoanSurety1 from 'src/views/cards/CardLoanSurety1'
-import CardLoanSurety2 from 'src/views/cards/CardLoanSurety2'
-
+import FormLoanReceipt from 'src/views/form-layouts/FormLoanReceipt'
+import BlankLayout
+ from 'src/@core/layouts/BlankLayout'
+import FormLoanSurety1 from 'src/views/form-layouts/FormLoanSurety1'
 export const LoanMemberContext = createContext()
 
 export const LoanRecordHistoryContext = createContext()
@@ -103,39 +104,12 @@ const FormLayouts = () => {
   console.log('memberDetail = '+memberDetail)
   console.log('loanDetail = '+loanDetail)
 
-  // const SkeletonMemberCardLoading = () => (
-  //   <Box sx={{ width: '100%' }}>
-  //         {memberDetail?.nationalId ? (
-  //           <LoanMemberContext.Provider value={memberDetail}>
-  //             <CardUser />
-  //           </LoanMemberContext.Provider>
-  //         ) : (
-  //           <Typography variant='h4'>
-  //             <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
-  //           </Typography>
-  //         )}
-  //   </Box>
-  // )
-  const SkeletonMemberLoanFormLoading = () => (
+  const SkeletonLoanReceiptLoading = () => (
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
         <LoanContext.Provider value={loanDetail}>
-          <FormLoanDetail />
+          <FormLoanSurety1 />
         </LoanContext.Provider>
-      ) : (
-        <Typography variant='h4'>
-          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
-        </Typography>
-      )}
-    </Box>
-  )
-
-  const SkeletonMemberLoanLoading = () => (
-    <Box sx={{ width: '100%' }}>
-      {memberDetail?.nationalId ? (
-        <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
-          <TableMemberLoanPaymentHistory />
-        </LoanRecordHistoryContext.Provider>
       ) : (
         <Typography variant='h4'>
           <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -147,31 +121,10 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <SkeletonMemberLoanFormLoading />
-      </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardAddLoanPayment />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanAgreement />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanReceipt/>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanSurety1 />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanSurety2 />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanReceipt/>
-        </Grid>
-      <Grid item xs={12}>
-        <SkeletonMemberLoanLoading />
+        <SkeletonLoanReceiptLoading />
       </Grid>
     </Grid>
   )
 }
-
+FormLayouts.getLayout = page => <BlankLayout>{page}</BlankLayout>
 export default FormLayouts

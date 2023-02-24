@@ -58,6 +58,7 @@
     "@mui/styled-engine-sc": "^5.11.0",
     "@popperjs/core": "^2.11.2",
     "apexcharts-clevision": "3.28.5",
+    "async": "^3.2.4",
     "axios": "^0.27.2",
     "babel-eslint": "^10.1.0",
     "clsx": "^1.1.1",
@@ -74,7 +75,8 @@
     "react-hot-toast": "^2.3.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-popper": "^2.2.5",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "thai-baht-text": "^1.0.8"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
