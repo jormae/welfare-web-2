@@ -30,11 +30,6 @@ const TableMemberLoanPaymentHistory = () => {
   return (
     <Card>
       <CardHeader title='ประวัติการชำระเงินกู้สวัสดิการ' titleTypographyProps={{ variant: 'h6' }} />
-      <Link href={`../../loan-payment/${router.query.nationalId}/${router.query.loanId}`} color='primary' sx={{ align:'right'}}>
-          <Button type='button' variant='outlined'>
-              เปิด
-          </Button>
-        </Link>
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
