@@ -63,14 +63,25 @@ const FormLoanReceipt = () => {
 
   return (
 
-          <Grid container spacing={2} sx={{p: 20}}>
+          <Grid container spacing={2} sx={{pl: 15, pr:15}}>
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography variant='h5' sx={{ marginBottom: 2 }}>
+              <Box
+                component="img"
+                sx={{
+                  height: 150,
+                  width: 200
+                }}
+                alt="The house from the offer."
+                src='/images/logos/DTWF.png'
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Typography variant='h5' sx={{ marginBottom: 1 }}>
                 ใบสำคัญรับเงิน
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography variant='h6' sx={{ marginBottom: 2}}>
+                <Typography variant='h6' sx={{ marginBottom: 1}}>
                 กลุ่มสวัสดิการครูดารุสสาลาม
                 </Typography>
             </Grid>
@@ -95,8 +106,8 @@ const FormLoanReceipt = () => {
                 </Typography>
             </Grid>
             <Grid item xs={12} sx={{ml:-8}}>
-        <TableContainer sx={{ml:12}}>
-          <Table style={{width:'100%'}} sx={{  border: "1px solid rgba(224, 224, 224, 1)" }} aria-label='simple table'>
+        <TableContainer sx={{ml:12}} >
+          <Table style={{width:'100%'}} sx={{  border: "1px solid rgba(224, 224, 224, 1)" }} aria-label='simple table' size='small'>
             <TableHead>
               <TableRow>
                 <TableCell align='center' sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}><Typography>รายการ</Typography></TableCell>

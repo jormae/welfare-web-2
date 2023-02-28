@@ -25,13 +25,21 @@ import apiConfig from 'src/configs/apiConfig'
 import SaveIcon from 'mdi-material-ui/Plus'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
+import { letterSpacing } from '@mui/system'
 
 const FormLoan = () => {
 
   const router = useRouter()
+  const userName = typeof window !== 'undefined' ? localStorage.getItem('username') : null
+
+  let loanRequestId
   if (router.isReady) {
     router.query.nationalId
+    loanRequestId = router.query.nationalId ?? userName
   }
+
+  console.log('ready = '+router.isReady)
+  console.log('loanRequestId = '+loanRequestId)
 
   const { register, handleSubmit, control } = useForm();
   
@@ -44,10 +52,7 @@ const FormLoan = () => {
   const [value2, setValue2] = useState(secondRefMember?.value);
 
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-    const userName = typeof window !== 'undefined' ? localStorage.getItem('username') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-  
-    const loanRequestId = memberDetail?.nationalId ? memberDetail?.nationalId : userName
     const loanRequestName = memberDetail?.memberName ? memberDetail?.memberName : memberName
 
   const fetchMemberDetail = () => {
@@ -146,7 +151,7 @@ const FormLoan = () => {
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
             {loanRequestId ? (
-              <TextField fullWidth InputProps={{ readOnly: true }} value={ loanRequestId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
+              <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}

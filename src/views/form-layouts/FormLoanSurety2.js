@@ -63,14 +63,25 @@ const FormLoanSurety1 = () => {
 
   return (
 
-          <Grid container spacing={2} sx={{p: 10}}>
+          <Grid container spacing={2} sx={{pl: 15, pr:15}}>
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography variant='h5' sx={{ marginBottom: 2 }}>
+              <Box
+                component="img"
+                sx={{
+                  height: 150,
+                  width: 200
+                }}
+                alt="The house from the offer."
+                src='/images/logos/DTWF.png'
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Typography variant='h5' sx={{ marginBottom: 1 }}>
                 สัญญาค้ำประกัน
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Typography variant='h6' sx={{ marginBottom: 2}}>
+                <Typography variant='h6' sx={{ marginBottom: 1}}>
                 กลุ่มสวัสดิการครูดารุสสาลาม
                 </Typography>
             </Grid>
@@ -87,7 +98,7 @@ const FormLoanSurety1 = () => {
                 (นาย, นาง, นางสาว) {loanDetail?.memberName} ข้าพเจ้ายินยอมชดใช้กองทุนให้ครบถ้วน</Typography>
             </Grid>
             <Grid item xs={6}/>
-            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
+            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:3}}>
                 <Typography variant='body2'>ลงชื่อ......................................ผู้ค้ำประกัน</Typography>
             </Grid>
             <Grid item xs={6}/>
@@ -95,7 +106,7 @@ const FormLoanSurety1 = () => {
                 <Typography variant='body2'>( {loanDetail?.secondReferenceName} )</Typography>
             </Grid>
             <Grid item xs={6}/>
-            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
+            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:3}}>
                 <Typography variant='body2'>ลงชื่อ......................................พยาน</Typography>
             </Grid>
             <Grid item xs={6}/>
@@ -103,7 +114,7 @@ const FormLoanSurety1 = () => {
                 <Typography variant='body2'>( .............................................. )</Typography>
             </Grid>
             <Grid item xs={6}/>
-            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
+            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:3}}>
                 <Typography variant='body2'>ลงชื่อ......................................พยาน</Typography>
             </Grid>
             <Grid item xs={6}/>
@@ -111,8 +122,8 @@ const FormLoanSurety1 = () => {
                 <Typography variant='body2'>( .............................................. )</Typography>
             </Grid>
 
-            <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center', mt:10 }}>
-                <Typography variant='h6' sx={{ marginBottom: 2}}>
+            <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center', mt:5 }}>
+                <Typography variant='h6' sx={{ marginBottom: 1}}>
                 คำยินยอมของคู่สมรสผู้ค้ำประกัน
                 </Typography>
             </Grid>
@@ -132,7 +143,7 @@ const FormLoanSurety1 = () => {
                 <Typography variant='body2'>( {loanDetail?.secondSpouseName} )</Typography>
             </Grid>
             <Grid item xs={6}/>
-            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
+            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:3}}>
                 <Typography variant='body2'>ลงชื่อ......................................พยาน</Typography>
             </Grid>
             <Grid item xs={6}/>
@@ -140,7 +151,7 @@ const FormLoanSurety1 = () => {
                 <Typography variant='body2'>( .............................................. )</Typography>
             </Grid>
             <Grid item xs={6}/>
-            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
+            <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:3}}>
                 <Typography variant='body2'>ลงชื่อ......................................พยาน</Typography>
             </Grid>
             <Grid item xs={6}/>

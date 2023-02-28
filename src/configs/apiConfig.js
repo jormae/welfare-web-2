@@ -2,7 +2,7 @@ const apiConfig = {
   // ** Layout Configs
   // baseURL: 'http://192.168.1.200:3301'
   // LOCALHOST
-  baseURL: 'http://192.168.2.40:3030'
+  baseURL: 'http://localhost:3030'
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,
   //   // ** Routing Configs
