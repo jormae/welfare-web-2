@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import TablePagination from "@mui/material/TablePagination"
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -18,7 +19,20 @@ import moment from 'moment'
 import { DataContext } from 'src/pages/member'
 
 const TableMember = () => {
+
   const members = useContext(DataContext)
+
+  const [pg, setpg] = React.useState(0);
+  const [rpg, setrpg] = React.useState(5);
+
+  function handleChangePage(event, newpage) {
+      setpg(newpage);
+  }
+
+  function handleChangeRowsPerPage(event) {
+      setrpg(parseInt(event.target.value, 10));
+      setpg(0);
+  }
 
   return (
     <Card>
@@ -59,6 +73,15 @@ const TableMember = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={members.length}
+                rowsPerPage={rpg}
+                page={pg}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
       </CardContent>
     </Card>
   )

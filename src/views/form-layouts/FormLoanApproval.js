@@ -22,12 +22,12 @@ import apiConfig from 'src/configs/apiConfig'
 import Divider from '@mui/material/Divider'
 
 // ** Icons Imports
-import SaveIcon from 'mdi-material-ui/Plus'
+import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 import { LoanContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
-const FormLoanDetail = () => {
+const FormLoanApproval = () => {
 
     const loanDetail = useContext(LoanContext)
 
@@ -179,6 +179,7 @@ const FormLoanDetail = () => {
                 </Select>
             </FormControl>
             <input type='hidden' defaultValue={userName}  {...register('approvedBy')} />
+            <input type='hidden' defaultValue={loanDetail?.loanTypeId}  {...register('loanTypeId')} />
             </Grid>
               ) : ''
             }
@@ -231,4 +232,4 @@ const FormLoanDetail = () => {
   )
 }
 
-export default FormLoanDetail
+export default FormLoanApproval

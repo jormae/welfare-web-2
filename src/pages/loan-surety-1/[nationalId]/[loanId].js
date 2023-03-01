@@ -18,7 +18,7 @@ import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestment
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
 import TableMemberLoanPaymentHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
-import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
+import FormLoanDetail from 'src/views/form-layouts/FormLoanApproval'
 import CardAddLoanPayment from 'src/views/cards/CardLoanPayment'
 import CardLoanAgreement from 'src/views/cards/CardLoanAgreement'
 import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'

@@ -179,6 +179,7 @@ const FormLoanAgreement = () => {
         <Grid item xs={12}>
           <Typography variant='body2'>ข้าพเจ้ายินยอมให้ทางโรงเรียนหักเงินเดือนของข้าพเจ้าตามตารางที่กำหนดข้างต้น</Typography>
         </Grid>
+        {loanDetail?.loanTypeId <= 2 ? (
             <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
               <Grid item xs={12}>
                 <Typography variant='body2' sx={{ display: 'flex', justifyContent: 'center'}}>คำยินยอมของคู่สมรส</Typography>
@@ -192,7 +193,8 @@ const FormLoanAgreement = () => {
                 <Typography variant='body2'  sx={{ display: 'flex', pl:10}}>( {loanDetail?.spouseName} )</Typography>
               </Grid>
             </Grid>
-
+             ) : (<Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}} />)
+            }
             <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
               <Grid item xs={12}>
                 <Typography variant='body2'>ลงชื่อ......................................ผู้รับสวัสดิการฯ</Typography>

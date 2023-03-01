@@ -22,7 +22,10 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
 // ** Icons Imports
-import SaveIcon from 'mdi-material-ui/Plus'
+
+import mdiContentSave from 'mdi-material-ui'
+// import SaveIcon from 'mdi-material-ui/Plus'
+import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 import { letterSpacing } from '@mui/system'
@@ -56,7 +59,7 @@ const FormLoan = () => {
     const loanRequestName = memberDetail?.memberName ? memberDetail?.memberName : memberName
 
   const fetchMemberDetail = () => {
-    let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
+    let uri = apiConfig.baseURL + `/members/${loanRequestId}`
     console.log(uri)
     axios
       .get(uri)
@@ -65,7 +68,7 @@ const FormLoan = () => {
   }
 
   const fetchLoanTypes = async () => {
-    let uri = apiConfig.baseURL + `/utils/loan-types`
+    let uri = apiConfig.baseURL + `/utils/loan-types/${loanRequestId}`
     console.log(uri)
     try {
       await axios
@@ -149,79 +152,102 @@ const FormLoan = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={6}>
-            {loanRequestId ? (
-              <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
+          <Grid container spacing={5} item xs={12} md={6}>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestId} label='เลขที่บัตรประชาชน' {...register('nationalId')} />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                  <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestName} label='ชื่อสมาชิก' />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <InputLabel>ประเภทสสวัสดิการ</InputLabel>
+                  {loanTypes? (
+                  <Select label='ประเภทสสวัสดิการ' defaultValue={loanTypes?.loanTypeId ?? ''} {...register('loanTypeId', { required: true })}>
+                    {loanTypes.map(item => {
+                      return (
+                        <MenuItem key={item.loanTypeId} value={item.loanTypeId}>
+                          {item.loanTypeName} {item.loanAmount} ({item.loanDurationInMonth} เดือน)
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                  ) : (
+                      <Skeleton variant='rectangular' width={250} height={55} />
+                    )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  {firstRefMember? (
+                  <Autocomplete
+                      onChange={(_, v) => setValue(v?.value)}
+                      disablePortal
+                      id="combo-box-demo"
+                      options={firstRefMember}
+                      getOptionLabel={(option) => option.nationalId.toString()}
+                      sx={{ width: 320 }}
+                      renderOption={(props, option) => (
+                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                            {option.memberName}
+                          </Box>
+                        )}
+                      renderInput={(params) => <TextField fullWidth {...params} label="ชื่อผู้ค้ำคนที่ 1" {...register('firstReferenceId')} />}
+                      />
+                      ) : (
+                          <Skeleton variant='rectangular' width={250} height={55} />
+                        )}
+                </FormControl>
+              </Grid>
+              <input type="hidden" value={memberName} {...register('username')}/>
+              <input type="hidden" value={memberRoleId} {...register('memberRoleId')}/>
+              <Grid item xs={12} md={6}>
+                <FormControl >
+                  <Autocomplete
+                  onChange={(_, v) => setValue2(v?.value)}
+                      disablePortal
+                      id="combo-box-demo"
+                      options={secondRefMember}
+                      getOptionLabel={(option) => option.nationalId.toString()}
+                      sx={{ width: 320 }}
+                      renderOption={(props, option) => (
+                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                            {option.memberName}
+                          </Box>
+                        )}
+                      renderInput={(params) => <TextField {...params} label="ชื่อผู้ค้ำคนที่ 2" {...register('secondReferenceId')}/> }
+                      />
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-            {loanRequestName ? (
-                <TextField fullWidth InputProps={{ readOnly: true }} value={loanRequestName} label='ชื่อสมาชิก' />
-              ) : (
-                <Skeleton variant='rectangular' width={250} height={55} />
-              )}
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                <InputLabel>ประเภทสสวัสดิการ</InputLabel>
-                {loanTypes? (
-                <Select label='ประเภทสสวัสดิการ' defaultValue={loanTypes?.loanTypeId ?? ''} {...register('loanTypeId', { required: true })}>
-                  {loanTypes.map(item => {
-                    return (
-                      <MenuItem key={item.loanTypeId} value={item.loanTypeId}>
-                        {item.loanTypeName} ({item.loanAmount})
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                  )}
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <FormControl fullWidth>
-                {firstRefMember? (
-                <Autocomplete
-                    onChange={(_, v) => setValue(v?.value)}
-                    disablePortal
-                    id="combo-box-demo"
-                    options={firstRefMember}
-                    getOptionLabel={(option) => option.nationalId.toString()}
-                    sx={{ width: 300 }}
-                    renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          {option.memberName}
-                        </Box>
-                      )}
-                    renderInput={(params) => <TextField fullWidth {...params} label="ชื่อผู้ค้ำคนที่ 1" {...register('firstReferenceId')} />}
-                    />
-                    ) : (
-                        <Skeleton variant='rectangular' width={250} height={55} />
-                      )}
-              </FormControl>
-            </Grid>
-            <input type="hidden" value={memberName} {...register('username')}/>
-            <input type="hidden" value={memberRoleId} {...register('memberRoleId')}/>
-            <Grid item xs={12} md={6}>
-              <FormControl >
-                <Autocomplete
-                 onChange={(_, v) => setValue2(v?.value)}
-                    disablePortal
-                    id="combo-box-demo"
-                    options={secondRefMember}
-                    getOptionLabel={(option) => option.nationalId.toString()}
-                    sx={{ width: 300 }}
-                    renderOption={(props, option) => (
-                        <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                          {option.memberName}
-                        </Box>
-                      )}
-                    renderInput={(params) => <TextField {...params} label="ชื่อผู้ค้ำคนที่ 2" {...register('secondReferenceId')}/> }
-                    />
-              </FormControl>
+            <Grid container spacing={5} item xs={12} md={6}>
+              <Grid item xs={12} md={12}>
+                <FormControl fullWidth>
+                  <InputLabel>ชี้แจงรายการหนี้</InputLabel>
+                  <Select label='ประเภทสสวัสดิการ' defaultValue='1' {...register('debtStatusId', { required: true })}>
+                        <MenuItem value='1'>ไม่มีหนี้สินใดๆ </MenuItem>
+                        <MenuItem value='2'>มีหนี้สิน </MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid> 
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระออมทรัพย์รายเดือน' {...register('debt1')}/>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระธนาคารอิสลามรายเดือน' {...register('debt2')}/>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระธนาคารออมสินรายเดือน' {...register('debt3')}/>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระชพค.รายเดือน' {...register('debt4')}/>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระกองทุนสงเคราะห์รายเดือน' {...register('debt5')}/>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField fullWidth type='number' label='ยอดชำระอื่นๆรายเดือน' {...register('debt6')}/>
+              </Grid>
             </Grid>
 
             <Grid item xs={12}>

@@ -1,5 +1,5 @@
 # welfare-web-2
-
+material icons (https://v4.mui.com/components/icons/#material-icons)
 version 1.0.0 
 create dashboard page for staff and member
   - staff
@@ -29,12 +29,15 @@ create dashboard page for staff and member
   version 1.0.1
    - staff
     - form approve loan (add payment duration selection, auto add loan fee for emergency loan 50 baht)
-    - search surety info from dropdown select
-    - member page (tabel pagination and seach form)
     - login page (change system logo, loading icon)
     - loan agreement form (hide surety info and withness info for emegency loan)
     - loan request from (add debts info)
     - loan form request (update duplicate condition)
-    - loan payment (add status for closing loan)
-    - allowance form/records page
     
+  version 1.0.2
+   - staff
+    - search surety info from dropdown select
+    - member page (table pagination and seach form)
+    - loan payment (add status for closing loan)
+    - allowance form/records page 
+    - forms validations

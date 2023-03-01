@@ -18,7 +18,7 @@ import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestment
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
 import TableMemberLoanRecordHistory from 'src/views/tables/TableMemberLoanPaymentHistory'
-import FormLoanDetail from 'src/views/form-layouts/FormLoanDetail'
+import FormLoanDetail from 'src/views/form-layouts/FormLoanApproval'
 import FormLoan from 'src/views/form-layouts/FormLoan'
 import FormLoanPayment from 'src/views/form-layouts/FormLoanPayment'
 import FormInvestmentPayment from 'src/views/form-layouts/FormInvestment'

@@ -121,7 +121,6 @@ const FormLoanSurety1 = () => {
             <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center'}}>
                 <Typography variant='body2'>( .............................................. )</Typography>
             </Grid>
-
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center', mt:5 }}>
                 <Typography variant='h6' sx={{ marginBottom: 1}}>
                 คำยินยอมของคู่สมรสผู้ค้ำประกัน
