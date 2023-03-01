@@ -23,10 +23,10 @@ import CardAddLoanPayment from 'src/views/cards/CardLoanPayment'
 import CardLoanAgreement from 'src/views/cards/CardLoanAgreement'
 import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'
 import FormLoanReceipt from 'src/views/form-layouts/FormLoanReceipt'
-import BlankLayout
- from 'src/@core/layouts/BlankLayout'
+import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FormLoanSurety1 from 'src/views/form-layouts/FormLoanSurety1'
 import FormLoanSurety2 from 'src/views/form-layouts/FormLoanSurety2'
+
 export const LoanMemberContext = createContext()
 
 export const LoanRecordHistoryContext = createContext()
@@ -128,4 +128,5 @@ const FormLayouts = () => {
   )
 }
 FormLayouts.getLayout = page => <BlankLayout>{page}</BlankLayout>
+
 export default FormLayouts
