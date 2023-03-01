@@ -1,9 +1,9 @@
 const apiConfig = {
   // ** Layout Configs
-  // baseURL: 'http://192.168.1.200:3301'
+  // NAIF PC
+  // baseURL: 'http://192.168.1.34:3030'
   // LOCALHOST
-  baseURL: 'http://192.168.1.34:3030'
-  // baseURL: 'http://localhost:3030'
+  baseURL: 'http://localhost:3030'
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,
   //   // ** Routing Configs

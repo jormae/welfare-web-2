@@ -69,7 +69,7 @@ const CardUser = () => {
           {/* <Link href={`../../loan-payment/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link> */}
-          <Link href={`../../investment-payment/${user?.nationalId}`} color='primary'>
+          <Link href={`../../investment-form/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ฝาก-ถอนหุ้น</Button>
           </Link>
           <Link href={`../../loan-form/${user?.nationalId}`} color='primary'>
