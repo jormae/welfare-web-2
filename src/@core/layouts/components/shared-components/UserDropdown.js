@@ -142,12 +142,6 @@ const UserDropdown = () => {
             คำร้องขอสวัสดิการ
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/loan-payment/${username}`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            แจ้งชำระเงิน
-          </Box>
-        </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/investment-form/${username}`)}>
           <Box sx={styles}>
             <EmailOutline sx={{ marginRight: 2 }} />

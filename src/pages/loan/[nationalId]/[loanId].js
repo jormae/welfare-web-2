@@ -24,6 +24,7 @@ import CardLoanAgreement from 'src/views/cards/CardLoanAgreement'
 import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'
 import CardLoanSurety1 from 'src/views/cards/CardLoanSurety1'
 import CardLoanSurety2 from 'src/views/cards/CardLoanSurety2'
+import FormDebtReport from 'src/views/form-layouts/FormDebtReport'
 
 export const LoanMemberContext = createContext()
 
@@ -130,6 +131,20 @@ const FormLayouts = () => {
     </Box>
   )
 
+  const SkeletonMemberDebtReportFormLoading = () => (
+    <Box sx={{ width: '100%' }}>
+      {memberDetail?.nationalId ? (
+        <LoanContext.Provider value={loanDetail}>
+          <FormDebtReport />
+        </LoanContext.Provider>
+      ) : (
+        <Typography variant='h4'>
+          <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+        </Typography>
+      )}
+    </Box>
+  )
+
   const SkeletonMemberLoanLoading = () => (
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
@@ -146,8 +161,11 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12}>
+      <Grid item xs={12} md={6}>
         <SkeletonMemberLoanFormLoading />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <SkeletonMemberDebtReportFormLoading />
       </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <CardAddLoanPayment />

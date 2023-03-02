@@ -57,7 +57,7 @@ const FormLoanAgreement = () => {
   }
 
   const fetchLoanAgreementDetail = async () => {
-    let uri = apiConfig.baseURL + `/utils/loan-month-range/${loanDetail?.loanId}`
+    let uri = apiConfig.baseURL + `/utils/loan-month-range/${router.query.loanId}`
     console.log(uri)
     try{
     const res = await axios.get(uri)
@@ -79,13 +79,14 @@ const FormLoanAgreement = () => {
   const getPlansContent = (loanAgreementDetail) => {
     let content = [];
     let approvedAt = loanDetail?.loanApprovedAt
+    let startLoanDate = moment(loanDetail?.startLoanDate).add(1, 'months').format('DD/MM/YYYY')
     let principle = loanDetail?.principle;
     let monthlyProfit = loanDetail?.monthlyProfit;
     let monthlyPayment = loanDetail?.monthlyPayment;
     let j = loanDetail?.loanAmount + principle;
     let k = 0;
     let balance = 0;
-    console.log('approvedAt : '+approvedAt)
+    console.log('startLoanDate : '+startLoanDate)
     for (let i = 1; i <=loanDetail?.loanDurationInMonth; i++) {
       const item = i;
       j = j - principle;
@@ -97,7 +98,7 @@ const FormLoanAgreement = () => {
          {i}
         </TableCell>
         <TableCell align='center' component='th' scope='row' sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}>
-          {moment(approvedAt).add(i, 'months').format('MM')+'/'+moment(approvedAt).add(543, 'years').format('YYYY')}
+          {moment(startLoanDate).add(i, 'months').format('MM')+'/'+moment(startLoanDate).add(543, 'years').format('YYYY')}
         </TableCell>
         <TableCell align='center' sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}>
          {principle}
@@ -179,7 +180,7 @@ const FormLoanAgreement = () => {
         <Grid item xs={12}>
           <Typography variant='body2'>ข้าพเจ้ายินยอมให้ทางโรงเรียนหักเงินเดือนของข้าพเจ้าตามตารางที่กำหนดข้างต้น</Typography>
         </Grid>
-        {loanDetail?.loanTypeId <= 2 ? (
+        {loanDetail?.loanTypeId > 2 ? (
             <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', mt:5}}>
               <Grid item xs={12}>
                 <Typography variant='body2' sx={{ display: 'flex', justifyContent: 'center'}}>คำยินยอมของคู่สมรส</Typography>

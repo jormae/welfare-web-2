@@ -51,8 +51,8 @@ const FormLoan = () => {
   const [loanTypes, setLoanTypes] = useState()
   const [firstRefMember, setFirstMember] = useState()
   const [secondRefMember, setSecondMember] = useState()
-  const [value, setValue] = useState(firstRefMember?.value);
-  const [value2, setValue2] = useState(secondRefMember?.value);
+  // const [value, setValue] = useState(firstRefMember?.value);
+  // const [value2, setValue2] = useState(secondRefMember?.value);
 
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
@@ -179,46 +179,42 @@ const FormLoan = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
-                  {firstRefMember? (
-                  <Autocomplete
-                      onChange={(_, v) => setValue(v?.value)}
-                      disablePortal
-                      id="combo-box-demo"
-                      options={firstRefMember}
-                      getOptionLabel={(option) => option.nationalId.toString()}
-                      sx={{ width: 320 }}
-                      renderOption={(props, option) => (
-                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                            {option.memberName}
-                          </Box>
-                        )}
-                      renderInput={(params) => <TextField fullWidth {...params} label="ชื่อผู้ค้ำคนที่ 1" {...register('firstReferenceId')} />}
-                      />
-                      ) : (
-                          <Skeleton variant='rectangular' width={250} height={55} />
-                        )}
+                  <InputLabel>ชื่อผู้ค้ำคนที่ 1</InputLabel>
+                  {firstRefMember ? (
+                  <Select label='ชื่อผู้ค้ำคนที่ 1' defaultValue={firstRefMember?.nationalId ?? ''} {...register('firstReferenceId')}>
+                    {firstRefMember.map(item => {
+                      return (
+                        <MenuItem key={item.nationalId} value={item.nationalId}>
+                          {item.memberName}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                  ) : (
+                      <Skeleton variant='rectangular' width={250} height={55} />
+                    )}
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <InputLabel>ชื่อผู้ค้ำคนที่ 2</InputLabel>
+                  {secondRefMember ? (
+                  <Select label='ชื่อผู้ค้ำคนที่ 2' defaultValue={secondRefMember?.nationalId ?? ''} {...register('secondReferenceId')}>
+                    {secondRefMember.map(item => {
+                      return (
+                        <MenuItem key={item.nationalId} value={item.nationalId}>
+                          {item.memberName}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                  ) : (
+                      <Skeleton variant='rectangular' width={250} height={55} />
+                    )}
                 </FormControl>
               </Grid>
               <input type="hidden" value={memberName} {...register('username')}/>
               <input type="hidden" value={memberRoleId} {...register('memberRoleId')}/>
-              <Grid item xs={12} md={6}>
-                <FormControl >
-                  <Autocomplete
-                  onChange={(_, v) => setValue2(v?.value)}
-                      disablePortal
-                      id="combo-box-demo"
-                      options={secondRefMember}
-                      getOptionLabel={(option) => option.nationalId.toString()}
-                      sx={{ width: 320 }}
-                      renderOption={(props, option) => (
-                          <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                            {option.memberName}
-                          </Box>
-                        )}
-                      renderInput={(params) => <TextField {...params} label="ชื่อผู้ค้ำคนที่ 2" {...register('secondReferenceId')}/> }
-                      />
-                </FormControl>
-              </Grid>
             </Grid>
             <Grid container spacing={5} item xs={12} md={6}>
               <Grid item xs={12} md={12}>
