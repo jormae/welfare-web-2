@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
+import Chip from '@mui/material/Chip';
 
 import { LoanHistoryContext } from 'src/pages/member/[nationalId]'
 
@@ -55,7 +56,9 @@ const TableMemberLoanHistory = () => {
                   <TableCell align='center'>{row.loanAmount}</TableCell>
                   <TableCell align='center' color='primary'>{row.totalPayment ?? 0}</TableCell>
                   <TableCell align='center' color='primary'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
-                  <TableCell align='center'>{row.loanStatusName ?? 'รออนุมัติ'}</TableCell>
+                  <TableCell align='center'>
+                  <Chip label={row.loanStatusName ?? 'รออนุมัติ'} color="warning" />
+                    </TableCell>
                   <TableCell align='center'>
                     <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
                         <Button type='button' variant='outlined'>

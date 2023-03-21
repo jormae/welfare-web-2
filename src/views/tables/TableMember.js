@@ -53,7 +53,7 @@ const TableMember = () => {
             </TableHead>
             <TableBody>
               {members.blogs.map(row => (
-                <TableRow key={row.memberId}>
+                <TableRow key={row.nationalId}>
                   <TableCell align='center' component='th' scope='row'>
                   {row.nationalId}
                   </TableCell>

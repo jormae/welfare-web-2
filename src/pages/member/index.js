@@ -26,31 +26,16 @@ export const CardContext = createContext()
 
 const FormLayouts = () => {
   const [members, setMembers] = useState({ blogs: [] })
-  const [statNewMember, setStatNewMember] = useState(0)
-  const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
   const fetchMembers = async () => {
     let uri = apiConfig.baseURL + `/members`
-    console.log(uri)
+    // console.log(uri)
     try {
       const { data } = await axios.get(uri)
       setMembers({ blogs: data })
     } catch (error) {
       // console.log(error)
-    }
-  }
-
-  const fetchStatNewMember = async () => {
-    let uri = apiConfig.baseURL + `/stat/new-member/${staffName}`
-    console.log(uri)
-
-    try {
-      await axios
-        .get(uri)
-        .then(result => setStatNewMember(result.data[0]))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
     }
   }
 
@@ -75,7 +60,7 @@ const FormLayouts = () => {
         if (data.status == 'success') {
           toast.success(data.message)
           fetchMembers()
-          fetchStatNewMember()
+          // fetchStatNewMember()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -99,12 +84,12 @@ const FormLayouts = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         if (data.status !== 'success') {
           localStorage.removeItem('token')
           localStorage.removeItem('staffName')
           window.location = '/pages/login'
-          console.log(data)
+          // console.log(data)
         }
       })
       .catch(error => {
@@ -115,7 +100,6 @@ const FormLayouts = () => {
   useEffect(() => {
     verifyToken()
     fetchMembers()
-    fetchStatNewMember()
   }, [])
 
   return (

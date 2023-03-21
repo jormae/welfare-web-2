@@ -27,6 +27,7 @@ import mdiContentSave from 'mdi-material-ui'
 // import SaveIcon from 'mdi-material-ui/Plus'
 import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
+import FormHelperText from '@mui/material/FormHelperText';
 import moment from 'moment'
 import { letterSpacing } from '@mui/system'
 
@@ -44,7 +45,7 @@ const FormLoan = () => {
   console.log('ready = '+router.isReady)
   console.log('loanRequestId = '+loanRequestId)
 
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, formState: { errors } } = useForm();
   
   const [loading, setLoading] = React.useState(false)
   const [memberDetail, setMemberDetail] = useState()
@@ -163,7 +164,13 @@ const FormLoan = () => {
                 <FormControl fullWidth>
                   <InputLabel>ประเภทสสวัสดิการ</InputLabel>
                   {loanTypes? (
-                  <Select label='ประเภทสสวัสดิการ' defaultValue={loanTypes?.loanTypeId ?? ''} {...register('loanTypeId', { required: true })}>
+                  <Select  
+                    id="loanTypeId"
+                    aria-invalid={errors.loanTypeId ? "true" : "false"}
+                    label='ประเภทสสวัสดิการ' 
+                    defaultValue={loanTypes?.loanTypeId ?? ''} 
+                    aria-describedby="loanTypeId"
+                    {...register('loanTypeId', { required: true })}>
                     {loanTypes.map(item => {
                       return (
                         <MenuItem key={item.loanTypeId} value={item.loanTypeId}>
@@ -176,6 +183,9 @@ const FormLoan = () => {
                       <Skeleton variant='rectangular' width={250} height={55} />
                     )}
                 </FormControl>
+                {errors.loanTypeId && errors.loanTypeId.type === "required" && (
+                  <FormHelperText id="loanTypeId" sx={{color:'#d32f2f'}}>Error : กรุณาเลือกประเภทสวัสดิการ</FormHelperText>
+                )}
               </Grid>
               <Grid item xs={12} md={6}>
                 <FormControl fullWidth>

@@ -148,6 +148,12 @@ const UserDropdown = () => {
             คำร้องฝากถอน-หุ้น
           </Box>
         </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
+            รายการสวัสดิการ
+          </Box>
+        </MenuItem>
         {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <MessageOutline sx={{ marginRight: 2 }} />

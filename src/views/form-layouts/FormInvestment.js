@@ -22,6 +22,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import Divider from '@mui/material/Divider'
+import FormHelperText from '@mui/material/FormHelperText';
 
 // ** Icons Imports
 import SaveIcon from 'mdi-material-ui/Plus'
@@ -41,7 +42,7 @@ const FormInvestment = () => {
     
     console.log(investmentDetail)
 
-    const { register, handleSubmit, control } = useForm();
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
   
     const [loading, setLoading] = React.useState(false)
     const [paymentTypes, setPaymentTypes] = useState([])
@@ -52,7 +53,7 @@ const FormInvestment = () => {
 // console.log(paymentSuggestionInfo?.loanId)
 
     const [shareQuantity, setShareQuantity] = useState()
-    const [valuePerShare, setValuePerShare] = useState()
+    const [valuePerShare, setValuePerShare] = useState(100)
     const [netTotalShare, setNetTotalShare] = useState()
     const totalShare = (parseInt(shareQuantity, 10) * parseInt(valuePerShare, 10))
 
@@ -146,10 +147,13 @@ const FormInvestment = () => {
                     </FormControl>
             </Grid> 
             <Grid item xs={12} md={6}>
-                <TextField fullWidth defaultValue="0" type='number' label='จำนวนหุ้น' {...register('shareQuantity')} onChange={handleChangeShareQuantity} />
+                <TextField fullWidth type='number' label='จำนวนหุ้น' {...register('shareQuantity', { required: true })} onChange={handleChangeShareQuantity} />
+                {errors.shareQuantity && errors.shareQuantity.type === "required" && (
+                  <FormHelperText id="shareQuantity" sx={{color:'#d32f2f'}}>Error : กรุณาใส่ข้อมูลจำนวนหุ้น</FormHelperText>
+                )}
             </Grid>
             <Grid item xs={12} md={6}>
-                    <TextField fullWidth  type='number' label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
+              <TextField fullWidth  defaultValue="100" type='number' label='ราคาหุ้นต่อหน่วย' {...register('valuePerShare')} onChange={handleChangeValuePerShare} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <TextField fullWidth InputProps={{ readOnly: true }} value={totalShare} label='จำนวนเงินลงทุนทั้งหมด' />
