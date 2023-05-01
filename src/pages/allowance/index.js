@@ -19,6 +19,7 @@ import CardAddMember from 'src/views/cards/CardAddMember'
 import TableAllowance from 'src/views/tables/TableAllowance'
 import CardAddAllowance from 'src/views/cards/CardAddAllowance'
 import FormAllowance from 'src/views/form-layouts/FormAllowance'
+import CardAllowances from 'src/views/cards/CardAllowances'
 
 const FormLayouts = () => {
   const [loans, setLoans] = useState({ blogs: [] })
@@ -41,15 +42,9 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardMember />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardTotalLoan />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardAddAllowance/>
-        </Grid>
+       <Grid container item>
+        <CardAllowances />
+       </Grid>
         <Grid item xs={12}>
           <FormAllowance />
         </Grid>

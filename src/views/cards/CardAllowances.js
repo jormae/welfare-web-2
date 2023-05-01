@@ -64,7 +64,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       รายรับ
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.INCOME_ALLOWANCE.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.INCOME_ALLOWANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -98,7 +98,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       รายจ่าย
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.EXPENSE_ALLOWANCE.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.EXPENSE_ALLOWANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -132,7 +132,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       คงเหลือ
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.TOTAL_ALLOWANCE_BALANCE.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.TOTAL_ALLOWANCE_BALANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>

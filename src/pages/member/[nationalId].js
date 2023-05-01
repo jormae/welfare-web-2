@@ -18,6 +18,7 @@ import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestment
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
 import TableMemberSuretyHistory from 'src/views/tables/TableMemberSuretyHistory'
+import FormAccount from 'src/views/form-layouts/FormAccount'
 
 const defaultData = {
   ptName: 'Loading',
@@ -249,7 +250,7 @@ const FormLayouts = () => {
           <TabList onChange={handleChange} aria-label='lab API tabs example'>
             <Tab label='ข้อมูลสมาชิก' value='member' />
             <Tab label='ข้อมูลคู่สมรส' value='spouse' />
-            <Tab label='ประวัติหุ้น' value='investment2' />
+            <Tab label='ข้อมูลบัญชีผู้ใช้' value='account' />
           </TabList>
         </Box>
       <TabPanel value='member'>
@@ -284,11 +285,11 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
-        <TabPanel value='investment2'>
+        <TabPanel value='account'>
           {memberDetail.nationalId ? (
-            <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-              <TableMemberInvestmentHistory />
-            </InvesmentHistoryContext.Provider>
+            <MemberContext.Provider value={memberDetail}>
+              <FormAccount />
+            </MemberContext.Provider>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />

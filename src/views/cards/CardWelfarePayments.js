@@ -64,7 +64,7 @@ const CardWelfarePayments = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       ยอดชำระประจำเดือน
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PAID.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PAID?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -98,7 +98,7 @@ const CardWelfarePayments = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       ยอดค้างชำระประจำเดือน
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PENDING_PAYMENT.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PENDING_PAYMENT?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -132,7 +132,7 @@ const CardWelfarePayments = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       ยอดติดตามชำระประจำเดือน
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_FOLLOWUP_PAYMENT.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_FOLLOWUP_PAYMENT?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -166,7 +166,7 @@ const CardWelfarePayments = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       กำไรประจำเดือน
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PROFIT.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{welfareMonthlyPayments[0]?.TOTAL_PROFIT?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>

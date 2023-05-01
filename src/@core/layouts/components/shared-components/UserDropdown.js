@@ -151,9 +151,22 @@ const UserDropdown = () => {
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
           <Box sx={styles}>
             <EmailOutline sx={{ marginRight: 2 }} />
-            รายการสวัสดิการ
+            รายการเงินสมทบ
           </Box>
         </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/monthly/welfare-payment`)}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
+            รายงานสวัสดิการรายเดือน
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/yearly/summary`)}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
+            รายงานสรุปสวัสดิการรายปี
+          </Box>
+        </MenuItem>
+        
         {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <MessageOutline sx={{ marginRight: 2 }} />

@@ -5,7 +5,7 @@ const apiConfig = {
   // MY LOCALHOST
   // baseURL: 'http://192.168.110.166:3030'
   // LOCALHOST
-  baseURL: 'http://localhost:3030'
+  baseURL: 'http://localhost:3001'
 
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,
