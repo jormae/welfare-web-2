@@ -52,6 +52,7 @@ const FormAccount = () => {
   const [confirmLoading, setConfirmLoading] = React.useState(false)
   const [newPassword, setNewPassword] = useState()
   const username = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
 
   const onSubmit = data => {
     setSaveLoading(true)
@@ -222,6 +223,7 @@ const FormAccount = () => {
               </Box>
             </Grid> 
             <Grid item xs={6}>
+            { memberRoleId == 1 || memberRoleId == 3 ? (
               <Box
                 sx={{
                   gap: 5,
@@ -235,8 +237,6 @@ const FormAccount = () => {
                 <LoadingButton
                   color='secondary'
                   onClick={handleClickOpen}
-                //   loading={loading}
-                //   loadingPosition='start'
                   startIcon={<LockOpenIcon />}
                   variant='contained'
                   size='large'
@@ -244,7 +244,8 @@ const FormAccount = () => {
                   Reset Password
                 </LoadingButton>
               </Box>
-            </Grid>
+              ) : ''}
+              </Grid>
           </Grid>
           </form>
         </CardContent>

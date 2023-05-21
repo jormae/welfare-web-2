@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, ChangeEvent } from 'react'
 import Skeleton from '@mui/material/Skeleton'
 import { Controller, useForm } from 'react-hook-form'
 import DatePicker from 'react-datepicker'
@@ -22,7 +22,7 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
 // ** Icons Imports
-import SaveIcon from 'mdi-material-ui/Plus'
+import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
@@ -43,6 +43,13 @@ const FormLoanPayment = () => {
   const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
   console.log('monthno : '+paymentSuggestionInfo?.monthNo)
 
+  const [file, setFile] = useState()
+  console.log(file)
+
+  function handleChange(event) {
+    setFile(event.target.files[0])
+  }
+  
   const fetchPaymentTypes = async () => {
     let uri = apiConfig.baseURL + `/utils/payment-types`
     console.log(uri)
@@ -62,22 +69,38 @@ const FormLoanPayment = () => {
   }, [])
 
   const onSubmit = data => {
-    setLoading(true)
+    // setLoading(true)
     
-    console.log(data)
+  console.log(data)
+  // const formData = new FormData();
+  //       formData.append("file", data.slip[0]);
+  const formData = new FormData();
+    formData.append('slip', data.slip[0]);
+    // nationalId, loanId, loanPaymentMonth, monthNo, paymentAmount, paymentTypeId, userName, memberRoleId
+    formData.append('nationalId', data.nationalId)
+    formData.append('loanId', data.loanId)
+    formData.append('loanPaymentMonth', data.loanPaymentMonth)
+    formData.append('monthNo', data.monthNo)
+    formData.append('paymentAmount', data.paymentAmount)
+    formData.append('paymentTypeId', data.paymentTypeId)
+    formData.append('userName', data.userName)
+    formData.append('memberRoleId', data.memberRoleId)
+    
 
     let uri = apiConfig.baseURL + `/payments`
 
     fetch(uri, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+      // headers: {
+      //   'Content-Type': 'application/json',
+      //   // 'content-type': 'multipart/form-data',
+      // },
+      // body: JSON.stringify(data)
+      body:formData,
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         setLoading(false)
         if (data.status == 'success') {
           toast.success(data.message)
@@ -161,6 +184,9 @@ const FormLoanPayment = () => {
                     ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField type='file' fullWidth {...register('slip')}/>              
             </Grid>
               <input type='hidden' {...register('userName')} value={userName} />
               <input type='hidden' {...register('memberRoleId')} value={memberRoleId} />

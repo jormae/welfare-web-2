@@ -15,6 +15,8 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
+import Avatar from '@mui/material/Avatar'
+import apiConfig from 'src/configs/apiConfig'
 
 import { LoanRecordHistoryContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
@@ -58,7 +60,11 @@ const TableMemberLoanPaymentHistory = () => {
                   </TableCell>
                   <TableCell align='center'>{row.paymentTypeName}</TableCell>
                   <TableCell align='center'>{row.paymentAmount}</TableCell>
-                  <TableCell align='center'></TableCell>
+                  <TableCell align='center'>
+                    <Link href={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} color='success'>
+                      <Avatar alt='John Doe' src={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} sx={{ width: '2.5rem', height: '2.5rem' }} />
+                    </Link>
+                  </TableCell>
                   <TableCell align='center'></TableCell>
                   <TableCell align='center'>{row.loanStatusName}</TableCell>
                   <TableCell align='center'>{row.approvedBy ?? '-'}</TableCell>
