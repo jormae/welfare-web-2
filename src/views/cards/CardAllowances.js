@@ -24,7 +24,7 @@ const CardAllowances = () => {
   console.log(allowances)
 
   const fetchAllowances = async () => {
-    let uri = apiConfig.baseURL + `/allowances/date/${today}`
+    let uri = apiConfig.baseURL + `/allowances/sum`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)

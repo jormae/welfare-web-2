@@ -49,6 +49,7 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const LoginPage = () => {
+  console.log("base uri = "+process.env.REACT_APP_BASE_URI)
 
   const [loading, setLoading] = React.useState(false)
   const [err, setError] = useState(false)
@@ -125,7 +126,7 @@ const LoginPage = () => {
                 alt="The house from the offer."
                 src='/images/logos/DTWF.png'
               />
-            
+            <Typography>{process.env.REACT_APP_BASE_URI}</Typography>
             <Typography
               variant='h6'
               sx={{

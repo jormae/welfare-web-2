@@ -56,8 +56,8 @@ const CardFollowUpLoan = () => {
                 <Icon path={mdiAccount} title='User Profile' size={2} />
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width:30 }}>
-                <Typography variant='h6' sx={{width:300}}>Follow Up Loan</Typography>
-                <Typography variant='h6'>{totalFollowUpLoan}</Typography>
+                <Typography variant='h6' sx={{width:300}}>ติดตามค้างชำระ</Typography>
+                <Typography variant='h6' sx={{width:300}}>{totalFollowUpLoan ?? 0} ราย</Typography>
               </Box>
             </Box>
           </Grid>

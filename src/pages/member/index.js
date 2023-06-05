@@ -19,6 +19,7 @@ import CardQueueLoan from 'src/views/cards/CardQueueLoan'
 import CardMember from 'src/views/cards/CardMember'
 import CardTotalLoan from 'src/views/cards/CardTotalLoan'
 import CardAddMember from 'src/views/cards/CardAddMember'
+import TableTodo from 'src/views/tables/TableTodo'
 
 export const DataContext = createContext()
 
@@ -26,11 +27,11 @@ export const CardContext = createContext()
 
 const FormLayouts = () => {
   const [members, setMembers] = useState({ blogs: [] })
+
   // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
   const fetchMembers = async () => {
     let uri = apiConfig.baseURL + `/members`
-    // console.log(uri)
     try {
       const { data } = await axios.get(uri)
       setMembers({ blogs: data })
@@ -60,7 +61,6 @@ const FormLayouts = () => {
         if (data.status == 'success') {
           toast.success(data.message)
           fetchMembers()
-          // fetchStatNewMember()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -84,12 +84,10 @@ const FormLayouts = () => {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
         if (data.status !== 'success') {
           localStorage.removeItem('token')
           localStorage.removeItem('staffName')
           window.location = '/pages/login'
-          // console.log(data)
         }
       })
       .catch(error => {
@@ -116,6 +114,7 @@ const FormLayouts = () => {
 
       <DataContext.Provider value={members}>
         <Grid item xs={12}>
+          {/* <TableTodo /> */}
           <TableMember />
         </Grid>
       </DataContext.Provider>

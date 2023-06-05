@@ -55,9 +55,9 @@ const CardTotalMoney = () => {
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
                 <Typography variant='h6' sx={{ width: 300 }}>
-                  ยอดเงินทั้งหมด
+                  ยอดเงินสวัสดิการทั้งหมด
                 </Typography>
-                <Typography variant='h6'>{totalShare}</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalShare ?? 0} บาท</Typography>
               </Box>
             </Box>
           </Grid>

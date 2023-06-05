@@ -5,7 +5,9 @@ const apiConfig = {
   // MY LOCALHOST
   // baseURL: 'http://192.168.110.166:3030'
   // LOCALHOST
-  baseURL: 'http://localhost:3001'
+  baseURL: 'http://localhost:3030'
+  // baseURL: process.env.REACT_APP_BASE_URI
+  
 
   //   mode: 'light' /* light | dark */,
   //   contentWidth: 'boxed' /* full | boxed */,

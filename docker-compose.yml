@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   web:
+    image: 'jormae/welfare-web:1.0.4'
     build: .
     ports:
       - 3000:3000

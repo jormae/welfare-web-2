@@ -1,5 +1,5 @@
 // ** MUI Imports
-import React, { useContext } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -14,25 +14,12 @@ import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
-import moment from 'moment'
 
 import { DataContext } from 'src/pages/member'
 
-const TableMember = () => {
+const TableMember = (props) => {
 
   const members = useContext(DataContext)
-
-  const [pg, setpg] = React.useState(0);
-  const [rpg, setrpg] = React.useState(5);
-
-  function handleChangePage(event, newpage) {
-      setpg(newpage);
-  }
-
-  function handleChangeRowsPerPage(event) {
-      setrpg(parseInt(event.target.value, 10));
-      setpg(0);
-  }
 
   return (
     <Card>
@@ -73,15 +60,7 @@ const TableMember = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={members.length}
-                rowsPerPage={rpg}
-                page={pg}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+       
       </CardContent>
     </Card>
   )

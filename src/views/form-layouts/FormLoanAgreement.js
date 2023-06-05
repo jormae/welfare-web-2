@@ -101,7 +101,7 @@ const FormLoanAgreement = () => {
           {moment(startLoanDate).add(i, 'months').format('MM')+'/'+moment(startLoanDate).add(543, 'years').format('YYYY')}
         </TableCell>
         <TableCell align='center' sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}>
-         {principle}
+         {loanDetail?.loanMainTypeId == 1 ? '' : principle}
         </TableCell>
         <TableCell align='center' sx={{ border: "1px solid rgba(224, 224, 224, 1)" }}>
          {monthlyProfit}
@@ -155,7 +155,7 @@ const FormLoanAgreement = () => {
             <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'left' }}>
                 <Typography variant='body2' sx={{lineHeight:2, justifyContent:'justify'}} paragraph="true">
                 ข้าพเจ้า (นาย, นาง, นางสาว) {loanDetail?.memberName} ที่อยู่ {loanDetail?.houseNo} ถ.{loanDetail?.streetName ?? '-'} ม.{loanDetail?.villageNo} ต.{loanDetail?.subDistrict} อ.{loanDetail?.district} จ.{loanDetail?.province} รหัสไปรษณีย์ {loanDetail?.postCode}   
-                &nbsp;ได้รับเงินสวัสดิการสามัญกลุ่มสวัสดิการครูดารุสสาลาม จำนวน {loanDetail?.loanAmount} บาท ({THBText(loanDetail?.loanAmount)}) โดยกำหนดชำระดังต่อไปนี้
+                &nbsp;ได้รับเงินสวัสดิการ{loanDetail?.loanMainTypeId == 1 ? 'ฉุกเฉิน' : 'สามัญ'} กลุ่มสวัสดิการครูดารุสสาลาม จำนวน {loanDetail?.loanAmount} บาท ({THBText(loanDetail?.loanAmount)}) โดยกำหนดชำระดังต่อไปนี้
                 </Typography>
             </Grid>
         <Grid item xs={12} sx={{ml:-8}}>

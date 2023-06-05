@@ -54,9 +54,9 @@ const CardQueueLoan = () => {
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
                 <Typography variant='h6' sx={{ width: 300 }}>
-                  Queue Loan
+                  รายการขอกู้สวัสดิการ
                 </Typography>
-                <Typography variant='h6'>{totalQueueLoan}</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalQueueLoan ?? 0} รายการ</Typography>
               </Box>
             </Box>
           </Grid>

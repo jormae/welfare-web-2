@@ -55,9 +55,9 @@ const CardTotalLoan = () => {
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
                 <Typography variant='h6' sx={{ width: 300 }}>
-                  ยอดเงินกู้ทั้งหมด
+                  ยอดเงินกู้สวัสดิการทั้งหมด
                 </Typography>
-                <Typography variant='h6'>{totalLoan}</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalLoan ?? 0} บาท</Typography>
               </Box>
             </Box>
           </Grid>
