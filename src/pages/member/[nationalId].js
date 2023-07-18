@@ -306,12 +306,26 @@ const FormLayouts = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabHistoryChange} aria-label='lab API tabs example'>
             <Tab label='ประวัติกู้' value='loan' />
+            <Tab label='ประวัติกู้อื้นๆ' value='otherLoan' />
             <Tab label='ประวัติหุ้น' value='investment' />
             <Tab label='ประวัติปันผล' value='dividend' />
             <Tab label='ประวัติค้ำประกัน' value='surety' />
           </TabList>
         </Box>
         <TabPanel value='loan'>
+          {memberLoanHistories.blogs.length > 0 ? (
+            <Grid container wrap='nowrap'>
+              <LoanHistoryContext.Provider value={memberLoanHistories}>
+                <TableMemberLoanHistory />
+              </LoanHistoryContext.Provider>
+            </Grid>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
+        <TabPanel value='otherLoan'>
           {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
               <LoanHistoryContext.Provider value={memberLoanHistories}>

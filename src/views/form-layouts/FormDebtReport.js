@@ -36,7 +36,8 @@ const FormDebtReport = () => {
     const [loading, setLoading] = React.useState(false)
     const userName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-    console.log("loanStatus : "+loanDetail?.loanStatusId)
+    console.log("loanStatusId : "+loanDetail?.loanStatusId)
+    const btnStatus = (loanDetail?.loanStatusId == "0") ? '' : 'disabled';
 
   const onSubmit = data => {
     setLoading(true)
@@ -77,22 +78,22 @@ const FormDebtReport = () => {
                 <TextField fullWidth InputProps={{ readOnly: true }} label='สถานะหนี้สิน' defaultValue={loanDetail?.debtStatusId == 1 ?  'ไม่มีหนี้สิน' : 'มีหนี้สิน'} />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระออมทรัพย์รายเดือน' defaultValue={loanDetail?.debt1}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระออมทรัพย์รายเดือน' defaultValue={loanDetail?.debt1} {...register('debt1')}/>
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระธนาคารอิสลามรายเดือน' defaultValue={loanDetail?.debt2}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระธนาคารอิสลามรายเดือน' defaultValue={loanDetail?.debt2} {...register('debt2')}/>
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระธนาคารออมสินรายเดือน' defaultValue={loanDetail?.debt3}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระธนาคารออมสินรายเดือน' defaultValue={loanDetail?.debt3} {...register('debt3')}/>
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระชพค.รายเดือน' defaultValue={loanDetail?.debt4}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระชพค.รายเดือน' defaultValue={loanDetail?.debt4} {...register('debt4')}/>
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระกองทุนสงเคราะห์รายเดือน' defaultValue={loanDetail?.debt5}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระกองทุนสงเคราะห์รายเดือน' defaultValue={loanDetail?.debt5} {...register('debt5')}/>
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ยอดชำระอื่นๆรายเดือน' defaultValue={loanDetail?.debt6}/>
+                <TextField fullWidth InputProps={{ readOnly: false }} label='ยอดชำระอื่นๆรายเดือน' defaultValue={loanDetail?.debt6} {...register('debt6')}/>
               </Grid>
             </Grid>
             
@@ -161,6 +162,7 @@ const FormDebtReport = () => {
                         startIcon={<SaveIcon />}
                         variant='contained'
                         size='large'
+                        disabled={ loanDetail?.loanStatusId != 0}
                         >
                         บันทึกการอนุมัติ
                         </LoadingButton>

@@ -27,7 +27,7 @@ const FormLayouts = () => {
   const [paidReports, setPaidReports] = useState({ blogs: [] })
   const [pendingPaymentReports, setPendingPaymentReports] = useState({ blogs: [] })
   const [followupPaymentReports, setFollowupPaymentReports] = useState({ blogs: [] })
-  const [tabPayments, setTabPayments] = React.useState('paid')
+  const [tabPayments, setTabPayments] = React.useState('pending-payment')
   const date = moment().format('YYYY-MM')
 
   const handleTabChange = (event, newValue) => {
@@ -80,8 +80,8 @@ const FormLayouts = () => {
       <TabContext value={tabPayments}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabChange} aria-label='lab API tabs example'>
-            <Tab label='รายการชำระเงิน' value='paid' />
             <Tab label='รายการรอชำระเงิน' value='pending-payment' />
+            <Tab label='รายการชำระเงิน' value='paid' />
             <Tab label='รายการติดตามการชำระเงิน' value='followup-payment' />
           </TabList>
         </Box>

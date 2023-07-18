@@ -16,26 +16,26 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
-const CardAllowances = () => {
+const CardGolds = () => {
 
-  const [allowances, setAllowances] = useState(0)
+  const [golds, setGolds] = useState(0)
   const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
   let today = moment().format('YYYY-MM')
-  console.log('total allowance = '+allowances)
+  console.log(golds)
 
-  const fetchAllowances = async () => {
-    let uri = apiConfig.baseURL + `/allowances/sum`
+  const fetchGolds = async () => {
+    let uri = apiConfig.baseURL + `/golds/sum`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setAllowances(data)
+      setGolds(data)
     } catch (error) {
       // console.log(error)
     }
   }
 
   useEffect(() => {
-    fetchAllowances()
+    fetchGolds()
   }, [])
   
   return (
@@ -55,7 +55,7 @@ const CardAllowances = () => {
                       height: 70,
                       boxShadow: 3,
                       color: 'common.white',
-                      backgroundColor: `primary.main`
+                      backgroundColor: `warning.main`
                     }}
                   >
                     <MonetizationOnIcon fontSize='large'/>
@@ -64,7 +64,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       รายรับ
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.INCOME_ALLOWANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{golds[0]?.INCOME_GOLD?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -89,7 +89,7 @@ const CardAllowances = () => {
                       height: 70,
                       boxShadow: 3,
                       color: 'common.white',
-                      backgroundColor: `primary.main`
+                      backgroundColor: `warning.main`
                     }}
                   >
                     <MonetizationOnIcon fontSize='large'/>
@@ -98,7 +98,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       รายจ่าย
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.EXPENSE_ALLOWANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{golds[0]?.EXPENSE_GOLD?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -123,7 +123,7 @@ const CardAllowances = () => {
                       height: 70,
                       boxShadow: 3,
                       color: 'common.white',
-                      backgroundColor: `primary.main`
+                      backgroundColor: `warning.main`
                     }}
                   >
                     <MonetizationOnIcon fontSize='large'/>
@@ -132,7 +132,7 @@ const CardAllowances = () => {
                     <Typography variant='h6' sx={{ width: 300 }}>
                       คงเหลือ
                     </Typography>
-                        <Typography variant='h6' sx={{ width: 300 }}>{allowances[0]?.TOTAL_ALLOWANCE_BALANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
+                        <Typography variant='h6' sx={{ width: 300 }}>{golds[0]?.TOTAL_GOLD_BALANCE?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
                   </Box>
                 </Box>
               </Grid>
@@ -148,4 +148,4 @@ const CardAllowances = () => {
   )
 }
 
-export default CardAllowances
+export default CardGolds

@@ -1,5 +1,7 @@
 // ** MUI Imports
 import React, { useContext } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import toast, { Toaster } from 'react-hot-toast'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
@@ -9,6 +11,14 @@ import Typography from '@mui/material/Typography'
 import CardContent from '@mui/material/CardContent'
 import AvatarGroup from '@mui/material/AvatarGroup'
 import Link from 'next/link'
+import Grid from '@mui/material/Grid'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import SaveIcon from '@material-ui/icons/Save';
+import LoadingButton from '@mui/lab/LoadingButton'
+import axios from 'axios'
+import apiConfig from 'src/configs/apiConfig'
+import Divider from '@mui/material/Divider'
 
 import { MemberContext } from 'src/pages/member/[nationalId]'
 import { LoanMemberContext } from 'src/pages/loan/[nationalId]/[loanId]'
@@ -19,10 +29,60 @@ const CardUser = () => {
   const loanMemberDetail = useContext(LoanMemberContext) 
   // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
   const user = typeof memberDetail !== 'undefined' ? memberDetail : loanMemberDetail
+  const nationalId = memberDetail?.nationalId
+  // console.log('nationalId = '+nationalId)
   // console.log('memberDetail = '+memberDetail)
 
+  const { register, handleSubmit, control, formState: { errors } } = useForm({
+    defaultValues: { otherLoans: '1' }
+  });
+  const [loading, setLoading] = React.useState(false)
+
+  const onSubmit = data => {
+      // setLoading(true)
+      console.log(data)
+      // let json = JSON.stringify(data);
+      // console.log(json);
+      // let string = data.toString(json)
+      // console.log(string);
+
+      // const newArray = data.toString();
+      // console.log(newArray);
+      // var arrayOfNumbers = arrayOfStrings.map(Number);
+      // console.log(arrayOfNumbers);
+
+      // let join = data.join("");
+      // console.log(join)
+
+      let uri = apiConfig.baseURL + `/utils/other-loans/${nationalId}`
+      fetch(uri, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data)
+          setLoading(false)
+          if (data.status == 'success') {
+          toast.success(data.message)
+          } else {
+          toast.error(data.message || data.errors[0].msg)
+          }
+      })
+      .catch(function (error) {
+          console.log(JSON.stringify(error))
+      })
+  }
+
+
   return (
+    
     <Card sx={{ position: 'relative' }}>
+      <Toaster />
+
       <CardMedia sx={{ height: '12.625rem' }} image='/images/cards/background-user.png' />
       <Box sx={{ width:'100%', display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center'}}>
 
@@ -76,20 +136,72 @@ const CardUser = () => {
             <Button variant='outlined'>ใบคำร้อง</Button>
           </Link>
         </Box>
+        <Divider/>
         <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant='subtitle2' sx={{ whiteSpace: 'nowrap', color: 'text.primary' }}>
-            18 mutual friends
+          <Typography variant='h6' align='center' sx={{ mb:2 }}>
+            รายการหนี้อื่นๆ
           </Typography>
-          <AvatarGroup max={4}>
-            <Avatar src='/images/avatars/8.png' alt='Alice Cobb' />
-            <Avatar src='/images/avatars/7.png' alt='Jeffery Warner' />
-            <Avatar src='/images/avatars/3.png' alt='Howard Lloyd' />
-            <Avatar src='/images/avatars/2.png' alt='Bettie Dunn' />
-            <Avatar src='/images/avatars/4.png' alt='Olivia Sparks' />
-            <Avatar src='/images/avatars/5.png' alt='Jimmy Hanson' />
-            <Avatar src='/images/avatars/6.png' alt='Hallie Richards' />
-          </AvatarGroup>
         </Box>
+        <form>
+        <Grid container spacing={5}>
+          <Grid item xs={6}>
+            <Checkbox
+              type='checkbox'
+              value='1'
+              placeholder='เงินสมทบ'
+              {...register('otherLoans')}
+              className='mx-3'
+              // checked={false}
+            />
+            <label htmlFor=''>เงินสมทบ</label>
+          </Grid>
+          <Grid item xs={6}>
+            <Checkbox
+              type='checkbox'
+              value='2'
+              placeholder='ธนาคาร'
+              {...register('otherLoans')}
+              className='mx-3'
+            />
+            <label htmlFor=''>ธนาคาร</label>
+          </Grid>
+          <Grid item xs={6}>
+            <Checkbox
+              type='checkbox'
+              value='3'
+              placeholder='กยศ.'
+              {...register('otherLoans')}
+              className='mx-3'
+            />
+            <label htmlFor=''>กยศ.</label>
+          </Grid>
+          <Grid item xs={6}>
+            <Checkbox
+              type='checkbox'
+              value='4'
+              placeholder='ค่าน้ำ-ค่าไฟ'
+              {...register('otherLoans')}
+              className='mx-3'
+            />
+            <label htmlFor=''>ค่าน้ำ-ค่าไฟ</label>
+          </Grid>
+          <Grid item xs={6}>
+            <LoadingButton
+              type='submit'
+              color='primary'
+              onClick={handleSubmit(onSubmit)}
+              loading={loading}
+              loadingPosition='start'
+              startIcon={<SaveIcon />}
+              variant='contained'
+              size='large'
+            >
+              บันทึก
+            </LoadingButton>
+          </Grid>
+        </Grid>
+      </form>
+
       </CardContent>
     </Card>
   )

@@ -151,7 +151,19 @@ const UserDropdown = () => {
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
           <Box sx={styles}>
             <EmailOutline sx={{ marginRight: 2 }} />
+            รายการทอง
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
             รายการเงินสมทบ
+          </Box>
+        </MenuItem>
+        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/zakat`)}>
+          <Box sx={styles}>
+            <EmailOutline sx={{ marginRight: 2 }} />
+            รายการซากาต
           </Box>
         </MenuItem>
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/monthly/welfare-payment`)}>

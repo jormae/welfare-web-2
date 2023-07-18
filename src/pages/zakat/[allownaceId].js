@@ -25,7 +25,6 @@ import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'
 import CardLoanSurety1 from 'src/views/cards/CardLoanSurety1'
 import CardLoanSurety2 from 'src/views/cards/CardLoanSurety2'
 import FormDebtReport from 'src/views/form-layouts/FormDebtReport'
-import CardOtherLoanPayment from 'src/views/cards/CardOtherLoanPayment'
 
 export const LoanMemberContext = createContext()
 
@@ -172,9 +171,6 @@ const FormLayouts = () => {
           <CardAddLoanPayment />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <CardOtherLoanPayment/>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
           <CardLoanAgreement />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -186,7 +182,9 @@ const FormLayouts = () => {
         <Grid item xs={12} md={6} lg={4}>
           <CardLoanSurety2 />
         </Grid>
-       
+        <Grid item xs={12} md={6} lg={4}>
+          <CardLoanReceipt/>
+        </Grid>
       <Grid item xs={12}>
         <SkeletonMemberLoanLoading />
       </Grid>

@@ -22,12 +22,50 @@ import CardQueueLoan from 'src/views/cards/CardQueueLoan'
 import TableLoanRequest from 'src/views/tables/TableLoanRequest'
 import TableInvestmentRequest from 'src/views/tables/TableInvestmentRequest'
 
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Swal from 'sweetalert2';
+
 export const DataContext = createContext()
 
 const Dashboard = () => {
+
   const [err, setError] = useState()
   const userRole = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
+  const getUserPass = async () => {
+    let uri = apiConfig.baseURL + `/auth/default-password/${username}`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data)
+      if(data.status == "error"){
+        Swal.fire({ icon: 'warning',
+                title: "คำแนะนำ!",
+                text: data.message,
+                }).then(okay => {
+                  if (okay) {
+                    window.location.href = `/member/${username}`;
+                  }
+                });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const resetDefaultPassword = () => {
+    Swal.fire({ title: "คำแนะนำ!",
+                text: "กรุณาเปลี่ยนรหัสผ่านใหม่!",
+                type: "warning"}).then(okay => {
+                  if (okay) {
+                    window.location.href = `/member/${username}`;
+                  }
+                });
+  }
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
@@ -56,6 +94,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     verifyToken()
+    getUserPass()
+    // resetDefaultPassword()
   }, [])
 
   return (

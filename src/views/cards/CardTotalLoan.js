@@ -57,7 +57,7 @@ const CardTotalLoan = () => {
                 <Typography variant='h6' sx={{ width: 300 }}>
                   ยอดเงินกู้สวัสดิการทั้งหมด
                 </Typography>
-                <Typography variant='h6' sx={{ width: 300 }}>{totalLoan ?? 0} บาท</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalLoan.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') ?? 0} บาท</Typography>
               </Box>
             </Box>
           </Grid>

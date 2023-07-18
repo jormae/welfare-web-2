@@ -22,29 +22,29 @@ import apiConfig from 'src/configs/apiConfig'
 import { DataContext } from 'src/pages/member'
 import { all } from 'async'
 
-const TableAllowance = () => {
+const TableZakat = () => {
 
-    const [allowances, setAllowances] = useState({ blogs: [] })
+    const [zakats, setZakats] = useState({ blogs: [] })
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-  console.log(allowances)
-    const fetchAllowances = async () => {
-      let uri = apiConfig.baseURL + `/allowances`
+    console.log(zakats)
+    const fetchZakats = async () => {
+      let uri = apiConfig.baseURL + `/zakats`
       console.log(uri)
       try {
         const { data } = await axios.get(uri)
-        setAllowances({ blogs: data })
+        setZakats({ blogs: data })
       } catch (error) {
         console.log(error)
       }
     }
   
     useEffect(() => {
-        fetchAllowances()
+        fetchZakats()
     }, [])
 
   return (
     <Card>
-      <CardHeader title='ทะเบียนสวัสดิการทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='รายการซากาตทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
@@ -53,24 +53,24 @@ const TableAllowance = () => {
               <TableRow>
                 <TableCell align='center'>ที่</TableCell>
                 <TableCell align='center'>วันที่</TableCell>
-                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
-                <TableCell align='center'>ชื่อสวัสดิการ</TableCell>
+                <TableCell align='center'>ประเภทซากาต</TableCell>
+                <TableCell align='center'>ชื่อซากาต</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {allowances.blogs.map(row => (
-                <TableRow key={row.allowanceId}>
+              {zakats.blogs.map(row => (
+                <TableRow key={row.zakatId}>
                   <TableCell align='center' component='th' scope='row'>
-                  {row.allowanceId}
+                  {row.zakatId}
                   </TableCell>
-                  <TableCell align='center'> {moment(row.allowanceDateTime).add(543, 'year').format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align='center'>{row.allowanceTypeName}</TableCell>
-                  <TableCell align='left'>{row.allowanceName}</TableCell>
-                  <TableCell align='center'>{row.allowanceAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'> {moment(row.zakatDateTime).add(543, 'year').format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align='center'>{row.zakatTypeName}</TableCell>
+                  <TableCell align='center'>{row.zakatName}</TableCell>
+                  <TableCell align='center'>{row.zakatAmount}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`allowance/${row.allowanceId}`} color='success'>
+                    <Link href={`zakat/${row.zakatId}`} color='warning'>
                       <Button type='button' variant='outlined'>
                         เปิด
                       </Button>
@@ -86,4 +86,4 @@ const TableAllowance = () => {
   )
 }
 
-export default TableAllowance
+export default TableZakat

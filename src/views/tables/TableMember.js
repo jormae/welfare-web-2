@@ -33,6 +33,7 @@ const TableMember = (props) => {
                 <TableCell align='center'>รหัสสมาชิก</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ตำแหน่ง</TableCell>
+                <TableCell align='center'>เงินหุ้นทั้งหมด</TableCell>
                 <TableCell align='center'>ประเภทสมาชิก</TableCell>
                 <TableCell align='center'>สถานะสมาชิก</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
@@ -44,9 +45,10 @@ const TableMember = (props) => {
                   <TableCell align='center' component='th' scope='row'>
                   {row.nationalId}
                   </TableCell>
-                  <TableCell align='center'>{row.memberName}</TableCell>
-                  <TableCell align='center'>{row.positionName}</TableCell>
-                  <TableCell align='center'>{row.memberTypeName}</TableCell>
+                  <TableCell >{row.memberName}</TableCell>
+                  <TableCell >{row.positionName}</TableCell>
+                  <TableCell align='center'>{row.TOTAL_SHARE ?? 0}</TableCell>
+                  <TableCell>{row.memberTypeName}</TableCell>
                   <TableCell align='center'>{row.memberStatus == 0 ? 'ปิดบัญชี' : 'ปกติ'}</TableCell>
                   <TableCell align='center'>
                     <Link href={`member/${row.nationalId}`} color='success'>

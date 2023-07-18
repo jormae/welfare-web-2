@@ -2,7 +2,7 @@
   "name": "daruss_welfare",
   "description": "Darussalam Welfare Online System",
   "license": "MIT",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "author": {
     "name": "Maheedeen Jormae",
     "url": "https://themeselection.com/"
@@ -79,6 +79,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-popper": "^2.2.5",
     "styled-components": "^5.3.6",
+    "sweetalert2": "^11.7.18",
     "thai-baht-text": "^1.0.8"
   },
   "devDependencies": {

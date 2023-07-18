@@ -34,9 +34,9 @@ const TableReportPendingPayment = () => {
               <TableRow>
                 <TableCell align='center'>วันที่</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
-                <TableCell align='center'>งวดที่</TableCell>
-                <TableCell align='center'>ช่องทางชำระ</TableCell>
-                <TableCell align='center'>ยอดชำระ</TableCell>
+                <TableCell align='center'>ตำแหน่ง</TableCell>
+                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
+                <TableCell align='center'>ยอดค้างชำระ</TableCell>
                 <TableCell align='center'>กำไร</TableCell>
                 <TableCell align='center'>วันที่ชำระ</TableCell>
                 <TableCell align='center'>ผู้ชำระ</TableCell>
@@ -51,14 +51,20 @@ const TableReportPendingPayment = () => {
                   {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell>{row.memberName}</TableCell>
-                  <TableCell >{row.monthNo}</TableCell>
-                  <TableCell >{row.paymentTypeName}</TableCell>
-                  <TableCell  color='success'>{row.paymentAmount}</TableCell>
+                  <TableCell >{row.positionName}</TableCell>
+                  <TableCell >{row.loanTypeName}</TableCell>
+                  <TableCell color='success' align='right'>{row.loanAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell align='center' color='success'>{row.PROFIT}</TableCell>
-                  <TableCell align='center' color='success'> {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY hh:mm')}</TableCell>
+                  <TableCell align='center' color='success'> {/* {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY hh:mm')}*/}</TableCell> 
                   <TableCell align='center' color='success'>{row.createdBy}</TableCell>
                   <TableCell align='center' color='success'>{row.paymentFilePath}</TableCell>
-                  <TableCell align='center' color='success'>{row.approvedAt == null ? 'รออนุมัติ' : 'อนุมัติ'}</TableCell>
+                  <TableCell align='center' color='success'>
+                    <Link href={`loan/${row.nationalId}/${row.loanId}`} color='success'>
+                      <Button type='button' variant='outlined'>
+                        รายละเอียด
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

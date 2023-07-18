@@ -32,6 +32,7 @@ const FormLayouts = () => {
 
   const fetchMembers = async () => {
     let uri = apiConfig.baseURL + `/members`
+    console.log(uri)
     try {
       const { data } = await axios.get(uri)
       setMembers({ blogs: data })
