@@ -48,6 +48,7 @@ export const FollowupPaymentContext = createContext()
 
 export const StrDateContext = createContext()
 
+export const StrSumPaymentContext = createContext()
 
 const FormLayouts = () => {
   const i = 1;
@@ -58,20 +59,13 @@ const FormLayouts = () => {
   const [followupPaymentReports, setFollowupPaymentReports] = useState({ blogs: [] })
   const [tabPayments, setTabPayments] = React.useState('pending-payment')
   const [date, setDate ]= useState(moment().format('YYYY-MM'))
-  // const [date, setDate ]= useState()
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const [loading, setLoading] = React.useState(false)
   const [searchDate, setSearchDate ]= useState()
-  console.log('searchDate = '+searchDate)
+  const [badgeCouter, setBadgeCouter ]= useState(0)
+  const [sumPayment, setSumPayment ]= useState(0)
   const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
-  const [search, setSearch] = useState('')
-  // if (typeof(searchDate) !== 'undefined' && searchDate != null) {
-  //   console.log("yes!")
-  //   // fetchPaidReports2()
-  //   // fetchPendingPaymentReports2()
-  // }
-
-
+  console.log('badgeCouter = '+badgeCouter[1]?.TOTAL_MEMBER)
   const [open,openchange]=useState(false);
     const functionopenpopup=()=>{
         openchange(true);
@@ -82,6 +76,29 @@ const FormLayouts = () => {
 
   const handleTabChange = (event, newValue) => {
     setTabPayments(newValue)
+  }
+
+  const fetchBadgeCouter = async () => {
+    let uri = apiConfig.baseURL + `/reports/monthly/welfare/count-payment/${date}`
+    try {
+        const { data } = await axios.get(uri)
+        console.log(data)
+        setBadgeCouter(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+    const fetchSumPayment = async () => {
+    let uri = apiConfig.baseURL + `/reports/monthly/welfare/sum-payment/${date}`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data)
+      setSumPayment(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const fetchPaidReports = async () => {
@@ -95,30 +112,8 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchPaidReports2 = async () => {
-    let uri = apiConfig.baseURL + `/reports/monthly/welfare/paid/${searchDate}`
-    console.log('paid uri = '+uri)
-    try {
-        const { data } = await axios.get(uri)
-        setPaidReports({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const fetchPendingPaymentReports = async () => {
     let uri = apiConfig.baseURL + `/reports/monthly/welfare/pending-payment/${date}`
-    console.log(uri)
-    try {
-      const { data } = await axios.get(uri)
-      setPendingPaymentReports({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const fetchPendingPaymentReports2 = async () => {
-    let uri = apiConfig.baseURL + `/reports/monthly/welfare/pending-payment/${searchDate}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
@@ -141,15 +136,30 @@ const FormLayouts = () => {
 
   const onSubmit = async data => {
     setLoading(true)
-    // console.log(data)
     let strYearMonth = data.reportDate.slice(0,7);
     setSearchDate(strYearMonth)
     setDate(strYearMonth)
 
-    let uri = apiConfig.baseURL + `/reports/monthly/welfare/pending-payment/${strYearMonth}`
-    console.log(uri)
+    let balance_uri = apiConfig.baseURL + `/reports/monthly/welfare/sum-payment/${strYearMonth}`
     try {
-      const { data } = await axios.get(uri)
+      const { data } = await axios.get(balance_uri)
+      setSumPayment(data)
+    } catch (error) {
+      console.log(error)
+    }
+
+    let badge_uri = apiConfig.baseURL + `/reports/monthly/welfare/count-payment/${strYearMonth}`
+    try {
+        const { data } = await axios.get(badge_uri)
+        setBadgeCouter(data)
+    } catch (error) {
+      console.log(error)
+    }
+
+    let pending_uri = apiConfig.baseURL + `/reports/monthly/welfare/pending-payment/${strYearMonth}`
+    // console.log(pending_uri)
+    try {
+      const { data } = await axios.get(pending_uri)
       setPendingPaymentReports({ blogs: data })
       setLoading(false)
     } catch (error) {
@@ -166,23 +176,16 @@ const FormLayouts = () => {
       console.log(error)
     }
 
-    // console.log('searchDate = '+searchDate)
-    // console.log('strYearMonth = '+strYearMonth)
-    // if (typeof(searchDate) !== 'undefined') {
-    //   console.log("not null!")
-    //   // fetchPaidReports2()
-    //   // fetchPendingPaymentReports2()
-    // }
-    
-
 }
 
 
 
   useEffect(() => {
-    fetchPaidReports()
-    fetchPendingPaymentReports()
-    fetchFollowupPaymentReports()
+    fetchSumPayment();
+    fetchBadgeCouter();
+    fetchPaidReports();
+    fetchPendingPaymentReports();
+    fetchFollowupPaymentReports();
   }, [])
 
   const SkeletonReportMonthlyWelfarePaymentsLoading = () => (
@@ -191,11 +194,11 @@ const FormLayouts = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabChange} aria-label='lab API tabs example' >
             <Tab label='รายการรอชำระเงิน' value='pending-payment' />
-            <Badge badgeContent={4} color="primary" sx={{mt:4}} />
+            <Badge badgeContent={badgeCouter[0]?.TOTAL_MEMBER} color="primary" sx={{mt:4}} />
             <Tab label='รายการชำระเงิน' value='paid' />
-            <Badge badgeContent={3} color="primary" sx={{mt:4}} />
-            <Tab label='รายการติดตามการชำระเงิน' value='followup-payment' />
-            <Badge badgeContent={2} color="primary" sx={{mt:4}} />
+            <Badge badgeContent={badgeCouter[1]?.TOTAL_MEMBER} color="primary" sx={{mt:4}} />
+            {/* <Tab label='รายการติดตามการชำระเงิน' value='followup-payment' />
+            <Badge badgeContent={2} color="primary" sx={{mt:4}} /> */}
           </TabList>
         </Box>
         <TabPanel value='paid'>
@@ -219,55 +222,11 @@ const FormLayouts = () => {
           {pendingPaymentReports.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
               <Grid item xs={12} md={12} lg={12}>
-              {/* <PendingPaymentContext.Provider value={pendingPaymentReports}>
+              <PendingPaymentContext.Provider value={pendingPaymentReports}>
                 <StrDateContext.Provider value={strDate}>
                   <TableReportPendingPayment />
                 </StrDateContext.Provider>
-              </PendingPaymentContext.Provider> */}
-              <Card>
-      <CardHeader title={`รายการรอชำระเงินสวัสดิการประจำเดือน ${strDate}`}  titleTypographyProps={{ variant: 'h6' }} />
-      <Divider sx={{ margin: 0 }} />
-      <CardContent>
-        <TableContainer component={Paper}>
-          <Table  sx={{ minWidth: 650 }} aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center'>ลำดับ</TableCell>
-                <TableCell align='center'>ชื่อ-สกุล</TableCell>
-                <TableCell align='center'>ตำแหน่ง</TableCell>
-                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
-                <TableCell align='center'>ยอดคงเหลือ</TableCell>
-                <TableCell align='center'>ยอดที่ต้องชำระ</TableCell>
-                <TableCell align='center'>จัดการ</TableCell> 
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { pendingPaymentReports.blogs.filter((row)=>{
-                return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
-              }).map(row => (
-                <TableRow key={row.loanId}>
-                  <TableCell align='center' component='th' scope='row'>
-                  {i++}
-                  </TableCell>
-                  <TableCell>{row.memberName}</TableCell>
-                  <TableCell >{row.positionName}</TableCell>
-                  <TableCell >{row.loanTypeName} ({row.loanAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')})</TableCell>
-                  <TableCell color='success' align='right'></TableCell>
-                  <TableCell align='center' color='success'>{row.monthlyPayment}</TableCell>
-                  <TableCell align='center' color='success'>
-                    <Link href={`../../loan-payment/${row.nationalId}/${row.loanId}`} color='success'>
-                      <Button type='button' variant='outlined'>
-                        ชำระ
-                      </Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-    </Card>
+              </PendingPaymentContext.Provider>
               </Grid>
             </Grid>
           ) : (
@@ -298,73 +257,63 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
        <Grid container item>
-        <CardWelfarePayments />
+          <StrSumPaymentContext.Provider value={sumPayment}>
+            <CardWelfarePayments />
+          </StrSumPaymentContext.Provider>
        </Grid>
        <Grid item md={12} xs={12}>
-       <Card>
-      <CardHeader title='ค้นหารายงาน' titleTypographyProps={{ variant: 'h6' }} />
-      <Divider sx={{ margin: 0 }} />
-      <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-        <CardContent>
-          <Grid container spacing={5}>
-            <Grid item xs={6}><Typography style={{ fontSize: 24 }} >  </Typography></Grid>
-            <Grid item xs={4} md={4}>
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker label="เลือกวันที่" {...register('reportDate')}/>
-            </LocalizationProvider> */}
-              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Container components={['DatePicker']}>
-                  <DatePicker label="Basic date picker" {...register('reportDate', { required: true })}/>
-                </Container>
-              </LocalizationProvider> */}
-              <TextField type="date" fullWidth label='วันที่' {...register('reportDate', { required: true })}/>
-            </Grid>
-            <Grid item xs={2}>
-              <Box
-                sx={{
-                  gap: 5,
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <Box sx={{ '& > button': { m: 1 } }}></Box>
-                <LoadingButton
-                  type='submit'
-                  color='primary'
-                  onClick={handleSubmit(onSubmit)}
-                  loading={loading}
-                  loadingPosition='start'
-                  startIcon={<AssessmentIcon />}
-                  variant='contained'
-                  size='large'
-                >
-                  แสดง
-                </LoadingButton>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </form>
-    </Card>
-      </Grid>
-      <Grid item xs={12} md={12} lg={12}>
-              <form noValidate autoComplete='off'>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='ค้นหาสมาชิก' placeholder='ค้นหาสมาชิก' {...register('search', {
-                        onChange: (e) => {setSearch(e.target.value)},
-                        onBlur: (e) => {},
-                      })} />
-                    </Grid>
-                  </Grid>
-              </form>
+        <Card>
+          <CardHeader title='ค้นหารายงาน' titleTypographyProps={{ variant: 'h6' }} />
+          <Divider sx={{ margin: 0 }} />
+          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={6}><Typography style={{ fontSize: 24 }} >  </Typography></Grid>
+                <Grid item xs={4} md={4}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker label="เลือกวันที่" {...register('reportDate')}/>
+                </LocalizationProvider> */}
+                  {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Container components={['DatePicker']}>
+                      <DatePicker label="Basic date picker" {...register('reportDate', { required: true })}/>
+                    </Container>
+                  </LocalizationProvider> */}
+                  <TextField type="date" fullWidth label='วันที่' {...register('reportDate', { required: true })}/>
+                </Grid>
+                <Grid item xs={2}>
+                  <Box
+                    sx={{
+                      gap: 5,
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <Box sx={{ '& > button': { m: 1 } }}></Box>
+                    <LoadingButton
+                      type='submit'
+                      color='primary'
+                      onClick={handleSubmit(onSubmit)}
+                      loading={loading}
+                      loadingPosition='start'
+                      startIcon={<AssessmentIcon />}
+                      variant='contained'
+                      size='large'
+                    >
+                      แสดง
+                    </LoadingButton>
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                </Grid>
               </Grid>
-       <Grid item md={12} xs={12}>
-        
+            </CardContent>
+          </form>
+        </Card>
+      </Grid>
+
+       <Grid item md={12} xs={12}>        
         <SkeletonReportMonthlyWelfarePaymentsLoading />
       </Grid>
       <Button onClick={functionopenpopup} color="primary" variant="contained">Open Popup</Button>

@@ -1,5 +1,6 @@
 // ** MUI Imports
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -7,12 +8,15 @@ import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
+import TablePagination from "@mui/material/TablePagination"
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
+import Grid from '@mui/material/Grid'
+import TextField  from "@mui/material/TextField";
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
@@ -23,9 +27,22 @@ const TableReportPendingPayment = () => {
 
     const pendingPaymentReports = useContext(PendingPaymentContext)
     const strDate = useContext(StrDateContext)
-    const i = 1;
-
+   
+    const { register } = useForm();
     const [search, setSearch] = useState('')
+    const i = 1;
+  
+    const [pg, setpg] = React.useState(0);
+    const [rpg, setrpg] = React.useState(10);
+  
+    function handleChangePage(event, newpage) {
+        setpg(newpage);
+    }
+  
+    function handleChangeRowsPerPage(event) {
+        setrpg(parseInt(event.target.value, 10));
+        setpg(0);
+    }
 
     
   return (
@@ -33,6 +50,19 @@ const TableReportPendingPayment = () => {
       <CardHeader title={`รายการรอชำระเงินสวัสดิการประจำเดือน ${strDate}`}  titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
+      <Grid item xs={12} md={12} lg={12}>
+          <form noValidate autoComplete='off'>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='ค้นหาสมาชิกรอชำระเงินสวัสดิการ' placeholder='ค้นหาสมาชิกรอชำระเงินสวัสดิการ' {...register('search', {
+                    onChange: (e) => {setSearch(e.target.value)},
+                    onBlur: (e) => {},
+                  })} />
+                </Grid>
+              </Grid>
+          </form>
+        </Grid>
+        <Divider sx={{ margin: 0, mt:5 }} />
         <TableContainer component={Paper}>
           <Table  sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
@@ -47,9 +77,10 @@ const TableReportPendingPayment = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              { pendingPaymentReports.blogs.filter((row)=>{
-                return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().include(search);
-              }).map(row => (
+                { pendingPaymentReports.blogs.filter((row)=>{
+                  return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
+                }).slice(pg * rpg, pg *
+                  rpg + rpg).map(row => (
                 <TableRow key={row.loanId}>
                   <TableCell align='center' component='th' scope='row'>
                   {i++}
@@ -71,6 +102,15 @@ const TableReportPendingPayment = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 50]}
+          component="div"
+          count={pendingPaymentReports.blogs.length}
+          rowsPerPage={rpg}
+          page={pg}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </CardContent>
     </Card>
   )

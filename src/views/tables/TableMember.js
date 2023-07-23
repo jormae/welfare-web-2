@@ -1,6 +1,6 @@
 // ** MUI Imports
 import React, { useContext, useMemo, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -99,14 +99,14 @@ const TableMember = (props) => {
           </Table>
         </TableContainer>
         <TablePagination
-                rowsPerPageOptions={[10, 20, 50]}
-                component="div"
-                count={members.blogs.length}
-                rowsPerPage={rpg}
-                page={pg}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+          rowsPerPageOptions={[10, 20, 50]}
+          component="div"
+          count={members.blogs.length}
+          rowsPerPage={rpg}
+          page={pg}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
        
       </CardContent>
     </Card>

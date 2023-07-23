@@ -306,7 +306,7 @@ const FormLayouts = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabHistoryChange} aria-label='lab API tabs example'>
             <Tab label='ประวัติกู้' value='loan' />
-            <Tab label='ประวัติกู้อื้นๆ' value='otherLoan' />
+            {/* <Tab label='ประวัติกู้อื้นๆ' value='otherLoan' /> */}
             <Tab label='ประวัติหุ้น' value='investment' />
             <Tab label='ประวัติปันผล' value='dividend' />
             <Tab label='ประวัติค้ำประกัน' value='surety' />
@@ -315,9 +315,11 @@ const FormLayouts = () => {
         <TabPanel value='loan'>
           {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <LoanHistoryContext.Provider value={memberLoanHistories}>
-                <TableMemberLoanHistory />
-              </LoanHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
+                </LoanHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>
@@ -325,25 +327,29 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
-        <TabPanel value='otherLoan'>
+        {/* <TabPanel value='otherLoan'>
           {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <LoanHistoryContext.Provider value={memberLoanHistories}>
-                <TableMemberLoanHistory />
-              </LoanHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
+                </LoanHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
             </Typography>
           )}
-        </TabPanel>
+        </TabPanel> */}
         <TabPanel value='investment'>
           {memberInvestmentHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-                <TableMemberInvestmentHistory />
-              </InvesmentHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
+                  <TableMemberInvestmentHistory />
+                </InvesmentHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>
@@ -354,9 +360,11 @@ const FormLayouts = () => {
         <TabPanel value='dividend'>
           {memberDividendHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <DividendHistoryContext.Provider value={memberDividendHistories}>
-                <TableMemberDividendHistory />
-              </DividendHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <DividendHistoryContext.Provider value={memberDividendHistories}>
+                  <TableMemberDividendHistory />
+                </DividendHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>

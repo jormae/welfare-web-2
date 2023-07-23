@@ -38,7 +38,7 @@ const TableMemberLoanHistory = () => {
                 <TableCell align='center'>วันที่สิ้นสุด</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
                 <TableCell align='center'>ยอดชำระ</TableCell>
-                <TableCell align='center'>ยอดค้างชำระ</TableCell>
+                <TableCell align='center'>คงเหลือ</TableCell>
                 <TableCell align='center'>สถานะ</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>

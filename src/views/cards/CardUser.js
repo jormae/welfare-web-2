@@ -137,7 +137,7 @@ const CardUser = () => {
           </Link>
         </Box>
         <Divider/>
-        <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* <Box sx={{ gap: 2, display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant='h6' align='center' sx={{ mb:2 }}>
             รายการหนี้อื่นๆ
           </Typography>
@@ -200,7 +200,7 @@ const CardUser = () => {
             </LoadingButton>
           </Grid>
         </Grid>
-      </form>
+      </form> */}
 
       </CardContent>
     </Card>
