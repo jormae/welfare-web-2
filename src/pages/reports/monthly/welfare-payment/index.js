@@ -318,7 +318,7 @@ const FormLayouts = () => {
       </Grid>
       <Button onClick={functionopenpopup} color="primary" variant="contained">Open Popup</Button>
             <Dialog 
-            // fullScreen 
+            fullScreen 
             open={open} onClose={closepopup} fullWidth maxWidth="sm">
                 <DialogTitle>User Registeration  <IconButton onClick={closepopup} style={{float:'right'}}><CloseIcon color="primary"></CloseIcon></IconButton>  </DialogTitle>
                 <DialogContent>
