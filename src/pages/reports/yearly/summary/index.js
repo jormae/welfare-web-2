@@ -52,7 +52,7 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
        <Grid container item>
-        <CardWelfarePayments />
+        {/* <CardWelfarePayments /> */}
        </Grid>
        <Grid item md={12} xs={12}>
         <SkeletonReportYearlySummariesLoading />

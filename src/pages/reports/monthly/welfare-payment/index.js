@@ -17,9 +17,7 @@ import TableReportPaid from 'src/views/tables/TableReportPaid'
 import TableReportPendingPayment from 'src/views/tables/TableReportPendingPayment'
 import TableReportFollowupPayment from 'src/views/tables/TableReportFollowupPayment'
 import CardWelfarePayments from 'src/views/cards/CardWelfarePayments'
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, IconButton, Stack, TextField } from "@mui/material";
-// import FormControlContext from "@mui/material/FormControl/FormControlContext";
-import CloseIcon from "@mui/icons-material/Close"
+import TextField  from "@mui/material/TextField";
 import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
@@ -27,18 +25,6 @@ import Divider from '@mui/material/Divider'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LoadingButton from '@mui/lab/LoadingButton'
 import Badge from '@mui/material/Badge';
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Table from '@mui/material/Table'
-import TableRow from '@mui/material/TableRow'
-import TableHead from '@mui/material/TableHead'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import Paper from '@mui/material/Paper'
-import Link from 'next/link'
 
 export const PaidContext = createContext()
 
@@ -51,6 +37,7 @@ export const StrDateContext = createContext()
 export const StrSumPaymentContext = createContext()
 
 const FormLayouts = () => {
+
   const i = 1;
   
   moment.locale('th')
@@ -65,14 +52,6 @@ const FormLayouts = () => {
   const [badgeCouter, setBadgeCouter ]= useState(0)
   const [sumPayment, setSumPayment ]= useState(0)
   const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
-  console.log('badgeCouter = '+badgeCouter[1]?.TOTAL_MEMBER)
-  const [open,openchange]=useState(false);
-    const functionopenpopup=()=>{
-        openchange(true);
-    }
-    const closepopup=()=>{
-        openchange(false);
-    }
 
   const handleTabChange = (event, newValue) => {
     setTabPayments(newValue)
@@ -157,7 +136,6 @@ const FormLayouts = () => {
     }
 
     let pending_uri = apiConfig.baseURL + `/reports/monthly/welfare/pending-payment/${strYearMonth}`
-    // console.log(pending_uri)
     try {
       const { data } = await axios.get(pending_uri)
       setPendingPaymentReports({ blogs: data })
@@ -177,8 +155,6 @@ const FormLayouts = () => {
     }
 
 }
-
-
 
   useEffect(() => {
     fetchSumPayment();
@@ -316,27 +292,6 @@ const FormLayouts = () => {
        <Grid item md={12} xs={12}>        
         <SkeletonReportMonthlyWelfarePaymentsLoading />
       </Grid>
-      <Button onClick={functionopenpopup} color="primary" variant="contained">Open Popup</Button>
-            <Dialog 
-            fullScreen 
-            open={open} onClose={closepopup} fullWidth maxWidth="sm">
-                <DialogTitle>User Registeration  <IconButton onClick={closepopup} style={{float:'right'}}><CloseIcon color="primary"></CloseIcon></IconButton>  </DialogTitle>
-                <DialogContent>
-                    {/* <DialogContentText>Do you want remove this user?</DialogContentText> */}
-                    <Stack spacing={2} margin={2}>
-                      <TextField variant="outlined" label="Username"></TextField>
-                      <TextField variant="outlined" label="Password"></TextField>
-                      <TextField variant="outlined" label="Email"></TextField>
-                      <TextField variant="outlined" label="Phone"></TextField>
-                      <FormControlLabel control={<Checkbox defaultChecked color="primary"></Checkbox>} label="Agree terms & conditions"></FormControlLabel>
-                      <Button color="primary" variant="contained">Submit</Button>
-                    </Stack>
-                </DialogContent>
-                <DialogActions>
-                {/* <Button color="success" variant="contained">Yes</Button>
-                    <Button onClick={closepopup} color="error" variant="contained">Close</Button> */}
-                </DialogActions>
-            </Dialog>
     </Grid>
 
   )

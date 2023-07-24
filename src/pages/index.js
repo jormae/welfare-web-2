@@ -66,6 +66,7 @@ const Dashboard = () => {
                   }
                 });
   }
+
   const verifyToken = async () => {
     const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
@@ -95,7 +96,7 @@ const Dashboard = () => {
   useEffect(() => {
     verifyToken()
     getUserPass()
-    // resetDefaultPassword()
+    resetDefaultPassword()
   }, [])
 
   return (
