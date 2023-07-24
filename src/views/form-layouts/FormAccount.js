@@ -51,9 +51,11 @@ const FormAccount = () => {
   const [saveLoading, setSaveLoading] = React.useState(false)
   const [confirmLoading, setConfirmLoading] = React.useState(false)
   const [newPassword, setNewPassword] = useState()
-  const username = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
   const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-
+  const nationalId = memberDetail?.nationalId;
+  console.log('nationalId = '+nationalId)
+  console.log('username = '+username)
   const onSubmit = data => {
     setSaveLoading(true)
     console.log('onSubmit')
@@ -199,8 +201,8 @@ const FormAccount = () => {
                     <FormHelperText id="confirmPassword" sx={{color:'#d32f2f'}}>Error : คุณใส่ข้อมูลยืนยันรหัสผ่านไม่เหมือนกัน</FormHelperText>
                   )}
             </Grid>
-            
             <Grid item xs={6}>
+            {username == nationalId ? ( 
               <Box
                m={1} //margin
                display="flex"
@@ -221,7 +223,8 @@ const FormAccount = () => {
                   บันทึกรหัสผ่านใหม่
                 </LoadingButton>
               </Box>
-            </Grid> 
+             ) : ''}
+             </Grid> 
             <Grid item xs={6}>
             { memberRoleId == 1 || memberRoleId == 3 ? (
               <Box
@@ -235,7 +238,7 @@ const FormAccount = () => {
               >
                 <Box sx={{ '& > button': { m: 1 } }}></Box>
                 <LoadingButton
-                  color='secondary'
+                  color='primary'
                   onClick={handleClickOpen}
                   startIcon={<LockOpenIcon />}
                   variant='contained'
