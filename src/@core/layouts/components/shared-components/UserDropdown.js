@@ -81,6 +81,7 @@ const UserDropdown = () => {
   const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
   const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
   const memberRoleName = typeof window !== 'undefined' ? localStorage.getItem('memberRoleName') : null
+  const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
 
   return (
     <Fragment>
@@ -148,36 +149,46 @@ const UserDropdown = () => {
             คำร้องฝากถอน-หุ้น
           </Box>
         </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            รายการทอง
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            รายการเงินสมทบ
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/zakat`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            รายการซากาต
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/monthly/welfare-payment`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            รายงานสวัสดิการรายเดือน
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/yearly/summary`)}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            รายงานสรุปสวัสดิการรายปี
-          </Box>
-        </MenuItem>
+        {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายการทอง
+            </Box>
+          </MenuItem>
+          ) : ''}
+           {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายการเงินสมทบ
+            </Box>
+          </MenuItem>
+           ) : ''}
+           {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/zakat`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายการซากาต
+            </Box>
+          </MenuItem>
+           ) : ''}
+          {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/monthly/welfare-payment`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายงานสวัสดิการรายเดือน
+            </Box>
+          </MenuItem>
+           ) : ''}
+          {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/yearly/summary`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายงานสรุปสวัสดิการรายปี
+            </Box>
+          </MenuItem>
+         ) : ''}
         
         {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>

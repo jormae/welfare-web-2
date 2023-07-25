@@ -62,8 +62,10 @@ const FormMemberDetail = () => {
   const memberRoleId = memberDetail?.memberRoleId
   const paymentTypeId = memberDetail?.paymentTypeId
   const memberStatusId = memberDetail?.memberStatusId
+
   const memberRole = typeof window !== 'undefined' ? localStorage?.getItem('memberRoleId') : ''
-console.log(memberRole)
+  // const strDisabled = memberRole != 4 ? '' : 'disabled';
+  console.log(memberRole)
   useEffect(() => {
     if (memberDetail) {
       reset({
@@ -158,7 +160,7 @@ console.log(memberRole)
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth disabled>
+              <FormControl fullWidth {...memberRole != 4 ? null : {disabled:true}}>
                 <InputLabel>ประเภทสมาชิก</InputLabel>
                 <Select
                   label='ประเภทสมาชิก'
@@ -194,7 +196,7 @@ console.log(memberRole)
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth disabled>
+              <FormControl fullWidth {...memberRole == 4 ? {disabled:true} : null }>
                 <InputLabel>ประเภทบัญชีผู้ใช้</InputLabel>
                 <Select
                   label='ประเภทบัญชีผู้ใช้'
@@ -212,7 +214,7 @@ console.log(memberRole)
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth disabled>
+              <FormControl fullWidth {...memberRole != 4 ? null : {disabled:true}}>
                 <InputLabel>สถานะสมาชิก</InputLabel>
                 <Select
                   label='สถานะสมาชิก'

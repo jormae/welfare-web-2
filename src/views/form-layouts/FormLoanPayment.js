@@ -35,7 +35,7 @@ const FormLoanPayment = () => {
     const member = useContext(MemberContext)
     console.log(paymentSuggestionInfo)
 
-    const { register, handleSubmit, control } = useForm();
+    const { register, resetField, handleSubmit, control } = useForm();
   
   const [loading, setLoading] = React.useState(false)
   const [paymentTypes, setPaymentTypes] = useState([])
@@ -49,6 +49,33 @@ const FormLoanPayment = () => {
   function handleChange(event) {
     setFile(event.target.files[0])
   }
+
+  // const [shareQuantity, setShareQuantity] = useState()
+  // const [newPaymentAmount, setNewPaymentAmount] = useState()
+  // const [netTotalShare, setNetTotalShare] = useState()
+  // const totalShare = (parseInt(shareQuantity, 10) * parseInt(valuePerShare, 10))
+  const [loanStatusName, setLoanStatusName] = useState()
+  console.log('loanStatusName = '+loanStatusName)
+
+  const handleChangePaymentAmount = (event) => {
+      // setNewPaymentAmount(event.target.value);
+      // event.preventDefault();
+      // event.target.reset();
+      // const newPaymentAmount = event.target.value;
+      if(event.target.value > paymentSuggestionInfo?.totalLoanBalance){
+        console.log("ERROR")
+        resetField("paymentAmount")
+        setLoanStatusName("ชำระรายเดือน")
+      }
+      else if(event.target.value == paymentSuggestionInfo?.totalLoanBalance){
+        console.log("Closed")
+        setLoanStatusName("ปิดยอดสวัสดิการ")
+      }
+      else{
+        console.log("Good")
+        setLoanStatusName("ชำระรายเดือน")
+      }
+  };
   
   const fetchPaymentTypes = async () => {
     let uri = apiConfig.baseURL + `/utils/payment-types`
@@ -69,38 +96,20 @@ const FormLoanPayment = () => {
   }, [])
 
   const onSubmit = data => {
-    // setLoading(true)
-    
-  console.log(data)
-  // const formData = new FormData();
-  //       formData.append("file", data.slip[0]);
-  const formData = new FormData();
-    formData.append('slip', data.slip[0]);
-    // nationalId, loanId, loanPaymentMonth, monthNo, paymentAmount, paymentTypeId, userName, memberRoleId
-    formData.append('nationalId', data.nationalId)
-    formData.append('loanId', data.loanId)
-    formData.append('loanPaymentMonth', data.loanPaymentMonth)
-    formData.append('monthNo', data.monthNo)
-    formData.append('paymentAmount', data.paymentAmount)
-    formData.append('paymentTypeId', data.paymentTypeId)
-    formData.append('userName', data.userName)
-    formData.append('memberRoleId', data.memberRoleId)
-    
+    setLoading(true)
+    console.log(data)
 
     let uri = apiConfig.baseURL + `/payments`
-
     fetch(uri, {
       method: 'POST',
-      // headers: {
-      //   'Content-Type': 'application/json',
-      //   // 'content-type': 'multipart/form-data',
-      // },
-      // body: JSON.stringify(data)
-      body:formData,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
+        console.log(data)
         setLoading(false)
         if (data.status == 'success') {
           toast.success(data.message)
@@ -119,14 +128,14 @@ const FormLoanPayment = () => {
       <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Grid container spacing={5}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.loanId ? (
                 <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanId} label='รหัสสวัสดิการ' {...register('loanId')} />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.refId ? (
                     <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.refId} label='เลขที่สัญญา' />
                 ) : (
@@ -134,40 +143,64 @@ const FormLoanPayment = () => {
                 )}
               
             </Grid>
-            <Grid item xs={12} md={6}>
+            {/* <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.nationalId ? (
                 <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.nationalId} label='เลขประจำตัวประชาชน'  />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
-            </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid> */}
+            <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.memberName ? (
                     <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.memberName} label='ชื่อสมาชิก' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
-                </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.loanTypeName ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanTypeName} label='ประเภทสวัสดิการ' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.loanAmount ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanAmount} label='จำนวนเงินสวัสดิการ' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
             {paymentSuggestionInfo?.monthNo ? (
                     <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthNo} label='งวดที่' {...register('monthNo')}/>
                     ) : (
                       <Skeleton variant='rectangular' width={250} height={55} />
                   )}
-                  </Grid>
-            <Grid item xs={12} md={6}>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
                     <TextField fullWidth defaultValue={moment(paymentSuggestionInfo?.loanPaymentMonth).format('YYYY-MM-DD')} label='เดือน' type='date' {...register('loanPaymentMonth')} InputLabelProps={{
                       shrink: true,
                     }} />
             </Grid>
-            <Grid item xs={12} md={6}>
-                {paymentSuggestionInfo?.monthlyPayment ? (
-                    <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthlyPayment} label='จำนวนเงิน' {...register('paymentAmount')}/>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.totalLoanBalance ? (
+                    <TextField fullWidth type='number' InputProps={{ readOnly: true }} defaultValue={paymentSuggestionInfo?.totalLoanBalance ?? 0} label='ยอดคงเหลือ' {...register('totalLoanBalance')}/>
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.monthlyPayment ? (
+                    <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthlyPayment} label='ยอดชำระ' {...register('paymentAmount')} onChange={handleChangePaymentAmount}/>
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                <TextField fullWidth type='text' InputProps={{ readOnly: true }} value={loanStatusName ?? 'ชำระรายเดือน'} label='ประเภทการชำระเงิน'  />
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.paymentTypeId ? (
                     <FormControl fullWidth>
                         <InputLabel>ช่องทางการชำระเงิน</InputLabel>
@@ -185,8 +218,8 @@ const FormLoanPayment = () => {
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={12} md={6}>
-              <TextField type='file' fullWidth {...register('slip')}/>              
+            <Grid item xs={12} md={6} lg={3}>
+              <TextField type='file' fullWidth label='หลักฐานการชำระเงิน' placeholder='หลักฐานการชำระเงิน' {...register('slip')}/>              
             </Grid>
               <input type='hidden' {...register('userName')} value={userName} />
               <input type='hidden' {...register('memberRoleId')} value={memberRoleId} />

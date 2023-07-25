@@ -96,7 +96,6 @@ const Dashboard = () => {
   useEffect(() => {
     verifyToken()
     getUserPass()
-    resetDefaultPassword()
   }, [])
 
   return (
