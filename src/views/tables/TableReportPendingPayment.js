@@ -22,11 +22,17 @@ import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 
 import { PendingPaymentContext, StrDateContext } from 'src/pages/reports/monthly/welfare-payment/index'
+import { DashboardPendingPaymentContext, DashboardStrDateContext} from 'src/pages/index'
 
 const TableReportPendingPayment = () => {
 
     const pendingPaymentReports = useContext(PendingPaymentContext)
+    const dashboardPendingPaymentReports = useContext(DashboardPendingPaymentContext)
     const strDate = useContext(StrDateContext)
+    const dashboardStrDate = useContext(DashboardStrDateContext)
+    const pendingDataTable = pendingPaymentReports ?? dashboardPendingPaymentReports;
+    const pendingStrDate = strDate ?? dashboardStrDate;
+    
    
     const { register } = useForm();
     const [search, setSearch] = useState('')
@@ -47,7 +53,7 @@ const TableReportPendingPayment = () => {
     
   return (
     <Card>
-      <CardHeader title={`รายการรอชำระเงินสวัสดิการประจำเดือน ${strDate}`}  titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title={`รายการรอชำระเงินสวัสดิการประจำเดือน ${pendingStrDate}`}  titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
       <Grid item xs={12} md={12} lg={12}>
@@ -71,13 +77,14 @@ const TableReportPendingPayment = () => {
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ตำแหน่ง</TableCell>
                 <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
+                <TableCell align='center'>งวดที่</TableCell>
                 <TableCell align='center'>ยอดคงเหลือ</TableCell>
                 <TableCell align='center'>ยอดที่ต้องชำระ</TableCell>
                 <TableCell align='center'>จัดการ</TableCell> 
               </TableRow>
             </TableHead>
             <TableBody>
-                { pendingPaymentReports.blogs.filter((row)=>{
+                { pendingDataTable.blogs.filter((row)=>{
                   return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
                 }).slice(pg * rpg, pg *
                   rpg + rpg).map(row => (
@@ -87,8 +94,9 @@ const TableReportPendingPayment = () => {
                   </TableCell>
                   <TableCell>{row.memberName}</TableCell>
                   <TableCell >{row.positionName}</TableCell>
-                  <TableCell >{row.loanTypeName} ({row.loanAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')})</TableCell>
-                  <TableCell color='success' align='right'></TableCell>
+                  <TableCell align='center' >{row.loanTypeName} ({row.loanAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')})</TableCell>
+                  <TableCell color='success' align='center'>{row.monthNo}</TableCell>
+                  <TableCell color='success' align='center'>{row.loanBalance}</TableCell>
                   <TableCell align='center' color='success'>{row.monthlyPayment}</TableCell>
                   <TableCell align='center' color='success'>
                     <Link href={`../../loan-payment/${row.nationalId}/${row.loanId}`} color='success'>
@@ -105,7 +113,7 @@ const TableReportPendingPayment = () => {
         <TablePagination
           rowsPerPageOptions={[10, 20, 50]}
           component="div"
-          count={pendingPaymentReports.blogs.length}
+          count={pendingDataTable.blogs.length}
           rowsPerPage={rpg}
           page={pg}
           onPageChange={handleChangePage}

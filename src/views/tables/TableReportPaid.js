@@ -22,11 +22,16 @@ import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 
 import { PaidContext, StrDateContext } from 'src/pages/reports/monthly/welfare-payment/index'
+import { DashboardPaidContext, DashboardStrDateContext } from 'src/pages/index'
 
 const TableReportPaid = () => {
 
     const paidReports = useContext(PaidContext)
+    const dashboardPaidReports = useContext(DashboardPaidContext)
     const strDate = useContext(StrDateContext)
+    const dashboardStrDate = useContext(DashboardStrDateContext)
+    const paidDataTable = paidReports ?? dashboardPaidReports;
+    const paidStrDate = strDate ?? dashboardStrDate;
     
     const { register } = useForm();
     const [search, setSearch] = useState('')
@@ -46,7 +51,7 @@ const TableReportPaid = () => {
     
   return (
     <Card>
-      <CardHeader title={`รายการชำระเงินสวัสดิการประจำเดือน ${strDate}`} titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title={`รายการชำระเงินสวัสดิการประจำเดือน ${paidStrDate}`} titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
       <Grid item xs={12} md={12} lg={12}>
@@ -69,18 +74,19 @@ const TableReportPaid = () => {
                 <TableCell align='center'>ที่</TableCell>
                 <TableCell align='center'>วันที่ชำระ</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
+                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
                 <TableCell align='center'>งวดที่</TableCell>
                 <TableCell align='center'>เดือน</TableCell>
                 <TableCell align='center'>ช่องทางชำระ</TableCell>
                 <TableCell align='center'>ยอดชำระ</TableCell>
-                <TableCell align='center'>ผู้ชำระ</TableCell>
-                <TableCell align='center'>หลักฐานการชำระ</TableCell>
+                <TableCell align='center'>เจ้าหน้าที่</TableCell>
+                {/* <TableCell align='center'>หลักฐานการชำระ</TableCell> */}
                 <TableCell align='center'>สถานะการชำระ</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-            { paidReports.blogs.filter((row)=>{
+            { paidDataTable.blogs.filter((row)=>{
                   return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
                 }).slice(pg * rpg, pg *
                   rpg + rpg).map(row => (
@@ -90,12 +96,13 @@ const TableReportPaid = () => {
                   </TableCell>
                   <TableCell align='center' color='success'> {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY hh:mm')}</TableCell>
                   <TableCell>{row.memberName}</TableCell>
-                  <TableCell align='center' >{row.monthNo}</TableCell>
+                  <TableCell align='center'>{row.loanTypeName} ({row.monthlyPayment})</TableCell>
+                  <TableCell align='center'>{row.monthNo}</TableCell>
                   <TableCell align='center'>{moment(row.loanPaymentMonth).add(543, 'year').format('MM/YYYY')}</TableCell>
-                  <TableCell >{row.paymentTypeName}</TableCell>
-                  <TableCell  color='success'>{row.paymentAmount?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell>{row.paymentTypeName}</TableCell>
+                  <TableCell color='success'>{row.paymentAmount?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell align='center' color='success'>{row.createdBy}</TableCell>
-                  <TableCell align='center' color='success'>{row.paymentFilePath}</TableCell>
+                  {/* <TableCell align='center' color='success'>{row.paymentFilePath}</TableCell> */}
                   <TableCell align='center' color='success'>{row.paymentApprovedBy == null ? 'รออนุมัติ' : 'อนุมัติ'}</TableCell>
                   <TableCell align='center' color='success'>
                     <Link href={`../../loan/${row.nationalId}/${row.loanId}`} color='success'>
@@ -112,7 +119,7 @@ const TableReportPaid = () => {
         <TablePagination
           rowsPerPageOptions={[10, 20, 50]}
           component="div"
-          count={paidReports.blogs.length}
+          count={paidDataTable.blogs.length}
           rowsPerPage={rpg}
           page={pg}
           onPageChange={handleChangePage}

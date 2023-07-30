@@ -59,8 +59,8 @@ const TableMemberLoanHistory = () => {
                   <TableCell align='center' color='primary'>{row.totalPayment ?? 0}</TableCell>
                   <TableCell align='center' color='primary'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
                   <TableCell align='center'>
-                  <Chip label={(row.closeLoanStatusId == 3) ? "ปิดยอดสวัสดิการ" : row.loanStatusName} color="primary" />
-                    </TableCell>
+                    <Chip label={(row.closeLoanStatusId == 3) ? "ปิดยอดสวัสดิการ" : row.loanStatusName} color="primary" />
+                  </TableCell>
                   <TableCell align='center'>
                     <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
                         <Button type='button' variant='outlined'>

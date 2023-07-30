@@ -17,6 +17,8 @@ import Button from '@mui/material/Button'
 import Link from 'next/link'
 import Grid from '@mui/material/Grid'
 import TextField  from "@mui/material/TextField";
+import Chip from '@mui/material/Chip';
+
 import { DataContext } from 'src/pages/member'
 
 const TableMember = (props) => {
@@ -85,7 +87,9 @@ const TableMember = (props) => {
                   <TableCell >{row.positionName}</TableCell>
                   <TableCell align='center'>{row.TOTAL_SHARE ?? 0}</TableCell>
                   <TableCell>{row.memberTypeName}</TableCell>
-                  <TableCell align='center'>{row.memberStatus == 0 ? 'ปิดบัญชี' : 'ปกติ'}</TableCell>
+                  <TableCell align='center'>
+                    <Chip label={row.memberStatusName} {...row.memberStatusId != 1 ? {color:'primary'} : null }></Chip>
+                  </TableCell>
                   <TableCell align='center'>
                     <Link href={`member/${row.nationalId}`} color='success'>
                       <Button type='button' variant='outlined'>

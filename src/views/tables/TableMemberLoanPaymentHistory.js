@@ -56,7 +56,7 @@ const TableMemberLoanPaymentHistory = () => {
                   <TableCell align='center'>{row.monthNo}</TableCell>
                   <TableCell align='center'>{moment(row.loanPaymentMonth).add(543, 'year').format('MM/YYYY')}</TableCell>
                   <TableCell align='center' component='th' scope='row'>
-                    {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY HH:mm')}
+                    {moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY HH:mm')}
                   </TableCell>
                   <TableCell align='center'>{row.paymentTypeName}</TableCell>
                   <TableCell align='center'>{row.paymentAmount}</TableCell>

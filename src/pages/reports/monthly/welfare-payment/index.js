@@ -2,7 +2,7 @@ import * as React from 'react'
 import Grid from '@mui/material/Grid'
 import axios from 'axios'
 import { useEffect, useState, createContext } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 import 'moment/locale/th'  // without this line it didn't work
@@ -38,8 +38,7 @@ export const StrSumPaymentContext = createContext()
 
 const FormLayouts = () => {
 
-  const i = 1;
-  
+  const i = 1;  
   moment.locale('th')
   const [paidReports, setPaidReports] = useState({ blogs: [] })
   const [pendingPaymentReports, setPendingPaymentReports] = useState({ blogs: [] })
@@ -68,7 +67,7 @@ const FormLayouts = () => {
     }
   }
 
-    const fetchSumPayment = async () => {
+  const fetchSumPayment = async () => {
     let uri = apiConfig.baseURL + `/reports/monthly/welfare/sum-payment/${date}`
     console.log(uri)
     try {
@@ -173,8 +172,6 @@ const FormLayouts = () => {
             <Badge badgeContent={badgeCouter[0]?.TOTAL_MEMBER} color="primary" sx={{mt:4}} />
             <Tab label='รายการชำระเงิน' value='paid' />
             <Badge badgeContent={badgeCouter[1]?.TOTAL_MEMBER} color="primary" sx={{mt:4}} />
-            {/* <Tab label='รายการติดตามการชำระเงิน' value='followup-payment' />
-            <Badge badgeContent={2} color="primary" sx={{mt:4}} /> */}
           </TabList>
         </Box>
         <TabPanel value='paid'>

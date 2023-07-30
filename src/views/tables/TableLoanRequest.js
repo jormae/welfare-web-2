@@ -40,10 +40,7 @@ const TableLoanRequest = () => {
   }, [])
 
   return (
-    <Card>
-      <CardHeader title='รายการคำร้องขอสวัสดิการ' titleTypographyProps={{ variant: 'h6' }} />
-      <Divider sx={{ margin: 0 }} />
-      <CardContent>
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
@@ -80,8 +77,6 @@ const TableLoanRequest = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </CardContent>
-    </Card>
   )
 }
 
