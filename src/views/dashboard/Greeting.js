@@ -7,13 +7,19 @@ import { styled, useTheme } from '@mui/material/styles'
 import CardMedia from '@mui/material/CardMedia'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
+import Link from 'next/link'
+import { CardActionArea } from '@mui/material';
 
 const Greeting = () => {
+  const userName = typeof window !== 'undefined' ? localStorage.getItem('username') : null
   const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
   const memberRoleName = typeof window !== 'undefined' ? localStorage.getItem('memberRoleName') : null
   const theme = useTheme()
 
   return (
+    <Link href={`/member/${userName}`} color='success'>
+    <CardActionArea>
+
     <Card sx={{ position: 'relative' }}>
       <CardMedia sx={{ height: '11.625rem' }} image='/images/cards/background-user.png' />
       <Box sx={{ width:'100%', display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center'}}>
@@ -61,6 +67,8 @@ const Greeting = () => {
         </Box>
       </CardContent>
     </Card>
+    </CardActionArea>
+    </Link>
   )
 }
 
