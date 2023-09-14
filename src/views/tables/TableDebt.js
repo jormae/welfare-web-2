@@ -20,32 +20,37 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import toast, { Toaster } from 'react-hot-toast'
 
-import { DataContext } from 'src/pages/member'
-import { all } from 'async'
+import 'moment/locale/th'  // without this line it didn't work
 
-const TableAllowance = () => {
+const TableDebt = () => {
 
-    const [allowances, setAllowances] = useState({ blogs: [] })
+    moment.locale('th')
+
+    const [date, setDate]= useState(moment().format('YYYY-MM'))
+    console.log(date)
+
+    const [debts, setDebts] = useState({ blogs: [] })
     const [loading, setLoading] = React.useState(false)
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-    console.log(allowances)
-    const fetchAllowances = async () => {
-      let uri = apiConfig.baseURL + `/allowances`
+    console.log(debts)
+
+    const fetchDebts = async () => {
+      let uri = apiConfig.baseURL + `/debts/date/${date}`
       console.log(uri)
       try {
         const { data } = await axios.get(uri)
-        setAllowances({ blogs: data })
+        setDebts({ blogs: data })
       } catch (error) {
         console.log(error)
       }
     }
 
-    const deleteAllowance = allowanceId => {
+    const deleteDebt = debtId => {
       // setLoading(true)
-      console.log('deleteAllowance')
-      console.log(allowanceId)
+      console.log('deleteDebt')
+      console.log(debtId)
   
-      let uri = apiConfig.baseURL + `/allowances/${allowanceId}`
+      let uri = apiConfig.baseURL + `/debts/${debtId}`
       console.log(uri)
   
       fetch(uri, {
@@ -53,7 +58,7 @@ const TableAllowance = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        // body: JSON.stringify(allowanceId)
+        // body: JSON.stringify(debtId)
       })
         .then(response => response.json())
         .then(data => {
@@ -61,7 +66,7 @@ const TableAllowance = () => {
           // setLoading(false)
           if (data.status == 'success') {
             toast.success(data.message)
-            fetchAllowances();
+            fetchDebts();
           } else {
             toast.error(data.message)
           }
@@ -72,12 +77,12 @@ const TableAllowance = () => {
     }
   
     useEffect(() => {
-        fetchAllowances()
+        fetchDebts()
     }, [])
 
   return (
     <Card>
-      <CardHeader title='ทะเบียนสวัสดิการทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='ทะเบียนหนี้รายเดือนทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
       <Toaster />
 
       <Divider sx={{ margin: 0 }} />
@@ -87,26 +92,38 @@ const TableAllowance = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>ที่</TableCell>
-                <TableCell align='center'>วันที่</TableCell>
-                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
-                <TableCell align='center'>ชื่อสวัสดิการ</TableCell>
-                <TableCell align='center'>จำนวนเงิน</TableCell>
+                <TableCell align='center'>เดือน</TableCell>
+                <TableCell align='center'>ชื่อลูกหนี้</TableCell>
+                <TableCell align='center'>ฉุกเฉิน</TableCell>
+                <TableCell align='center'>สามัญ</TableCell>
+                <TableCell align='center'>หนี้ธนาคาร</TableCell>
+                <TableCell align='center'>หนี้กยศ</TableCell>
+                <TableCell align='center'>ค่าเช่าบ้าน</TableCell>
+                <TableCell align='center'>เงินสมทบ</TableCell>
+                <TableCell align='center'>รวมทั้งหมด</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {allowances.blogs.map(row => (
-                <TableRow key={row.allowanceId}>
+              {debts.blogs.map(row => (
+                <TableRow key={row.debtId}>
+
                   <TableCell align='center' component='th' scope='row'>
-                  {row.allowanceId}
+                  {row.debtId}
                   </TableCell>
-                  <TableCell align='center'> {moment(row.allowanceDateTime).add(543, 'year').format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align='center'>{row.allowanceTypeName}</TableCell>
-                  <TableCell align='left'>{row.allowanceName}</TableCell>
-                  <TableCell align='center'>{row.allowanceAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'> {moment(row.yearMonth).add(543, 'year').format('MM/YYYY')}</TableCell>
+                  <TableCell align='center'>{row.memberName}</TableCell>
+                  {/* <TableCell align='center'>{row.bank ?? row.bank.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell> */}
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{row.bank}</TableCell>
+                  <TableCell align='center'>{(row.houseRent + row.bank + row.studentLoan +row.allowance)}</TableCell>
                   <TableCell align='center'>
-                    {/* <Link href={`allowance/${row.allowanceId}`} color='success'> */}
-                      <Button type='button' variant='outlined' onClick={() => deleteAllowance(row.allowanceId)}>
+                    {/* <Link href={`debt/${row.debtId}`} color='success'> */}
+                      <Button type='button' variant='outlined' onClick={() => deleteDebt(row.debtId)}>
                         ลบ
                       </Button>
                     {/* </Link> */}
@@ -121,4 +138,4 @@ const TableAllowance = () => {
   )
 }
 
-export default TableAllowance
+export default TableDebt

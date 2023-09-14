@@ -135,7 +135,7 @@ const FormAccount = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          กรุณายืนยันการรีเซตรหัสผ่านใหม่? รหัสผ่านใหม่ของบัญชีนี้คือเลขที่บัตรประจำตัวประชาชน
+          กรุณายืนยันการรีเซตรหัสผ่านใหม่? รหัสผ่านใหม่ของบัญชีนี้คือ 123456
           </DialogContentText>
         </DialogContent>
         <DialogActions>

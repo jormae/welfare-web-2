@@ -150,7 +150,7 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         {memberRoleId != 4 ? (
-          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
             <Box sx={styles}>
               <EmailOutline sx={{ marginRight: 2 }} />
               รายการทอง
@@ -158,7 +158,7 @@ const UserDropdown = () => {
           </MenuItem>
           ) : ''}
            {memberRoleId != 4 ? (
-          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/allowance`)}>
             <Box sx={styles}>
               <EmailOutline sx={{ marginRight: 2 }} />
               รายการเงินสมทบ
@@ -170,6 +170,14 @@ const UserDropdown = () => {
             <Box sx={styles}>
               <EmailOutline sx={{ marginRight: 2 }} />
               รายการซากาต
+            </Box>
+          </MenuItem>
+           ) : ''}
+           {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/debt`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายการหนี้รายเดือน
             </Box>
           </MenuItem>
            ) : ''}
