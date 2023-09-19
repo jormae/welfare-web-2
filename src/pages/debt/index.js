@@ -45,6 +45,7 @@ import TablePagination from "@mui/material/TablePagination"
 
 import moment from 'moment'
 import 'moment/locale/th' 
+import CardDebts from 'src/views/cards/CardADebts'
 
 const FormLayouts = () => {
   const date = moment().format('YYYY-MM')
@@ -164,7 +165,7 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
        <Grid container item>
-        <CardAllowances />
+        <CardDebts />
        </Grid>
 
         <Grid item xs={12}>
