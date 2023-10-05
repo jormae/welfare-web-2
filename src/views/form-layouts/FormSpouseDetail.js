@@ -33,7 +33,7 @@ import Divider from '@mui/material/Divider'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
-import { SpouseContext } from 'src/pages/member/[nationalId]'
+import { SpouseContext } from 'src/pages/staff/[cid]'
 
 const FormSpouseDetail = () => {
   const spouseDetails = useContext(SpouseContext)

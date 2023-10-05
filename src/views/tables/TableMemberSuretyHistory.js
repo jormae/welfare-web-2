@@ -15,7 +15,7 @@ import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
 
-import { SuretyHistoryContext } from 'src/pages/member/[nationalId]'
+import { SuretyHistoryContext } from 'src/pages/staff/[cid]'
 
 const TableMemberSuretyHistory = () => {
 

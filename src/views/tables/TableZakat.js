@@ -19,7 +19,7 @@ import moment from 'moment'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
-import { DataContext } from 'src/pages/member'
+import { DataContext } from 'src/pages/staff'
 import { all } from 'async'
 
 const TableZakat = () => {

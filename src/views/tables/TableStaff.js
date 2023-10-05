@@ -19,11 +19,11 @@ import Grid from '@mui/material/Grid'
 import TextField  from "@mui/material/TextField";
 import Chip from '@mui/material/Chip';
 
-import { DataContext } from 'src/pages/member'
+import { DataContext } from 'src/pages/staff'
 
-const TableMember = (props) => {
+const TableStaff = (props) => {
 
-  const members = useContext(DataContext)
+  const staff = useContext(DataContext)
 
   const { register } = useForm();
   const [search, setSearch] = useState('')
@@ -43,14 +43,14 @@ const TableMember = (props) => {
 
   return (
     <Card>
-      <CardHeader title='ทะเบียนสมาชิกทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='ทะเบียนเจ้าหน้าที่ทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <Grid item xs={12} md={12} lg={12}>
           <form noValidate autoComplete='off'>
               <Grid container spacing={5}>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='ค้นหาสมาชิก' placeholder='ค้นหาสมาชิก' {...register('search', {
+                  <TextField fullWidth label='ค้นหาเจ้าหน้าที่' placeholder='ค้นหาเจ้าหน้าที่' {...register('search', {
                     onChange: (e) => {setSearch(e.target.value)},
                     onBlur: (e) => {},
                   })} />
@@ -64,36 +64,34 @@ const TableMember = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>ที่</TableCell>
-                <TableCell align='center'>รหัสสมาชิก</TableCell>
+                <TableCell align='center'>เลขประชาชน</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ตำแหน่ง</TableCell>
-                <TableCell align='center'>เงินหุ้นทั้งหมด</TableCell>
-                <TableCell align='center'>ประเภทสมาชิก</TableCell>
-                <TableCell align='center'>สถานะสมาชิก</TableCell>
+                <TableCell align='center'>งาน</TableCell>
+                <TableCell align='center'>กลุ่มงาน</TableCell>
+                <TableCell align='center'>ประเภท</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-            { members.blogs.filter((row)=>{
-                return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
+            { staff.blogs.filter((row)=>{
+                return search.toLowerCase() === '' ? row : row.staffName.toLowerCase().includes(search);
               }).slice(pg * rpg, pg *
                 rpg + rpg).map(row => (
-                <TableRow key={row.nationalId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow key={row.cid} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell align='center'  component='th' scope='row'>{i++}</TableCell>
                   <TableCell align='center'>
-                  {row.nationalId}
+                  {row.cid}
                   </TableCell>
-                  <TableCell >{row.memberName}</TableCell>
+                  <TableCell >{row.staffName}</TableCell>
                   <TableCell >{row.positionName}</TableCell>
-                  <TableCell align='center'>{row.TOTAL_SHARE ?? 0}</TableCell>
-                  <TableCell>{row.memberTypeName}</TableCell>
+                  <TableCell >{row.deptName}</TableCell>
+                  <TableCell>{row.mainDeptName}</TableCell>
+                  <TableCell>{row.workStatusId == 1 ? 'ทำงาน' : 'ไม่ทำงาน'}</TableCell>
                   <TableCell align='center'>
-                    <Chip label={row.memberStatusName} {...row.memberStatusId != 1 ? {color:'primary'} : null }></Chip>
-                  </TableCell>
-                  <TableCell align='center'>
-                    <Link href={`member/${row.nationalId}`} color='success'>
+                    <Link href={`staff/${row.cid}`} color='success'>
                       <Button type='button' variant='outlined'>
-                        เปิด
+                        รายละเอียด
                       </Button>
                     </Link>
                   </TableCell>
@@ -105,7 +103,7 @@ const TableMember = (props) => {
         <TablePagination
           rowsPerPageOptions={[10, 20, 50]}
           component="div"
-          count={members.blogs.length}
+          count={staff.blogs.length}
           rowsPerPage={rpg}
           page={pg}
           onPageChange={handleChangePage}
@@ -117,4 +115,4 @@ const TableMember = (props) => {
   )
 }
 
-export default TableMember
+export default TableStaff

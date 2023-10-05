@@ -7,7 +7,7 @@ import { mdiAccount } from '@mdi/js'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import TableMember from 'src/views/tables/TableMember'
+import TableMember from 'src/views/tables/TableStaff'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -26,16 +26,17 @@ export const DataContext = createContext()
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [members, setMembers] = useState({ blogs: [] })
+  const [staff, setStaff] = useState({ blogs: [] })
+  console.log(staff)
 
   // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
 
-  const fetchMembers = async () => {
-    let uri = apiConfig.baseURL + `/members`
+  const fetchStaff = async () => {
+    let uri = apiConfig.baseURL + `/staff`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setMembers({ blogs: data })
+      setStaff({ blogs: data })
     } catch (error) {
       // console.log(error)
     }
@@ -61,7 +62,7 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchMembers()
+          fetchStaff()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -97,13 +98,13 @@ const FormLayouts = () => {
   }
 
   useEffect(() => {
-    verifyToken()
-    fetchMembers()
+    // verifyToken()
+    fetchStaff()
   }, [])
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} md={6} lg={4}>
+      {/* <Grid item xs={12} md={6} lg={4}>
           <CardMember />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -111,9 +112,9 @@ const FormLayouts = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <CardAddMember/>
-        </Grid>
+        </Grid> */}
 
-      <DataContext.Provider value={members}>
+      <DataContext.Provider value={staff}>
         <Grid item xs={12}>
           {/* <TableTodo /> */}
           <TableMember />

@@ -24,68 +24,71 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
 import {
-  MemberContext,
+  StaffContext,
   PositionsContext,
-  MemberTypesContext,
-  MemberRolesContext,
+  StaffTypesContext,
+  StaffRolesContext,
   PaymentTypesContext,
-  MemberStatusContext
+  StaffStatusContext
 } from 'src/pages/staff/[cid]'
+import { CosineWave } from 'mdi-material-ui'
 
-const FormMemberDetail = () => {
-  const memberDetail = useContext(MemberContext)
+const FormStaffDetail = () => {
+
+  const staffDetail = useContext(StaffContext)
 
   const positions = useContext(PositionsContext)
 
-  const memberTypes = useContext(MemberTypesContext)
+  const staffTypes = useContext(StaffTypesContext)
 
-  const memberRoles = useContext(MemberRolesContext)
+  const staffRoles = useContext(StaffRolesContext)
 
   const paymentTypes = useContext(PaymentTypesContext)
 
-  const memberStatus = useContext(MemberStatusContext)
+  const staffStatus = useContext(StaffStatusContext)
 
   const { register, handleSubmit, reset } = useForm()
   const [loading, setLoading] = React.useState(false)
+  console.log(staffDetail)
 
-  const nationalId = memberDetail?.nationalId
-  const memberName = memberDetail?.memberName
-  const villageNo = memberDetail?.villageNo
-  const subDistrict = memberDetail?.subDistrict
-  const district = memberDetail?.district
-  const province = memberDetail?.province
-  const houseNo = memberDetail?.houseNo
-  const postCode = memberDetail?.postCode
-  const contactNo = memberDetail?.contactNo
-  const positionId = memberDetail?.positionId
-  const memberTypeId = memberDetail?.memberTypeId
-  const memberRoleId = memberDetail?.memberRoleId
-  const paymentTypeId = memberDetail?.paymentTypeId
-  const memberStatusId = memberDetail?.memberStatusId
+  const cid = staffDetail?.cid
+  const staffName = staffDetail?.staffName
+  const villageNo = staffDetail?.villageNo
+  const subDistrict = staffDetail?.subDistrict
+  const district = staffDetail?.district
+  const province = staffDetail?.province
+  const houseNo = staffDetail?.houseNo
+  const postCode = staffDetail?.postCode
+  const contactNo = staffDetail?.contactNo
+  const positionId = staffDetail?.positionId
+  const staffTypeId = staffDetail?.staffTypeId
+  const staffRoleId = staffDetail?.staffRoleId
+  const paymentTypeId = staffDetail?.paymentTypeId
+  const staffStatusId = staffDetail?.staffStatusId
 
-  const memberRole = typeof window !== 'undefined' ? localStorage?.getItem('memberRoleId') : ''
-  // const strDisabled = memberRole != 4 ? '' : 'disabled';
-  console.log(memberRole)
+  const staffRole = typeof window !== 'undefined' ? localStorage?.getItem('staffRoleId') : ''
+  // const strDisabled = staffRole != 4 ? '' : 'disabled';
+  console.log(staffRole)
   useEffect(() => {
-    if (memberDetail) {
+    if (staffDetail) {
       reset({
-        nationalId: memberDetail?.nationalId,
-        memberName: memberDetail?.memberName,
-        salary: memberDetail?.salary,
-        houseNo: memberDetail?.houseNo,
-        streetName: memberDetail?.streetName,
-        villageName: memberDetail?.villageName,
-        villageNo: memberDetail?.villageNo,
-        subDistrict: memberDetail?.subDistrict,
-        district: memberDetail?.district,
-        province: memberDetail?.province,
-        postCode: memberDetail?.postCode,
-        contactNo: memberDetail?.contactNo,
-        positionId: memberDetail?.positionId,
-        memberTypeId: memberDetail?.memberTypeId,
-        memberRoleId: memberDetail?.memberRoleId,
-        paymentTypeId: memberDetail?.paymentTypeId,
-        memberStatusId: memberDetail?.memberStatusId
+        cid: staffDetail?.cid,
+        staffName: staffDetail?.staffName,
+        salary: staffDetail?.salary,
+        houseNo: staffDetail?.houseNo,
+        streetName: staffDetail?.streetName,
+        villageName: staffDetail?.villageName,
+        villageNo: staffDetail?.villageNo,
+        subDistrict: staffDetail?.subDistrict,
+        district: staffDetail?.district,
+        province: staffDetail?.province,
+        postCode: staffDetail?.postCode,
+        contactNo: staffDetail?.contactNo,
+        positionId: staffDetail?.positionId,
+        staffTypeId: staffDetail?.staffTypeId,
+        staffRoleId: staffDetail?.staffRoleId,
+        paymentTypeId: staffDetail?.paymentTypeId,
+        staffStatusId: staffDetail?.staffStatusId
       })
     }
   }, [])
@@ -93,10 +96,10 @@ const FormMemberDetail = () => {
   const onSubmit = data => {
     setLoading(true)
     console.log(data)
-    let memberId = memberDetail?.nationalId
-    console.log(memberId)
+    let staffId = staffDetail?.cid
+    console.log(staffId)
 
-    let uri = apiConfig.baseURL + `/members/${nationalId}`
+    let uri = apiConfig.baseURL + `/staffs/${cid}`
 
     fetch(uri, {
       method: 'PUT',
@@ -128,15 +131,15 @@ const FormMemberDetail = () => {
         <CardContent>
           <Grid container spacing={5}>
             <Grid item xs={12} md={3}>
-              {memberDetail.nationalId ? (
-                <TextField fullWidth label='เลขที่บัตรประชาชน' {...register('nationalId')} />
+              {staffDetail.cid ? (
+                <TextField fullWidth label='เลขที่บัตรประชาชน' {...register('cid')}  />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
             <Grid item xs={12} md={3}>
-              {memberDetail.memberName ? (
-                <TextField fullWidth label='ชื่อสมาชิก' {...register('memberName')} />
+              {staffDetail.staffName ? (
+                <TextField fullWidth label='ชื่อสมาชิก' {...register('staffName')} />
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
@@ -160,17 +163,17 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth {...memberRole != 4 ? null : {disabled:true}}>
+              <FormControl fullWidth {...staffRole != 4 ? null : {disabled:true}}>
                 <InputLabel>ประเภทสมาชิก</InputLabel>
                 <Select
                   label='ประเภทสมาชิก'
-                  defaultValue={memberTypeId ?? ''}
-                  {...register('memberTypeId', { required: true })}
+                  defaultValue={staffTypeId ?? ''}
+                  {...register('staffTypeId', { required: true })}
                 >
-                  {memberTypes.map(item => {
+                  {staffTypes.map(item => {
                     return (
-                      <MenuItem key={item.memberTypeId} value={item.memberTypeId}>
-                        {item.memberTypeName}
+                      <MenuItem key={item.staffTypeId} value={item.staffTypeId}>
+                        {item.staffTypeName}
                       </MenuItem>
                     )
                   })}
@@ -196,17 +199,17 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth {...memberRole == 4 ? {disabled:true} : null }>
+              <FormControl fullWidth {...staffRole == 4 ? {disabled:true} : null }>
                 <InputLabel>ประเภทบัญชีผู้ใช้</InputLabel>
                 <Select
                   label='ประเภทบัญชีผู้ใช้'
-                  defaultValue={memberRoleId ?? ''}
-                  {...register('memberRoleId', { required: true })}
+                  defaultValue={staffRoleId ?? ''}
+                  {...register('staffRoleId', { required: true })}
                 >
-                  {memberRoles.map(item => {
+                  {staffRoles.map(item => {
                     return (
-                      <MenuItem key={item.memberRoleId} value={item.memberRoleId}>
-                        {item.memberRoleName}
+                      <MenuItem key={item.staffRoleId} value={item.staffRoleId}>
+                        {item.staffRoleName}
                       </MenuItem>
                     )
                   })}
@@ -214,17 +217,17 @@ const FormMemberDetail = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} md={3}>
-              <FormControl fullWidth {...memberRole != 4 ? null : {disabled:true}}>
+              <FormControl fullWidth {...staffRole != 4 ? null : {disabled:true}}>
                 <InputLabel>สถานะสมาชิก</InputLabel>
                 <Select
                   label='สถานะสมาชิก'
-                  defaultValue={memberStatusId ?? ''}
-                  {...register('memberStatusId', { required: true })}
+                  defaultValue={staffStatusId ?? ''}
+                  {...register('staffStatusId', { required: true })}
                 >
-                  {memberStatus.map(item => {
+                  {staffStatus.map(item => {
                     return (
-                      <MenuItem key={item.memberStatusId} value={item.memberStatusId}>
-                        {item.memberStatusName}
+                      <MenuItem key={item.staffStatusId} value={item.staffStatusId}>
+                        {item.staffStatusName}
                       </MenuItem>
                     )
                   })}
@@ -297,4 +300,4 @@ const FormMemberDetail = () => {
   )
 }
 
-export default FormMemberDetail
+export default FormStaffDetail

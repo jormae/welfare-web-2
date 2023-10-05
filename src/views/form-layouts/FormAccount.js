@@ -30,11 +30,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-import  {MemberContext} from 'src/pages/member/[nationalId]'
+import  {StaffContext} from 'src/pages/staff/[cid]'
 
 const FormAccount = () => {
 
-    const memberDetail = useContext(MemberContext)
+    const staffDetail = useContext(StaffContext)
+    console.log("staffDetail = "+staffDetail)
 
     const [open, setOpen] = React.useState(false);
 
@@ -52,16 +53,16 @@ const FormAccount = () => {
   const [confirmLoading, setConfirmLoading] = React.useState(false)
   const [newPassword, setNewPassword] = useState()
   const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
-  const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
-  const nationalId = memberDetail?.nationalId;
-  console.log('nationalId = '+nationalId)
+  const staffRoleId = typeof window !== 'undefined' ? localStorage.getItem('staffRoleId') : null
+  const cid = staffDetail?.cid;
+  console.log('cid = '+cid)
   console.log('username = '+username)
   const onSubmit = data => {
     setSaveLoading(true)
     console.log('onSubmit')
     console.log(data)
 
-    let uri = apiConfig.baseURL + `/auth/${data.nationalId}`
+    let uri = apiConfig.baseURL + `/auth/${data.cid}`
     console.log(uri)
 
     fetch(uri, {
@@ -91,7 +92,7 @@ const FormAccount = () => {
 
         console.log("handleReset")
         console.log(data)
-        let uri = apiConfig.baseURL + `/auth/reset/${memberDetail?.nationalId}`
+        let uri = apiConfig.baseURL + `/auth/reset/${staffDetail?.cid}`
         console.log(uri)
 
         fetch(uri, {
@@ -162,22 +163,29 @@ const FormAccount = () => {
         <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)} >
           <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
-              {memberDetail?.memberName ? (
-                <TextField fullWidth InputProps={{ readOnly: true }} label='ชื่อสมาชิก'  defaultValue={memberDetail.memberName}/>
+              {staffDetail?.cid ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} label='เลขที่บัตรประชาชน'  defaultValue={staffDetail.cid}/>
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
             <Grid item xs={12} md={4}>
-              {memberDetail?.nationalId ? (
-                <TextField fullWidth InputProps={{ readOnly: true }} label='สถานะบัญชี' defaultValue={memberDetail.memberStatusId == 1 ? 'ปกติ' : 'ปิดการใช้งาน'} />
+              {staffDetail?.staffName ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} label='ชื่อ-สกุล'  defaultValue={staffDetail.staffName}/>
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
             </Grid>
             <Grid item xs={12} md={4}>
-              {memberDetail?.nationalId ? (
-                <TextField fullWidth InputProps={{ readOnly: true }} label='เลขที่บัตรประชาชน' defaultValue={memberDetail.nationalId} {...register('nationalId')}/>
+              {staffDetail?.cid ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} label='สถานะบัญชี' defaultValue={staffDetail.staffStatusId == 1 ? 'ปกติ' : 'ปิดการใช้งาน'} />
+              ) : (
+                <Skeleton variant='rectangular' width={250} height={55} />
+              )}
+            </Grid>
+            <Grid item xs={12} md={4}>
+              {staffDetail?.cid ? (
+                <TextField fullWidth InputProps={{ readOnly: true }} label='เลขที่บัตรประชาชน' defaultValue={staffDetail.cid} {...register('cid')}/>
               ) : (
                 <Skeleton variant='rectangular' width={250} height={55} />
               )}
@@ -202,7 +210,7 @@ const FormAccount = () => {
                   )}
             </Grid>
             <Grid item xs={6}>
-            {username == nationalId ? ( 
+            {username == cid ? ( 
               <Box
                m={1} //margin
                display="flex"
@@ -226,7 +234,7 @@ const FormAccount = () => {
              ) : ''}
              </Grid> 
             <Grid item xs={6}>
-            { memberRoleId == 1 || memberRoleId == 3 ? (
+            { staffRoleId == 1 || staffRoleId == 3 ? (
               <Box
                 sx={{
                   gap: 5,
