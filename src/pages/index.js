@@ -404,7 +404,7 @@ const Dashboard = () => {
                     <Grid container spacing={5}>
                       <Grid item xs={6}><Typography style={{ fontSize: 24 }} >  </Typography></Grid>
                       <Grid item xs={4} md={4}>
-                        <TextField type="date" fullWidth label='วันที่' {...register('reportDate', { required: true })}/>
+                        <TextField type="month" fullWidth label='วันที่' {...register('reportDate', { required: true })}/>
                       </Grid>
                       <Grid item xs={2}>
                         <Box

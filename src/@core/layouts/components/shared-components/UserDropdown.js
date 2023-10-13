@@ -150,6 +150,14 @@ const UserDropdown = () => {
           </Box>
         </MenuItem>
         {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/salary`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              บัญชีเงินเดือน
+            </Box>
+          </MenuItem>
+          ) : ''}
+          {memberRoleId != 4 ? (
           <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/gold`)}>
             <Box sx={styles}>
               <EmailOutline sx={{ marginRight: 2 }} />

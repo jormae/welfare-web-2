@@ -27,6 +27,7 @@ const TableZakat = () => {
     const [zakats, setZakats] = useState({ blogs: [] })
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     console.log(zakats)
+    
     const fetchZakats = async () => {
       let uri = apiConfig.baseURL + `/zakats`
       console.log(uri)
