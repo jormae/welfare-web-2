@@ -53,7 +53,7 @@ import dayjs from 'dayjs';
 
 import moment from 'moment'
 import 'moment/locale/th'  // without this line it didn't work
-// import TableDashboardRequests from 'src/views/tables/TableDashboardRequests'
+import TableDashboardRequests from 'src/views/tables/TableDashboardRequests'
 
 export const DataContext = createContext()
 
@@ -386,13 +386,13 @@ const Dashboard = () => {
         )}
         </Grid>
 
-        {/* {userRole != 4 ? (
+        {userRole != 4 ? (
         <Grid item xs={12}>
           <TableDashboardRequests />
         </Grid>
         ) : (
           ''
-        )} */}
+        )}
         {userRole != 4 ? (
         <Grid item xs={12}>
           <Grid item md={12} xs={12}>
