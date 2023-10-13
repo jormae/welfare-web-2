@@ -21,21 +21,18 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import moment from 'moment'
 
-// import { PaidContext, StrDateContext } from 'src/pages/reports/monthly/welfare-payment/index'
-import { DashboardReportAttendance1Context, DashboardStrDateContext } from 'src/pages/index'
+import { PaidContext, StrDateContext } from 'src/pages/reports/monthly/welfare-payment/index'
+import { DashboardPaidContext, DashboardStrDateContext } from 'src/pages/index'
 
-const TableReportAttendance1 = () => {
-  console.log("TableReportAttendance1")
-    // const paidReports = useContext(PaidContext)
-    const dashboardReportAttendance1 = useContext(DashboardReportAttendance1Context)
-    const strDate = useContext(DashboardStrDateContext)
-    // const dashboardStrDate = useContext(DashboardStrDateContext)
-    // const attendanceDataTable = paidReports ?? dashboardReportAttendance1;
-    // const attendanceDataTable = useContext(DashboardReportAttendance1Context);
-    // const paidStrDate = useContext(StrDateContext);
-    // const paidStrDate = strDate ?? dashboardStrDate;
-    console.log("dashboardReportAttendance1"+dashboardReportAttendance1)
-    
+const TableReportPaid = () => {
+  
+    const paidReports = useContext(PaidContext)
+    const dashboardPaidReports = useContext(DashboardPaidContext)
+    const strDate = useContext(StrDateContext)
+    const dashboardStrDate = useContext(DashboardStrDateContext)
+    const paidDataTable = paidReports ?? dashboardPaidReports;
+    const paidStrDate = strDate ?? dashboardStrDate;
+        
     const { register } = useForm();
     const [search, setSearch] = useState('')
     const i = 1;
@@ -75,30 +72,38 @@ const TableReportAttendance1 = () => {
             <TableHead>
               <TableRow>
                 <TableCell align='center'>ที่</TableCell>
-                <TableCell align='center'>กลุ่มงาน</TableCell>
-                <TableCell align='center'>ชื่อเวร</TableCell>
-                <TableCell align='center'>จำนวนสแกนทำงาน</TableCell>
-                <TableCell align='center'>ตรงเวลา</TableCell>
-                <TableCell align='center'>สาย</TableCell>
-                <TableCell align='center'>ลา</TableCell>
+                <TableCell align='center'>วันที่ชำระ</TableCell>
+                <TableCell align='center'>ชื่อ-สกุล</TableCell>
+                <TableCell align='center'>ประเภทสวัสดิการ</TableCell>
+                <TableCell align='center'>งวดที่</TableCell>
+                <TableCell align='center'>เดือน</TableCell>
+                <TableCell align='center'>ช่องทางชำระ</TableCell>
+                <TableCell align='center'>ยอดชำระ</TableCell>
+                <TableCell align='center'>เจ้าหน้าที่</TableCell>
+                {/* <TableCell align='center'>หลักฐานการชำระ</TableCell> */}
+                <TableCell align='center'>สถานะการชำระ</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-            { dashboardReportAttendance1.blogs.filter((row)=>{
-                  return search.toLowerCase() === '' ? row : row.staffName.toLowerCase().includes(search);
+            { paidDataTable.blogs.filter((row)=>{
+                  return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
                 }).slice(pg * rpg, pg *
                   rpg + rpg).map(row => (
                 <TableRow key={row.attendanceId}>
                   <TableCell align='center' component='th' scope='row'>
                   {i++}
                   </TableCell>
-                  <TableCell>{row.mainDeptName}</TableCell>
-                  <TableCell>{row.shiftName} ({row.startShiftTime} - {row.endShiftTime})</TableCell>
-                  <TableCell align='center'>{row.totalAttendance}</TableCell>
-                  <TableCell align='center'>{row.totalPunctual}</TableCell>
-                  <TableCell align='center'>{row.totalLate}</TableCell>
-                  <TableCell align='center'>N/A</TableCell>
+                  <TableCell align='center' color='success'> {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY hh:mm')}</TableCell>
+                  <TableCell>{row.memberName}</TableCell>
+                  <TableCell align='center'>{row.loanTypeName} ({row.monthlyPayment})</TableCell>
+                  <TableCell align='center'>{row.monthNo}</TableCell>
+                  <TableCell align='center'>{moment(row.loanPaymentMonth).add(543, 'year').format('MM/YYYY')}</TableCell>
+                  <TableCell>{row.paymentTypeName}</TableCell>
+                  <TableCell color='success'>{row.paymentAmount?.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center' color='success'>{row.createdBy}</TableCell>
+                  {/* <TableCell align='center' color='success'>{row.paymentFilePath}</TableCell> */}
+                  <TableCell align='center' color='success'>{row.paymentApprovedBy == null ? 'รออนุมัติ' : 'อนุมัติ'}</TableCell>
                   <TableCell align='center' color='success'>
                     {/* <Link href={`../../loan/${row.nationalId}/${row.loanId}`} color='success'> */}
                       <Button type='button' variant='outlined'>
@@ -114,7 +119,7 @@ const TableReportAttendance1 = () => {
         <TablePagination
           rowsPerPageOptions={[10, 20, 50]}
           component="div"
-          count={dashboardReportAttendance1.blogs.length}
+          count={paidDataTable.blogs.length}
           rowsPerPage={rpg}
           page={pg}
           onPageChange={handleChangePage}
@@ -125,4 +130,4 @@ const TableReportAttendance1 = () => {
   )
 }
 
-export default TableReportAttendance1
+export default TableReportPaid

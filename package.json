@@ -81,7 +81,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-popper": "^2.2.5",
     "styled-components": "^5.3.6",
-    "sweetalert2": "^11.7.18",
+    "sweetalert2": "^11.7.32",
     "thai-baht-text": "^1.0.8"
   },
   "devDependencies": {
