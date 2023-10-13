@@ -25,13 +25,16 @@ export const DataSalaryContext = createContext()
 
 export const DataHealthInsuranceContext = createContext()
 
+export const DataDateContext = createContext()
+
 const FormSalary = () => {
     
-    const date= moment().format('YYYY-MM')
+    // const date= moment().format('YYYY-MM')
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const [loading, setLoading] = useState(false)
     const [salaries, setSalaries] = useState({ blogs: [] })
     const [healthInsurance, setHealthInsurance] = useState(0)
+    const [date, setDate] = useState()
     console.log(salaries)
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
@@ -41,6 +44,7 @@ const FormSalary = () => {
         setLoading(true)
         console.log(data)
         setHealthInsurance(data.healthInsurance / 100)
+        setDate(data.salaryMonth)
         let uri = apiConfig.baseURL + `/salaries/date/${date}`
         console.log(uri)
         try {
@@ -109,7 +113,9 @@ const FormSalary = () => {
         <Grid item xs={12}>
             <DataSalaryContext.Provider value={salaries}>
                 <DataHealthInsuranceContext.Provider value={healthInsurance}>
-                    <TableSalary />
+                    <DataDateContext.Provider value={date}>
+                        <TableSalary />
+                    </DataDateContext.Provider>
                 </DataHealthInsuranceContext.Provider>
             </DataSalaryContext.Provider>
         </Grid>

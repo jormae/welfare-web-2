@@ -25,6 +25,7 @@ import Divider from '@mui/material/Divider'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LoadingButton from '@mui/lab/LoadingButton'
 import Badge from '@mui/material/Badge';
+import FormHelperText from '@mui/material/FormHelperText';
 
 export const PaidContext = createContext()
 
@@ -251,7 +252,10 @@ const FormLayouts = () => {
                       <DatePicker label="Basic date picker" {...register('reportDate', { required: true })}/>
                     </Container>
                   </LocalizationProvider> */}
-                  <TextField type="date" fullWidth label='วันที่' {...register('reportDate', { required: true })}/>
+                  <TextField type="month" fullWidth label='เดือน' InputLabelProps={{shrink: true,}} {...register('reportDate', { required: true })}/>
+                        {errors.reportDate && errors.reportDate.type === "required" && (
+                        <FormHelperText id="reportDate" sx={{color:'#d32f2f'}}>Error : กรุณาเลือกเดือน</FormHelperText>
+                        )}
                 </Grid>
                 <Grid item xs={2}>
                   <Box

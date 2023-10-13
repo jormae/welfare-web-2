@@ -114,7 +114,6 @@ const FormZakat = () => {
                 <LoadingButton
                   type='submit'
                   color='success'
-                  //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   loadingPosition='start'

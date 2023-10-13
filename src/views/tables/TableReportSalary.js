@@ -16,60 +16,30 @@ import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
+import PrintIcon from '@material-ui/icons/Print';
+import Button from '@mui/material/Button'
+import Link from 'next/link'
 import moment from 'moment'
 import toast, { Toaster } from 'react-hot-toast'
 import apiConfig from 'src/configs/apiConfig'
 
-import { DataSalaryContext, DataHealthInsuranceContext, DataDateContext } from 'src/views/form-layouts/FormSalary'
+import { DataReportSalaryContext, DataDateContext} from 'src/pages/reports/monthly/salary/index'
 
 
-const TableSalary = () => {
+const TableReportSalary = () => {
 
-    const salaries = useContext(DataSalaryContext)
-    const healthInsurance = useContext(DataHealthInsuranceContext)
+    const salaries = useContext(DataReportSalaryContext)
     const date = useContext(DataDateContext)
-    console.log(healthInsurance)
-    console.log(date)
  
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const [loading, setLoading] = useState(false)
     const i = 1;
-
-    // const date = moment().format('YYYY-MM')
+    const [loading, setLoading] = useState(false)
+    const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
-    
-    // console.log(salaries)
-
-    const onSubmit = async () => {
-        setLoading(true)
-        let uri = apiConfig.baseURL + `/salaries`
-        console.log(uri)
-
-        fetch(uri, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-            },
-        body: JSON.stringify({date,healthInsurance,memberName})
-        })
-        .then(response => response.json())
-        .then(data => {
-                console.log(data)
-                setLoading(false)
-                if (data.status == 'success') {
-                toast.success(data.message)
-                } else {
-                toast.error(data.message)
-                }
-            })
-        .catch(function (error) {
-            console.log(JSON.stringify(error))
-        })
-    }
 
   return (
     <Card>
-      <CardHeader title='บัญชีการจ่ายเงินเดือนบุคลากร โรงเรียนดารุสสาลาม ประจำเดือน' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title={`รายงานบัญชีการจ่ายเงินเดือนบุคลากร โรงเรียนดารุสสาลาม ประจำเดือน ${strDate}`} titleTypographyProps={{ variant: 'h6' }} />
       <Toaster />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
@@ -81,7 +51,7 @@ const TableSalary = () => {
                 <TableCell align='center'>เลขที่บัตรประชาชน</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>เงินเดือน</TableCell>
-                <TableCell align='center'>หักประกันสังคม ({healthInsurance * 100}%)</TableCell>
+                <TableCell align='center'>หักประกันสังคม (%)</TableCell>
                 <TableCell align='center'>รับจริง</TableCell>
               </TableRow>
             </TableHead>
@@ -94,19 +64,41 @@ const TableSalary = () => {
                   <TableCell>{row.nationalId}</TableCell>
                   <TableCell>{row.memberName}</TableCell>
                   <TableCell align='center'>{(row.salary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
-                  <TableCell align='center'>{(healthInsurance * (row.salary ?? 0)).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
-                  <TableCell align='center'>{(row.salary - (healthInsurance * row.salary)).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'>{row.healthInsurance.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'>{(row.netSalary).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
-            <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-                {/* <input type="hidden" value={memberName} {...register('username')}/>
-                <input type="hidden" value={date} {...register('date')}/>
-                <input type="hidden" value={healthInsurance} {...register('healthInsurance')}/> */}
                 <Grid container spacing={5}>
-                    <Grid item xs={12} md={9}></Grid>
+
+                    <Grid item xs={12} md={3}>
+                            <Box
+                                sx={{
+                                gap: 5,
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                alignItems: 'left',
+                                justifyContent: 'space-between',
+                                mt:4
+                                }}
+                            >
+                                <Box sx={{ '& > button': { m: 10 } }}></Box>
+                                <LoadingButton
+                                type='submit'
+                                color='primary'
+                                loading={loading}
+                                loadingPosition='start'
+                                startIcon={<PrintIcon />}
+                                variant='contained'
+                                size='large'
+                                >
+                                พิมพ์ซองเงินเดือน
+                                </LoadingButton>
+                            </Box>
+                    </Grid>
+                    <Grid item xs={12} md={6}></Grid>
                 
                         <Grid item xs={12} md={3}>
                             <Box
@@ -122,24 +114,24 @@ const TableSalary = () => {
                                 <Box sx={{ '& > button': { m: 10 } }}></Box>
                                 <LoadingButton
                                 type='submit'
-                                color='success'
-                                onClick={handleSubmit(onSubmit)}
+                                color='primary'
                                 loading={loading}
                                 loadingPosition='start'
-                                startIcon={<SaveIcon />}
+                                startIcon={<PrintIcon />}
                                 variant='contained'
                                 size='large'
                                 >
-                                บันทึกข้อมูลเงินเดือน
+                                พิมพ์รายงานเงินเดือน
                                 </LoadingButton>
+                      <Button type='button' variant='outlined' onClick={() => window.print()}>
+                        รายละเอียด
+                      </Button>
                             </Box>
                         </Grid>
                 </Grid>
-                
-            </form>
       </CardContent>
     </Card>
   )
 }
 
-export default TableSalary
+export default TableReportSalary
