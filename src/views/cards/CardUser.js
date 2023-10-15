@@ -20,18 +20,19 @@ import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 import Divider from '@mui/material/Divider'
 
-import { StaffContext } from 'src/pages/staff/[cid]'
-// import { LoanStaffContext } from 'src/pages/loan/[cid]/[loanId]'
+import { MemberContext } from 'src/pages/member/[nationalId]'
+import { LoanMemberContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
 const CardUser = () => {
 
-  const staffDetail = useContext(StaffContext) 
-  // const loanStaffDetail = useContext(LoanStaffContext) 
-  // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
-  const user = typeof staffDetail !== 'undefined' ? staffDetail : ''
-  const cid = staffDetail?.cid
-  // console.log('cid = '+cid)
-  // console.log('staffDetail = '+staffDetail)
+  const memberDetail = useContext(MemberContext) 
+  const loanMemberDetail = useContext(LoanMemberContext) 
+  const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+  const user = typeof memberDetail !== 'undefined' ? memberDetail : ''
+  const nationalId = memberDetail?.nationalId
+
+  // console.log('nationalId = '+nationalId)
+  // console.log('memberDetail = '+memberDetail)
 
   const { register, handleSubmit, control, formState: { errors } } = useForm({
     defaultValues: { otherLoans: '1' }
@@ -41,6 +42,7 @@ const CardUser = () => {
   const onSubmit = data => {
       // setLoading(true)
       console.log(data)
+      
       // let json = JSON.stringify(data);
       // console.log(json);
       // let string = data.toString(json)
@@ -54,7 +56,7 @@ const CardUser = () => {
       // let join = data.join("");
       // console.log(join)
 
-      let uri = apiConfig.baseURL + `/utils/other-loans/${cid}`
+      let uri = apiConfig.baseURL + `/utils/other-loans/${nationalId}`
       fetch(uri, {
       method: 'PUT',
       headers: {
@@ -112,8 +114,8 @@ const CardUser = () => {
           }}
         >
           <Box sx={{mt:5, width:'100%', display: 'flex',  flexWrap: 'wrap',flexDirection: 'column', alignItems:'center'}}>
-            <Typography variant='h6' align='center' sx={{ color: 'primary.main',display: 'flex', alignItems: 'center', justifyContent: 'center', }}>{user?.staffName}</Typography>
-            <Typography align="right" sx={{ color: 'primary.main' }}>{user?.staffTypeName}</Typography>
+            <Typography variant='h6' align='center' sx={{ color: 'primary.main',display: 'flex', alignItems: 'center', justifyContent: 'center', }}>{user?.memberName}</Typography>
+            <Typography align="right" sx={{ color: 'primary.main' }}>{user?.memberTypeName}</Typography>
           </Box>
         </Box>
         <Box
@@ -126,13 +128,13 @@ const CardUser = () => {
             justifyContent: 'space-between',
           }}
         >
-          {/* <Link href={`../../loan-payment/${user?.cid}`} color='primary'>
+          {/* <Link href={`../../loan-payment/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ชำระเงินกู้</Button>
           </Link> */}
-          <Link href={`../../investment-form/${user?.cid}`} color='primary'>
+          <Link href={`../../investment-form/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ฝาก-ถอนหุ้น</Button>
           </Link>
-          <Link href={`../../loan-form/${user?.cid}`} color='primary'>
+          <Link href={`../../loan-form/${user?.nationalId}`} color='primary'>
             <Button variant='outlined'>ใบคำร้อง</Button>
           </Link>
         </Box>

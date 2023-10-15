@@ -15,7 +15,7 @@ import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
 
-import { DividendHistoryContext } from 'src/pages/staff/[cid]'
+import { DividendHistoryContext } from 'src/pages/member/[nationalId]'
 
 const TableMemberDividendHistory = () => {
   const memberDividendHistories = useContext(DividendHistoryContext)

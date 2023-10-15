@@ -30,7 +30,7 @@ import {
   MemberRolesContext,
   PaymentTypesContext,
   MemberStatusContext
-} from 'src/pages/staff/[cid]'
+} from 'src/pages/member/[nationalId]'
 
 const FormMemberDetail = () => {
   const memberDetail = useContext(MemberContext)
@@ -62,8 +62,10 @@ const FormMemberDetail = () => {
   const memberRoleId = memberDetail?.memberRoleId
   const paymentTypeId = memberDetail?.paymentTypeId
   const memberStatusId = memberDetail?.memberStatusId
+  const isHealthInsurance = memberDetail?.isHealthInsurance
 
   const memberRole = typeof window !== 'undefined' ? localStorage?.getItem('memberRoleId') : ''
+
   // const strDisabled = memberRole != 4 ? '' : 'disabled';
   console.log(memberRole)
   useEffect(() => {
@@ -85,7 +87,8 @@ const FormMemberDetail = () => {
         memberTypeId: memberDetail?.memberTypeId,
         memberRoleId: memberDetail?.memberRoleId,
         paymentTypeId: memberDetail?.paymentTypeId,
-        memberStatusId: memberDetail?.memberStatusId
+        memberStatusId: memberDetail?.memberStatusId,
+        isHealthInsurance: memberDetail?.isHealthInsurance
       })
     }
   }, [])
@@ -231,6 +234,24 @@ const FormMemberDetail = () => {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth {...memberRole != 4 ? null : {disabled:true}}>
+                <InputLabel>หักประกันสังคม</InputLabel>
+                <Select
+                  label='หักประกันสังคม'
+                  defaultValue={isHealthInsurance ?? ''}
+                  {...register('isHealthInsurance', { required: true })}
+                >
+                      <MenuItem key={1} value={1}>
+                        ใช่
+                      </MenuItem>
+                      <MenuItem key={0} value={0}>
+                        ไม่ใช่
+                      </MenuItem>
+                    
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
         </CardContent>
         <CardHeader title='ข้อมูลที่อยู่' titleTypographyProps={{ variant: 'h6' }} />
@@ -278,7 +299,6 @@ const FormMemberDetail = () => {
                 <LoadingButton
                   type='submit'
                   color='primary'
-                  //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   loadingPosition='start'

@@ -7,7 +7,7 @@ import { mdiAccount } from '@mdi/js'
 import Divider from '@mui/material/Divider'
 import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import TableMember from 'src/views/tables/TableStaff'
+import TableMember from 'src/views/tables/TableMember'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -26,17 +26,17 @@ export const DataContext = createContext()
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [staff, setStaff] = useState({ blogs: [] })
-  console.log(staff)
+  const [member, setMember] = useState({ blogs: [] })
+  console.log(member)
 
-  // const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  // const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
 
-  const fetchStaff = async () => {
-    let uri = apiConfig.baseURL + `/staff`
+  const fetchMember = async () => {
+    let uri = apiConfig.baseURL + `/members`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setStaff({ blogs: data })
+      setMember({ blogs: data })
     } catch (error) {
       // console.log(error)
     }
@@ -62,7 +62,7 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchStaff()
+          fetchMember()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -88,7 +88,7 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status !== 'success') {
           localStorage.removeItem('token')
-          localStorage.removeItem('staffName')
+          localStorage.removeItem('memberName')
           window.location = '/pages/login'
         }
       })
@@ -99,12 +99,12 @@ const FormLayouts = () => {
 
   useEffect(() => {
     // verifyToken()
-    fetchStaff()
+    fetchMember()
   }, [])
 
   return (
     <Grid container spacing={6}>
-      {/* <Grid item xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={6} lg={4}>
           <CardMember />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -112,9 +112,9 @@ const FormLayouts = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <CardAddMember/>
-        </Grid> */}
+        </Grid>
 
-      <DataContext.Provider value={staff}>
+      <DataContext.Provider value={member}>
         <Grid item xs={12}>
           {/* <TableTodo /> */}
           <TableMember />

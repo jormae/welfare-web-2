@@ -14,7 +14,7 @@ import CardContent from '@mui/material/CardContent'
 import Bed from 'mdi-material-ui/Bed'
 import DotsVertical from 'mdi-material-ui/DotsVertical'
 
-import { CardContext } from 'src/pages/staff'
+import { CardContext } from 'src/pages/member'
 
 const CardNewChart = () => {
   const statNewChart = useContext(CardContext)

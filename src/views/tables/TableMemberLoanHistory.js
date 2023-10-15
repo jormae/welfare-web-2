@@ -16,7 +16,7 @@ import Link from 'next/link'
 import moment from 'moment'
 import Chip from '@mui/material/Chip';
 
-import { LoanHistoryContext } from 'src/pages/staff/[cid]'
+import { LoanHistoryContext } from 'src/pages/member/[nationalId]'
 
 const TableMemberLoanHistory = () => {
 

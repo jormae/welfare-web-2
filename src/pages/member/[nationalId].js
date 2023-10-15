@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useRouter } from 'next/router'
 import Grid from '@mui/material/Grid'
 import apiConfig from 'src/configs/apiConfig'
-import FormStaffDetail from 'src/views/form-layouts/FormStaffDetail'
+import FormMemberDetail from 'src/views/form-layouts/FormMemberDetail'
 import axios from 'axios'
 import CardUser from 'src/views/cards/CardUser'
 import Skeleton from '@mui/material/Skeleton'
@@ -13,11 +13,11 @@ import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
-// import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
-// import TableStaffInvestmentHistory from 'src/views/tables/TableStaffInvestmentHistory'
-// import TableStaffLoanHistory from 'src/views/tables/TableStaffLoanHistory'
-// import TableStaffDividendHistory from 'src/views/tables/TableStaffDividendHistory'
-// import TableStaffSuretyHistory from 'src/views/tables/TableStaffSuretyHistory'
+import FormSpouseDetail from 'src/views/form-layouts/FormSpouseDetail'
+import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestmentHistory'
+import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
+import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
+import TableMemberSuretyHistory from 'src/views/tables/TableMemberSuretyHistory'
 import FormAccount from 'src/views/form-layouts/FormAccount'
 import { ConsoleNetworkOutline } from 'mdi-material-ui'
 
@@ -35,17 +35,17 @@ const defaultData = {
   admitDuration: 'Loading'
 }
 
-export const StaffContext = createContext()
+export const MemberContext = createContext()
 
 export const PositionsContext = createContext()
 
-export const StaffTypesContext = createContext()
+export const MemberTypesContext = createContext()
 
-export const StaffRolesContext = createContext()
+export const MemberRolesContext = createContext()
 
 export const PaymentTypesContext = createContext()
 
-export const StaffStatusContext = createContext()
+export const MemberStatusContext = createContext()
 
 export const ReferHospitalsContext = createContext()
 
@@ -64,21 +64,21 @@ export const SpouseContext = createContext()
 const FormLayouts = () => {
   const router = useRouter()
   if (router.isReady) {
-    router.query.cid
+    router.query.nationalId
   }
-  const [staffDetail, setStaffDetail] = useState(defaultData)
-  console.log(staffDetail)
+  const [memberDetail, setMemberDetail] = useState(defaultData)
+  console.log(memberDetail)
   const [position, setPositions] = useState([])
-  const [staffTypes, setStaffTypes] = useState([])
-  const [staffRoles, setStaffRoles] = useState([])
+  const [memberTypes, setMemberTypes] = useState([])
+  const [memberRoles, setMemberRoles] = useState([])
   const [paymentTypes, setPaymentTypes] = useState([])
-  const [StaffStatus, setReferCauses] = useState([])
+  const [MemberStatus, setReferCauses] = useState([])
   const [spouseDetails, setSpouseDetails] = useState()
-  const [staffInvestmentHistories, setStaffInvestmentHistories] = useState({ blogs: [] })
-  const [staffLoanHistories, setStaffLoanHistories] = useState({ blogs: [] })
-  const [staffDividendHistories, setStaffDividendHistories] = useState({ blogs: [] })
-  const [staffSuretyHistories, setStaffSuretyHistories] = useState({ blogs: [] })
-  const [value, setValue] = React.useState('staff')
+  const [memberInvestmentHistories, setMemberInvestmentHistories] = useState({ blogs: [] })
+  const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
+  const [memberDividendHistories, setMemberDividendHistories] = useState({ blogs: [] })
+  const [memberSuretyHistories, setMemberSuretyHistories] = useState({ blogs: [] })
+  const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
 
   const handleChange = (event, newValue) => {
@@ -89,13 +89,13 @@ const FormLayouts = () => {
     setTabHistoryValue(newValue)
   }
 
-  const fetchStaffDetail = () => {
-    let uri = apiConfig.baseURL + `/staff/${router.query.cid}`
+  const fetchMemberDetail = () => {
+    let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`
     console.log(uri)
 
     axios
       .get(uri)
-      .then(result => setStaffDetail(result.data[0]))
+      .then(result => setMemberDetail(result.data[0]))
       .catch(error => console.log('An error occurred' + error))
   }
 
@@ -112,24 +112,24 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchStaffTypes = async () => {
-    let uri = apiConfig.baseURL + `/utils/staff-types`
+  const fetchMemberTypes = async () => {
+    let uri = apiConfig.baseURL + `/utils/member-types`
     try {
       await axios
         .get(uri)
-        .then(result => setStaffTypes(result.data))
+        .then(result => setMemberTypes(result.data))
         .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
     }
   }
 
-  const fetchStaffRoles = async () => {
-    let uri = apiConfig.baseURL + `/utils/staff-roles`
+  const fetchMemberRoles = async () => {
+    let uri = apiConfig.baseURL + `/utils/member-roles`
     try {
       await axios
         .get(uri)
-        .then(result => setStaffRoles(result.data))
+        .then(result => setMemberRoles(result.data))
         .catch(error => console.log('An error occurred' + error))
     } catch (error) {
       console.log(error)
@@ -148,8 +148,8 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchStaffStatus = async () => {
-    let uri = apiConfig.baseURL + `/utils/staff-status`
+  const fetchMemberStatus = async () => {
+    let uri = apiConfig.baseURL + `/utils/member-status`
     try {
       await axios
         .get(uri)
@@ -161,7 +161,7 @@ const FormLayouts = () => {
   }
 
   const fetchSpouseDetail = () => {
-    let uri = apiConfig.baseURL + `/spouses/${router.query.cid}`
+    let uri = apiConfig.baseURL + `/spouses/${router.query.nationalId}`
     console.log(uri)
 
     axios
@@ -170,45 +170,45 @@ const FormLayouts = () => {
       .catch(error => console.log('An error occurred' + error))
   }
 
-  const fetchStaffInvestments = async () => {
-    let uri = apiConfig.baseURL + `/investments/history/${router.query.cid}`
+  const fetchMemberInvestments = async () => {
+    let uri = apiConfig.baseURL + `/investments/history/${router.query.nationalId}`
     try {
       const { data } = await axios.get(uri)
-      setStaffInvestmentHistories({ blogs: data })
+      setMemberInvestmentHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
   }
 
-  const fetchStaffLoans = async () => {
-    let uri = apiConfig.baseURL + `/loans/staff/${router.query.cid}`
+  const fetchMemberLoans = async () => {
+    let uri = apiConfig.baseURL + `/loans/members/${router.query.nationalId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setStaffLoanHistories({ blogs: data })
+      setMemberLoanHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
   }
 
-  const fetchStaffDividends = async () => {
-    let uri = apiConfig.baseURL + `/dividends/${router.query.cid}`
+  const fetchMemberDividends = async () => {
+    let uri = apiConfig.baseURL + `/dividends/${router.query.nationalId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setStaffDividendHistories({ blogs: data })
+      setMemberDividendHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
   }
 
-  const fetchStaffSureties = async () => {
-    let uri = apiConfig.baseURL + `/loans/surety/${router.query.cid}`
+  const fetchMemberSureties = async () => {
+    let uri = apiConfig.baseURL + `/loans/surety/${router.query.nationalId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
       console.log(data)
-      setStaffSuretyHistories({ blogs: data })
+      setMemberSuretyHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -217,26 +217,26 @@ const FormLayouts = () => {
   useEffect(() => {
     if (router.isReady) {
       router.query
-      fetchStaffDetail()
+      fetchMemberDetail()
       fetchPositions()
-      fetchStaffTypes()
-      fetchStaffRoles()
+      fetchMemberTypes()
+      fetchMemberRoles()
       fetchPaymentTypes()
-      fetchStaffStatus()
+      fetchMemberStatus()
       fetchSpouseDetail()
-      fetchStaffInvestments()
-      fetchStaffLoans()
-      fetchStaffDividends()
-      fetchStaffSureties()
+      fetchMemberInvestments()
+      fetchMemberLoans()
+      fetchMemberDividends()
+      fetchMemberSureties()
     }
   }, [router.isReady, router.query])
 
-  const SkeletonStaffCardLoading = () => (
+  const SkeletonMemberCardLoading = () => (
     <Box sx={{ width: '100%' }}>
-          {staffDetail.cid ? (
-            <StaffContext.Provider value={staffDetail}>
+          {memberDetail.nationalId ? (
+            <MemberContext.Provider value={memberDetail}>
               <CardUser />
-            </StaffContext.Provider>
+            </MemberContext.Provider>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={300} sx={{ animationDuration: '3.0s' }} />
@@ -245,31 +245,31 @@ const FormLayouts = () => {
     </Box>
   )
 
-  const SkeletonStaffFormsLoading = () => (
+  const SkeletonMemberFormsLoading = () => (
     <Box sx={{ width: '100%' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label='lab API tabs example'>
-            <Tab label='ข้อมูลสมาชิก' value='staff' />
+            <Tab label='ข้อมูลสมาชิก' value='member' />
             <Tab label='ข้อมูลคู่สมรส' value='spouse' />
             <Tab label='ข้อมูลบัญชีผู้ใช้' value='account' />
           </TabList>
         </Box>
-      <TabPanel value='staff'>
-          {staffDetail.cid ? (
-            <StaffContext.Provider value={staffDetail}>
+      <TabPanel value='member'>
+          {memberDetail.nationalId ? (
+            <MemberContext.Provider value={memberDetail}>
               <PositionsContext.Provider value={position}>
-                <StaffTypesContext.Provider value={staffTypes}>
-                  <StaffRolesContext.Provider value={staffRoles}>
+                <MemberTypesContext.Provider value={memberTypes}>
+                  <MemberRolesContext.Provider value={memberRoles}>
                     <PaymentTypesContext.Provider value={paymentTypes}>
-                      <StaffStatusContext.Provider value={StaffStatus}>
-                        <FormStaffDetail />
-                      </StaffStatusContext.Provider>
+                      <MemberStatusContext.Provider value={MemberStatus}>
+                        <FormMemberDetail />
+                      </MemberStatusContext.Provider>
                     </PaymentTypesContext.Provider>
-                  </StaffRolesContext.Provider>
-                </StaffTypesContext.Provider>
+                  </MemberRolesContext.Provider>
+                </MemberTypesContext.Provider>
               </PositionsContext.Provider>
-            </StaffContext.Provider>
+            </MemberContext.Provider>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -277,7 +277,7 @@ const FormLayouts = () => {
           )}
         </TabPanel>
         <TabPanel value='spouse'>
-          {/* {staffDetail.cid ? (
+          {memberDetail.nationalId ? (
             <SpouseContext.Provider value={spouseDetails}>
               <FormSpouseDetail />
             </SpouseContext.Provider>
@@ -285,13 +285,13 @@ const FormLayouts = () => {
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
             </Typography>
-          )} */}
+          )}
         </TabPanel>
         <TabPanel value='account'>
-          {staffDetail.cid ? (
-            <StaffContext.Provider value={staffDetail}>
+          {memberDetail.nationalId ? (
+            <MemberContext.Provider value={memberDetail}>
               <FormAccount />
-            </StaffContext.Provider>
+            </MemberContext.Provider>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -302,7 +302,7 @@ const FormLayouts = () => {
     </Box>
   )
 
-  const SkeletonStaffInvestmentAndLoadHistotiesLoading = () => (
+  const SkeletonMemberInvestmentAndLoadHistotiesLoading = () => (
     <Box sx={{ width: '100%' }}>
       <TabContext value={tabHistoryValue}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -315,11 +315,11 @@ const FormLayouts = () => {
           </TabList>
         </Box>
         <TabPanel value='loan'>
-          {staffLoanHistories.blogs.length > 0 ? (
+          {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
                <Grid item xs={12} md={12} lg={12}>
-                <LoanHistoryContext.Provider value={staffLoanHistories}>
-                  <TableStaffLoanHistory />
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
                 </LoanHistoryContext.Provider>
               </Grid>
             </Grid>
@@ -329,12 +329,12 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
-        {/* <TabPanel value='otherLoan'>
-          {staffLoanHistories.blogs.length > 0 ? (
+        <TabPanel value='otherLoan'>
+          {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
                <Grid item xs={12} md={12} lg={12}>
-                <LoanHistoryContext.Provider value={staffLoanHistories}>
-                  <TableStaffLoanHistory />
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
                 </LoanHistoryContext.Provider>
               </Grid>
             </Grid>
@@ -343,13 +343,13 @@ const FormLayouts = () => {
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
             </Typography>
           )}
-        </TabPanel> */}
+        </TabPanel>
         <TabPanel value='investment'>
-          {staffInvestmentHistories.blogs.length > 0 ? (
+          {memberInvestmentHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
                <Grid item xs={12} md={12} lg={12}>
-                <InvesmentHistoryContext.Provider value={staffInvestmentHistories}>
-                  <TableStaffInvestmentHistory />
+                <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
+                  <TableMemberInvestmentHistory />
                 </InvesmentHistoryContext.Provider>
               </Grid>
             </Grid>
@@ -360,11 +360,11 @@ const FormLayouts = () => {
           )}
         </TabPanel>
         <TabPanel value='dividend'>
-          {staffDividendHistories.blogs.length > 0 ? (
+          {memberDividendHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
                <Grid item xs={12} md={12} lg={12}>
-                <DividendHistoryContext.Provider value={staffDividendHistories}>
-                  <TableStaffDividendHistory />
+                <DividendHistoryContext.Provider value={memberDividendHistories}>
+                  <TableMemberDividendHistory />
                 </DividendHistoryContext.Provider>
               </Grid>
             </Grid>
@@ -375,10 +375,10 @@ const FormLayouts = () => {
           )}
         </TabPanel>
         <TabPanel value='surety'>
-          {staffSuretyHistories.blogs.length > 0 ? (
+          {memberSuretyHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <SuretyHistoryContext.Provider value={staffSuretyHistories}>
-                <TableStaffSuretyHistory />
+              <SuretyHistoryContext.Provider value={memberSuretyHistories}>
+                <TableMemberSuretyHistory />
               </SuretyHistoryContext.Provider>
             </Grid>
           ) : (
@@ -394,13 +394,13 @@ const FormLayouts = () => {
   return (
     <Grid container spacing={6}>
       <Grid item md={4} xs={12}>
-        <SkeletonStaffCardLoading />
+        <SkeletonMemberCardLoading />
       </Grid>
       <Grid item md={8}  xs={12}>
-        <SkeletonStaffFormsLoading />
+        <SkeletonMemberFormsLoading />
       </Grid>
       <Grid item md={12} xs={12}>
-        <SkeletonStaffInvestmentAndLoadHistotiesLoading />
+        <SkeletonMemberInvestmentAndLoadHistotiesLoading />
       </Grid>
     </Grid>
   )

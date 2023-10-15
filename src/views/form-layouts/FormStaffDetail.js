@@ -30,7 +30,7 @@ import {
   StaffRolesContext,
   PaymentTypesContext,
   StaffStatusContext
-} from 'src/pages/staff/[cid]'
+} from 'src/pages/member/[nationalId]'
 import { CosineWave } from 'mdi-material-ui'
 
 const FormStaffDetail = () => {

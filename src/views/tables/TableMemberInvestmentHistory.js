@@ -15,7 +15,7 @@ import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
 
-import { InvesmentHistoryContext } from 'src/pages/staff/[cid]'
+import { InvesmentHistoryContext } from 'src/pages/member/[nationalId]'
 import { InvesmentPaymentHistoryContext } from 'src/pages/investment-form/[nationalId]'
 
 const TableMemberInvestmentHistory = () => {

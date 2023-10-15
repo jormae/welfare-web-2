@@ -19,11 +19,11 @@ import Grid from '@mui/material/Grid'
 import TextField  from "@mui/material/TextField";
 import Chip from '@mui/material/Chip';
 
-import { DataContext } from 'src/pages/staff'
+import { DataContext } from 'src/pages/member'
 
-const TableStaff = (props) => {
+const TableMember= (props) => {
 
-  const staff = useContext(DataContext)
+  const members = useContext(DataContext)
 
   const { register } = useForm();
   const [search, setSearch] = useState('')
@@ -67,29 +67,29 @@ const TableStaff = (props) => {
                 <TableCell align='center'>เลขประชาชน</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ตำแหน่ง</TableCell>
-                <TableCell align='center'>งาน</TableCell>
-                <TableCell align='center'>กลุ่มงาน</TableCell>
-                <TableCell align='center'>ประเภท</TableCell>
+                <TableCell align='center'>ประเภทสมาชิก</TableCell>
+                <TableCell align='center'>ประเภทการชำระเงิน</TableCell>
+                <TableCell align='center'>สถานะสมาชิก</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-            { staff.blogs.filter((row)=>{
-                return search.toLowerCase() === '' ? row : row.staffName.toLowerCase().includes(search);
+            { members.blogs.filter((row)=>{
+                return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
               }).slice(pg * rpg, pg *
                 rpg + rpg).map(row => (
-                <TableRow key={row.cid} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                <TableRow key={row.nationalId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
                   <TableCell align='center'  component='th' scope='row'>{i++}</TableCell>
                   <TableCell align='center'>
-                  {row.cid}
+                  {row.nationalId}
                   </TableCell>
-                  <TableCell >{row.staffName}</TableCell>
+                  <TableCell >{row.memberName}</TableCell>
                   <TableCell >{row.positionName}</TableCell>
-                  <TableCell >{row.deptName}</TableCell>
-                  <TableCell>{row.mainDeptName}</TableCell>
-                  <TableCell>{row.workStatusId == 1 ? 'ทำงาน' : 'ไม่ทำงาน'}</TableCell>
+                  <TableCell >{row.memberTypeName}</TableCell>
+                  <TableCell>{row.paymentTypeName}</TableCell>
+                  <TableCell>{row.memberStatusId == 1 ? 'ปกติ' : 'ปิดบัญชี'}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`staff/${row.cid}`} color='success'>
+                    <Link href={`member/${row.nationalId}`} color='success'>
                       <Button type='button' variant='outlined'>
                         รายละเอียด
                       </Button>
@@ -103,7 +103,7 @@ const TableStaff = (props) => {
         <TablePagination
           rowsPerPageOptions={[10, 20, 50]}
           component="div"
-          count={staff.blogs.length}
+          count={members.blogs.length}
           rowsPerPage={rpg}
           page={pg}
           onPageChange={handleChangePage}
@@ -115,4 +115,4 @@ const TableStaff = (props) => {
   )
 }
 
-export default TableStaff
+export default TableMember
