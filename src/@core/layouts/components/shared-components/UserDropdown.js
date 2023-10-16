@@ -197,6 +197,14 @@ const UserDropdown = () => {
             </Box>
           </MenuItem>
            ) : ''}
+           {memberRoleId != 4 ? (
+          <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/monthly/salary`)}>
+            <Box sx={styles}>
+              <EmailOutline sx={{ marginRight: 2 }} />
+              รายงานบัญชีเงินเดือน
+            </Box>
+          </MenuItem>
+           ) : ''}
           {memberRoleId != 4 ? (
           <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose(`/reports/yearly/summary`)}>
             <Box sx={styles}>
