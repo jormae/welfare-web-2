@@ -52,6 +52,7 @@ const FormLayouts = () => {
   const [pendingPaymentReports, setPendingPaymentReports] = useState({ blogs: [] })
   const [followupPaymentReports, setFollowupPaymentReports] = useState({ blogs: [] })
   const [tabPayments, setTabPayments] = React.useState('pending-payment')
+
   const [date, setDate ]= useState(moment().format('YYYY-MM'))
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const [loading, setLoading] = React.useState(false)
@@ -75,6 +76,7 @@ const FormLayouts = () => {
     setLoading(true)
     console.log(data)
     console.log(data.reportDate)
+    setDate(data.reportDate)
     let uri = apiConfig.baseURL + `/salaries/report/${data.reportDate}`
     console.log('fetchReportSalaries uri = '+uri)
     try {

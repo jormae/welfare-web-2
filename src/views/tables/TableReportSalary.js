@@ -26,7 +26,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import apiConfig from 'src/configs/apiConfig'
 
 import { DataReportSalaryContext, DataDateContext} from 'src/pages/reports/monthly/salary/index'
-import { DataReportPrintSalaryContext, DataDatePrintContext} from 'src/pages/reports/monthly/salary/print-doc'
+
+// import { DataReportPrintSalaryContext, DataDatePrintContext} from 'src/pages/reports/monthly/salary/print-doc'
 
 const useStyles = makeStyles({
   // root: {
@@ -62,11 +63,15 @@ const TableReportSalary = () => {
     const classes = useStyles();
     const reportSalary = useContext(DataReportSalaryContext);
     const reportDate = useContext(DataDateContext);
-    const printSalary = useContext(DataReportPrintSalaryContext);
-    const printDate = useContext(DataDatePrintContext);
 
-    const salaries = reportSalary ?? printSalary;
-    const date = reportDate ?? printDate;
+    // const printSalary = useContext(DataReportPrintSalaryContext);
+    // const printDate = useContext(DataDatePrintContext);
+
+    // const salaries = reportSalary ?? printSalary;
+    // const date = reportDate ?? printDate;
+
+    const salaries = reportSalary;
+    const date = reportDate;
  
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const i = 1;
@@ -122,7 +127,7 @@ const TableReportSalary = () => {
                 <Grid container spacing={5}>
 
                     <Grid item xs={12} md={3}>
-                      <Link href={'../monthly/salary/print-doc'}>
+                      <Link href={`../monthly/salary/print-envelop/${date}`}>
                             <Box
                                 sx={{
                                 gap: 5,

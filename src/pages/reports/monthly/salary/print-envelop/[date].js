@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useRouter } from 'next/router'
 import Grid from '@mui/material/Grid'
 import axios from 'axios'
 import { useEffect, useState, createContext } from 'react'
@@ -28,6 +29,7 @@ import Badge from '@mui/material/Badge';
 import TableReportSalary from 'src/views/tables/TableReportSalary'
 import SearchIcon from '@material-ui/icons/Search';
 import FormHelperText from '@mui/material/FormHelperText';
+import TableReportSalaryDoc from 'src/views/tables/TableReportSalaryDoc'
 
 export const DataReportPrintSalaryContext = createContext()
 
@@ -45,6 +47,11 @@ export const StrSumPaymentContext = createContext()
 
 const FormLayouts = () => {
 
+  const router = useRouter()
+  if (router.isReady) {
+    router.query.date
+  }
+
   const i = 1;  
   moment.locale('th')
   const [reportSalaries, setReportSalaries] = useState({ blogs: [] })
@@ -52,7 +59,7 @@ const FormLayouts = () => {
   const [pendingPaymentReports, setPendingPaymentReports] = useState({ blogs: [] })
   const [followupPaymentReports, setFollowupPaymentReports] = useState({ blogs: [] })
   const [tabPayments, setTabPayments] = React.useState('pending-payment')
-  const [date, setDate ]= useState(moment().format('YYYY-MM'))
+  const [date, setDate ]= useState(moment(router.query.date).format('YYYY-MM'))
   const { register, handleSubmit, control, formState: { errors } } = useForm();
   const [loading, setLoading] = React.useState(false)
   const [searchDate, setSearchDate ]= useState()
@@ -61,7 +68,7 @@ const FormLayouts = () => {
   const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
 
   const fetchReportSalaries= async () => {
-    let uri = apiConfig.baseURL + `/salaries/report/${date}`
+    let uri = apiConfig.baseURL + `/salaries/report/${router.query.date}`
     console.log('fetchReportSalaries uri = '+uri)
     try {
         const { data } = await axios.get(uri)
@@ -71,92 +78,20 @@ const FormLayouts = () => {
     }
   }
 
-  const onSubmit = async (data) => {
-    setLoading(true)
-    console.log(data)
-    console.log(data.reportDate)
-    let uri = apiConfig.baseURL + `/salaries/report/${data.reportDate}`
-    console.log('fetchReportSalaries uri = '+uri)
-    try {
-        const { data } = await axios.get(uri)
-        setReportSalaries({ blogs: data })
-        setLoading(false)
-    } catch (error) {
-      console.log(error)
-    }
-
-}
-
   useEffect(() => {
     fetchReportSalaries();
-  }, [])
-
-  const SkeletonReportMonthlySalariesLoading = () => (
-    <Box sx={{ width: '100%' }}>
-      <DataReportPrintSalaryContext.Provider value={reportSalaries}>
-        <DataDatePrintContext.Provider value={date}>
-          <TableReportSalary/>
-        </DataDatePrintContext.Provider>
-      </DataReportPrintSalaryContext.Provider>
-    </Box>
-  )
+  }, [router.isReady, router.query])
 
   return (
     <Grid container spacing={6}>
-       <Grid container item>
-          <StrSumPaymentContext.Provider value={sumPayment}>
-            {/* <CardWelfarePayments /> */}
-          </StrSumPaymentContext.Provider>
-       </Grid>
-       <Grid item md={12} xs={12}>
-        <Card>
-          <CardHeader title='ค้นหารายงาน' titleTypographyProps={{ variant: 'h6' }} />
-          <Divider sx={{ margin: 0 }} />
-          <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
-            <CardContent>
-              <Grid container spacing={5}>
-                <Grid item xs={6}><Typography style={{ fontSize: 24 }} >  </Typography></Grid>
-                <Grid item xs={4} md={4}>
-                <TextField type="month" fullWidth label='เดือน' defaultValue={date} InputLabelProps={{shrink: true,}} {...register('reportDate', { required: true })}/>
-                        {errors.reportDate && errors.reportDate.type === "required" && (
-                        <FormHelperText id="reportDate" sx={{color:'#d32f2f'}}>Error : กรุณาเลือกเดือน</FormHelperText>
-                        )}
-                </Grid>
-                <Grid item xs={2}>
-                  <Box
-                    sx={{
-                      gap: 5,
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}
-                  >
-                    <Box sx={{ '& > button': { m: 1 } }}></Box>
-                    <LoadingButton
-                      type='submit'
-                      color='primary'
-                      onClick={handleSubmit(onSubmit)}
-                      loading={loading}
-                      loadingPosition='start'
-                      startIcon={<SearchIcon />}
-                      variant='contained'
-                      size='large'
-                    >
-                      แสดง
-                    </LoadingButton>
-                  </Box>
-                </Grid>
-                <Grid item xs={12}>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </form>
-        </Card>
-      </Grid>
-
        <Grid item md={12} xs={12}>        
-        <SkeletonReportMonthlySalariesLoading />
+       <Box sx={{ width: '100%' }}>
+      <DataReportPrintSalaryContext.Provider value={reportSalaries}>
+        <DataDatePrintContext.Provider value={date}>
+          <TableReportSalaryDoc/>
+        </DataDatePrintContext.Provider>
+      </DataReportPrintSalaryContext.Provider>
+    </Box>
       </Grid>
     </Grid>
 
