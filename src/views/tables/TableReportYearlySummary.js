@@ -46,8 +46,8 @@ const TableReportYearlySummary = () => {
                   <TableCell align='center' component='th' scope='row'>
                   {i+1}
                   </TableCell>
-                  <TableCell align='center' >{row.loanPaymentMonth}</TableCell>
-                  <TableCell align='center'>{row.TOTAL_PAYMENT}</TableCell>
+                  <TableCell align='center' >{moment(row.loanPaymentMonth).add(543, 'year').format('MMMM YYYY')}</TableCell>
+                  <TableCell align='center'>{(row.TOTAL_PAYMENT ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell align='center'>
                     <Link href={`loan/${row.nationalId}/${row.loanId}`} color='success'>
                       <Button type='button' variant='outlined'>

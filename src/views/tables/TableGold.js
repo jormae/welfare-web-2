@@ -19,14 +19,12 @@ import moment from 'moment'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
 
-import { DataContext } from 'src/pages/member'
-import { all } from 'async'
-
 const TableGold = () => {
 
     const [golds, setGolds] = useState({ blogs: [] })
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     console.log(golds)
+
     const fetchGolds = async () => {
       let uri = apiConfig.baseURL + `/golds`
       console.log(uri)
@@ -44,7 +42,7 @@ const TableGold = () => {
 
   return (
     <Card>
-      <CardHeader title='รายการซากาตทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='รายการทองทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
         <TableContainer component={Paper}>
@@ -53,7 +51,7 @@ const TableGold = () => {
               <TableRow>
                 <TableCell align='center'>ที่</TableCell>
                 <TableCell align='center'>วันที่</TableCell>
-                <TableCell align='center'>ประเภทซากาต</TableCell>
+                <TableCell align='center'>ประเภทส่วนต่าง</TableCell>
                 <TableCell align='center'>ชื่อซากาต</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
@@ -66,13 +64,13 @@ const TableGold = () => {
                   {row.goldId}
                   </TableCell>
                   <TableCell align='center'> {moment(row.goldDateTime).add(543, 'year').format('DD/MM/YYYY')}</TableCell>
-                  <TableCell align='center'>{row.goldTypeName}</TableCell>
+                  <TableCell align='center'>{row.goldTypeId == 1 ? "กำไร" : "ขาดทุน"}</TableCell>
                   <TableCell align='center'>{row.goldName}</TableCell>
                   <TableCell align='center'>{row.goldAmount}</TableCell>
                   <TableCell align='center'>
                     <Link href={`gold/${row.goldId}`} color='warning'>
                       <Button type='button' variant='outlined'>
-                        เปิด
+                        ลบ
                       </Button>
                     </Link>
                   </TableCell>

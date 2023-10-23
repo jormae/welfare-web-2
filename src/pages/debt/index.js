@@ -6,27 +6,14 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
-import { Input } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import TableLoanRequest from 'src/views/tables/TableLoanRequest'
 import toast, { Toaster } from 'react-hot-toast'
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
 import apiConfig from 'src/configs/apiConfig'
-import TableLoan from 'src/views/tables/TableLoan'
-import CardMember from 'src/views/cards/CardMember'
-import CardTotalLoan from 'src/views/cards/CardTotalLoan'
-import CardAddMember from 'src/views/cards/CardAddMember'
-import TableAllowance from 'src/views/tables/TableAllowance'
-import CardAddAllowance from 'src/views/cards/CardAddAllowance'
-import FormAllowance from 'src/views/form-layouts/FormAllowance'
-import CardAllowances from 'src/views/cards/CardAllowances'
-import FormDebt from 'src/views/form-layouts/FormDebt'
-import TableDebt from 'src/views/tables/TableDebt'
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LoadingButton from '@mui/lab/LoadingButton'
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
@@ -42,23 +29,49 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import Button from '@mui/material/Button'
 import TablePagination from "@mui/material/TablePagination"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 
 import moment from 'moment'
 import 'moment/locale/th' 
 import CardDebts from 'src/views/cards/CardADebts'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const FormLayouts = () => {
   const date = moment().format('YYYY-MM')
   const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
   const strShortDate = moment(date).format('MM') +'/'+ moment(date).add(543, 'year').format('YYYY');
   const { register: register, handleSubmit, control, formState: { errors } } = useForm();
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = useState(false)
+  const [confirmLoading, setConfirmLoading] = useState(false)
+
   const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
   const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null  
   const [debts, setDebts] = useState({ blogs: [] })
   const [memberInfo, setMemberInfo] = useState()
 
   // const { register } = useForm();
+
+  const [open, setOpen] = useState(false);
+  const [deleteDebtId, setDeleteDebtId] = useState();
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
     const [search, setSearch] = useState('')
     const i = 1;
   
@@ -93,6 +106,7 @@ const FormLayouts = () => {
         if (data.status == 'success') {
         toast.success(data.message)
         fetchDebts()
+        window.location.reload();
         } else {
         toast.error(data.message || data.errors[0].msg)
         }
@@ -119,6 +133,7 @@ const FormLayouts = () => {
         const date = moment().format('YYYY-MM')
 
         let uri = apiConfig.baseURL + `/debts/date/${date}`
+        console.log(uri)
         try {
           const { data } = await axios.get(uri)
           setDebts({ blogs: data })
@@ -127,12 +142,13 @@ const FormLayouts = () => {
         }
       }
 
-      const deleteDebt = debtId => {
+      const deleteDebt = () => {
+        setOpen(false)
         setLoading(true)
-        console.log('deleteDebt')
-        console.log(debtId)
+        console.log(deleteDebtId)
+        console.log('confirm deleteDebt')
     
-        let uri = apiConfig.baseURL + `/debts/${debtId}`
+        let uri = apiConfig.baseURL + `/debts/${deleteDebtId}`
         console.log(uri)
     
         fetch(uri, {
@@ -155,6 +171,13 @@ const FormLayouts = () => {
           .catch(function (error) {
             console.log(JSON.stringify(error))
           })
+      }
+
+      const handleDeleteDebt = (debtId) => {
+        setOpen(true)
+        setDeleteDebtId(debtId)
+        console.log('handleDeleteDebt')
+        console.log(debtId)
       }
 
   useEffect(() => {
@@ -246,6 +269,48 @@ const FormLayouts = () => {
               <Toaster />
         
               <Divider sx={{ margin: 0 }} />
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Transition}
+                keepMounted
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"คุณแน่ใจ?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                  กรุณายืนยันการลบข้อมูลรายการหนี้
+                  </DialogContentText>
+                </DialogContent>
+                  <DialogActions>
+                    <Box sx={{ '& > button': { m: 1 } }}></Box>
+                          <LoadingButton
+                            color='secondary'
+                            onClick={handleClose}
+                            loadingPosition='start'
+                            startIcon={<CloseIcon />}
+                            variant='contained'
+                            size='large'
+                          >
+                            ยกเลิก
+                          </LoadingButton>
+                          <LoadingButton
+                            color='primary'
+                            onClick={deleteDebt}
+                            loading={confirmLoading}
+                            loadingPosition='start'
+                            startIcon={<CheckIcon />}
+                            variant='contained'
+                            size='large'
+                            autoFocus
+                          >
+                            ตกลง
+                          </LoadingButton>
+                  </DialogActions>
+                </Dialog>
               <CardContent>
               <Grid item xs={12} md={12} lg={12}>
                   <form noValidate autoComplete='off'>
@@ -296,13 +361,11 @@ const FormLayouts = () => {
                           <TableCell align='center'>{row.houseRent}</TableCell>
                           <TableCell align='center' color='danger'>{(row.houseRent + row.bank + row.studentLoan +row.allowance+ row.debt1+row.debt2)}</TableCell>
                           <TableCell align='center'>
-                            {/* <Link href={`debt/${row.debtId}`} color='success'> */}
                             {row.debtId ? (
-                              <Button type='button' variant='outlined' onClick={() => deleteDebt(row.debtId)}>
+                              <Button type='button' variant='outlined' onClick={() => handleDeleteDebt(row.debtId)}>
                                 ลบ
                               </Button>
                               ) : ''}
-                            {/* </Link> */}
                           </TableCell>
                         </TableRow>
                       ))}

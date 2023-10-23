@@ -29,6 +29,7 @@ const TableAllowance = () => {
     const [loading, setLoading] = React.useState(false)
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     console.log(allowances)
+
     const fetchAllowances = async () => {
       let uri = apiConfig.baseURL + `/allowances`
       console.log(uri)
@@ -53,12 +54,10 @@ const TableAllowance = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        // body: JSON.stringify(allowanceId)
       })
         .then(response => response.json())
         .then(data => {
           console.log(data)
-          // setLoading(false)
           if (data.status == 'success') {
             toast.success(data.message)
             fetchAllowances();

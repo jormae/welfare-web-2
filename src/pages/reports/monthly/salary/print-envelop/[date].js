@@ -26,7 +26,7 @@ import Divider from '@mui/material/Divider'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LoadingButton from '@mui/lab/LoadingButton'
 import Badge from '@mui/material/Badge';
-import TableReportSalary from 'src/views/tables/TableReportSalary'
+import TableReportSalary from 'src/views/tables/TableReportMonthlySalary'
 import SearchIcon from '@material-ui/icons/Search';
 import FormHelperText from '@mui/material/FormHelperText';
 import TableReportSalaryDoc from 'src/views/tables/TableReportSalaryDoc'
@@ -35,16 +35,6 @@ export const DataReportPrintSalaryContext = createContext()
 
 export const DataDatePrintContext = createContext()
 
-export const PaidContext = createContext()
-
-export const PendingPaymentContext = createContext()
-
-export const FollowupPaymentContext = createContext()
-
-export const StrDateContext = createContext()
-
-export const StrSumPaymentContext = createContext()
-
 const FormLayouts = () => {
 
   const router = useRouter()
@@ -52,20 +42,11 @@ const FormLayouts = () => {
     router.query.date
   }
 
+  console.log(router.query.date)
+
   const i = 1;  
   moment.locale('th')
   const [reportSalaries, setReportSalaries] = useState({ blogs: [] })
-  const [paidReports, setPaidReports] = useState({ blogs: [] })
-  const [pendingPaymentReports, setPendingPaymentReports] = useState({ blogs: [] })
-  const [followupPaymentReports, setFollowupPaymentReports] = useState({ blogs: [] })
-  const [tabPayments, setTabPayments] = React.useState('pending-payment')
-  const [date, setDate ]= useState(moment(router.query.date).format('YYYY-MM'))
-  const { register, handleSubmit, control, formState: { errors } } = useForm();
-  const [loading, setLoading] = React.useState(false)
-  const [searchDate, setSearchDate ]= useState()
-  const [badgeCouter, setBadgeCouter ]= useState(0)
-  const [sumPayment, setSumPayment ]= useState(0)
-  const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
 
   const fetchReportSalaries= async () => {
     let uri = apiConfig.baseURL + `/salaries/report/${router.query.date}`
@@ -79,7 +60,10 @@ const FormLayouts = () => {
   }
 
   useEffect(() => {
-    fetchReportSalaries();
+    if (router.isReady) {
+      router.query
+      fetchReportSalaries();
+    }
   }, [router.isReady, router.query])
 
   return (
@@ -87,7 +71,7 @@ const FormLayouts = () => {
        <Grid item md={12} xs={12}>        
        <Box sx={{ width: '100%' }}>
       <DataReportPrintSalaryContext.Provider value={reportSalaries}>
-        <DataDatePrintContext.Provider value={date}>
+        <DataDatePrintContext.Provider value={router.query.date}>
           <TableReportSalaryDoc/>
         </DataDatePrintContext.Provider>
       </DataReportPrintSalaryContext.Provider>

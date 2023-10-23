@@ -58,11 +58,13 @@ const useStyles = makeStyles({
 });
 
 
-const TableReportSalary = () => {
+const TableReportMonthlySalary = () => {
  
     const classes = useStyles();
     const reportSalary = useContext(DataReportSalaryContext);
     const reportDate = useContext(DataDateContext);
+
+    // const healthInsurance = useContext(DataHealthInsuranceContext);
 
     // const printSalary = useContext(DataReportPrintSalaryContext);
     // const printDate = useContext(DataDatePrintContext);
@@ -72,10 +74,14 @@ const TableReportSalary = () => {
 
     const salaries = reportSalary;
     const date = reportDate;
+    console.log('date = '+date)
+
+    // console.log('healthInsurance = '+healthInsurance)
  
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const i = 1;
     const [loading, setLoading] = useState(false)
+
     const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
 
@@ -185,5 +191,5 @@ const TableReportSalary = () => {
   )
 }
 
-export default TableReportSalary
+export default TableReportMonthlySalary
 

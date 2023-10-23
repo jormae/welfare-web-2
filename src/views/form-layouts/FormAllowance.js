@@ -114,7 +114,6 @@ const FormAllowance = () => {
                 <LoadingButton
                   type='submit'
                   color='primary'
-                  //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   loadingPosition='start'

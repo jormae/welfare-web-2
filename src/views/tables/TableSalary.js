@@ -17,6 +17,8 @@ import Box from '@mui/material/Box'
 import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
+import 'moment/locale/th'  // without this line it didn't work
+
 import toast, { Toaster } from 'react-hot-toast'
 import apiConfig from 'src/configs/apiConfig'
 
@@ -24,7 +26,7 @@ import { DataSalaryContext, DataHealthInsuranceContext, DataDateContext } from '
 
 
 const TableSalary = () => {
-
+    moment.locale('th')
     const salaries = useContext(DataSalaryContext)
     const healthInsurance = useContext(DataHealthInsuranceContext)
     const date = useContext(DataDateContext)
@@ -37,6 +39,7 @@ const TableSalary = () => {
 
     // const date = moment().format('YYYY-MM')
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+    const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
     
     // console.log(salaries)
 
@@ -69,7 +72,7 @@ const TableSalary = () => {
 
   return (
     <Card>
-      <CardHeader title='บัญชีการจ่ายเงินเดือนบุคลากร โรงเรียนดารุสสาลาม ประจำเดือน' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title={`รายงานบัญชีการจ่ายเงินเดือนบุคลากร โรงเรียนดารุสสาลาม ประจำเดือน ${strDate}`} titleTypographyProps={{ variant: 'h6' }} />
       <Toaster />
       <Divider sx={{ margin: 0 }} />
       <CardContent>

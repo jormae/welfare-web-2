@@ -36,6 +36,7 @@ const FormSalary = () => {
     const [healthInsurance, setHealthInsurance] = useState(0)
     const [date, setDate] = useState()
     console.log(salaries)
+    console.log(date)
     const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
     const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
 
@@ -45,7 +46,7 @@ const FormSalary = () => {
         console.log(data)
         setHealthInsurance(data.healthInsurance / 100)
         setDate(data.salaryMonth)
-        let uri = apiConfig.baseURL + `/salaries/date/${date}`
+        let uri = apiConfig.baseURL + `/salaries/date/${data.salaryMonth}`
         console.log(uri)
         try {
             const { data } = await axios.get(uri)

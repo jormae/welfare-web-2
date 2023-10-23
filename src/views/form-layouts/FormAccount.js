@@ -37,7 +37,7 @@ const FormAccount = () => {
     const memberDetail = useContext(MemberContext)
     console.log("memberDetail = "+memberDetail)
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -143,9 +143,6 @@ const FormAccount = () => {
         </DialogContent>
         <DialogActions>
           <Button variant='contained' color='secondary' onClick={handleClose}>ยกเลิก</Button>
-          {/* <Button variant='contained' color='primary' onClick={handleReset} autoFocus>
-            ตกลง
-          </Button> */}
           <Box sx={{ '& > button': { m: 1 } }}></Box>
                 <LoadingButton
                   color='primary'

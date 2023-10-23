@@ -28,7 +28,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 
-
 const FormGold = () => {
 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
@@ -114,7 +113,6 @@ const FormGold = () => {
                 <LoadingButton
                   type='submit'
                   color='warning'
-                  //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   loadingPosition='start'

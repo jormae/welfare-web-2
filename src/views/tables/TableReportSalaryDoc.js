@@ -25,7 +25,6 @@ import { makeStyles } from '@mui/styles';
 import toast, { Toaster } from 'react-hot-toast'
 import apiConfig from 'src/configs/apiConfig'
 
-import { DataReportSalaryContext, DataDateContext} from 'src/pages/reports/monthly/salary/index'
 import { DataReportPrintSalaryContext, DataDatePrintContext} from 'src/pages/reports/monthly/salary/print-envelop/[date]'
 
 const useStyles = makeStyles({
@@ -66,13 +65,8 @@ const pageStyle = `
 const TableReportSalaryDoc = () => {
  
     const styles = useStyles();
-    const reportSalary = useContext(DataReportSalaryContext);
-    const reportDate = useContext(DataDateContext);
-    const printSalary = useContext(DataReportPrintSalaryContext);
-    const printDate = useContext(DataDatePrintContext);
-
-    const salaries = reportSalary ?? printSalary;
-    const date = reportDate ?? printDate;
+    const salaries = useContext(DataReportPrintSalaryContext);
+    const date = useContext(DataDatePrintContext);
  
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const i = 1;

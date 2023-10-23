@@ -25,7 +25,7 @@ import Divider from '@mui/material/Divider'
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import LoadingButton from '@mui/lab/LoadingButton'
 import Badge from '@mui/material/Badge';
-import TableReportSalary from 'src/views/tables/TableReportSalary'
+import TableReportSalary from 'src/views/tables/TableReportMonthlySalary'
 import SearchIcon from '@material-ui/icons/Search';
 import FormHelperText from '@mui/material/FormHelperText';
 
@@ -59,18 +59,6 @@ const FormLayouts = () => {
   const [searchDate, setSearchDate ]= useState()
   const [badgeCouter, setBadgeCouter ]= useState(0)
   const [sumPayment, setSumPayment ]= useState(0)
-  const strDate = 'เดือน '+ moment(date).format('MMMM') +' พ.ศ.'+ moment(date).add(543, 'year').format('YYYY');
-
-  const fetchReportSalaries= async () => {
-    let uri = apiConfig.baseURL + `/salaries/report/${date}`
-    console.log('fetchReportSalaries uri = '+uri)
-    try {
-        const { data } = await axios.get(uri)
-        setReportSalaries({ blogs: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   const onSubmit = async (data) => {
     setLoading(true)
@@ -88,10 +76,6 @@ const FormLayouts = () => {
     }
 
 }
-
-  useEffect(() => {
-    fetchReportSalaries();
-  }, [])
 
   const SkeletonReportMonthlySalariesLoading = () => (
     <Box sx={{ width: '100%' }}>
