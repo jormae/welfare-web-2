@@ -27,13 +27,7 @@ import apiConfig from 'src/configs/apiConfig'
 
 import { DataReportSalaryContext, DataDateContext} from 'src/pages/reports/monthly/salary/index'
 
-// import { DataReportPrintSalaryContext, DataDatePrintContext} from 'src/pages/reports/monthly/salary/print-doc'
-
 const useStyles = makeStyles({
-  // root: {
-  //   backgroundColor: 'grey',
-  //   color:'white'
-  // },
   [`@page`] : {
     size: 'A4 Portrait',
     margin: 0,
@@ -64,20 +58,9 @@ const TableReportMonthlySalary = () => {
     const reportSalary = useContext(DataReportSalaryContext);
     const reportDate = useContext(DataDateContext);
 
-    // const healthInsurance = useContext(DataHealthInsuranceContext);
-
-    // const printSalary = useContext(DataReportPrintSalaryContext);
-    // const printDate = useContext(DataDatePrintContext);
-
-    // const salaries = reportSalary ?? printSalary;
-    // const date = reportDate ?? printDate;
-
     const salaries = reportSalary;
     const date = reportDate;
-    console.log('date = '+date)
 
-    // console.log('healthInsurance = '+healthInsurance)
- 
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const i = 1;
     const [loading, setLoading] = useState(false)
@@ -109,6 +92,7 @@ const TableReportMonthlySalary = () => {
                 <TableCell align='center' style={{ color: "black" }}>ชื่อ-สกุล</TableCell>
                 <TableCell align='center' style={{ color: "black" }}>เงินเดือน</TableCell>
                 <TableCell align='center' style={{ color: "black" }}>หักประกันสังคม (%)</TableCell>
+                <TableCell align='center' style={{ color: "black" }}>สถาบันการเงินและอื่นๆ</TableCell>
                 <TableCell align='center' style={{ color: "black" }}>รับจริง</TableCell>
                 <TableCell align='center' style={{ color: "black" }}>ลงชื่อ</TableCell>
               </TableRow>
@@ -123,6 +107,7 @@ const TableReportMonthlySalary = () => {
                   <TableCell style={{ color: "black" }}>{row.memberName}</TableCell>
                   <TableCell style={{ color: "black" }} align='center'>{(row.salary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell style={{ color: "black" }} align='center'>{row.healthInsurance.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell style={{ color: "black" }} align='center'>{(row.debts ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell style={{ color: "black" }} align='center'>{(row.netSalary).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -158,33 +143,34 @@ const TableReportMonthlySalary = () => {
                             </Box>
                             </Link>
                     </Grid>
+                    
                     <Grid item xs={12} md={6}></Grid>
                 
-                        <Grid item xs={12} md={3}>
-                            <Box
-                                sx={{
-                                gap: 5,
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                mt:4
-                                }}
+                    <Grid item xs={12} md={3}>
+                        <Box
+                            sx={{
+                            gap: 5,
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            mt:4
+                            }}
+                        >
+                            <Box sx={{ '& > button': { m: 10 } }}></Box>
+                            <LoadingButton
+                            onClick={handlePrint}
+                            color='primary'
+                            loading={loading}
+                            loadingPosition='start'
+                            startIcon={<PrintIcon />}
+                            variant='contained'
+                            size='large'
                             >
-                                <Box sx={{ '& > button': { m: 10 } }}></Box>
-                                <LoadingButton
-                                onClick={handlePrint}
-                                color='primary'
-                                loading={loading}
-                                loadingPosition='start'
-                                startIcon={<PrintIcon />}
-                                variant='contained'
-                                size='large'
-                                >
-                                พิมพ์รายงานเงินเดือน
-                                </LoadingButton>
-                            </Box>
-                        </Grid>
+                            พิมพ์รายงานเงินเดือน
+                            </LoadingButton>
+                        </Box>
+                    </Grid>
                 </Grid>
       </CardContent>
     </Card>

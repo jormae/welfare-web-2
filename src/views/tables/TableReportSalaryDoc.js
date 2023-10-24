@@ -80,76 +80,80 @@ const TableReportSalaryDoc = () => {
       content: () => printRef.current,
     });
 
-    
- 
     return (
-        
-    <Card>
-        <Button
+        <Grid container spacing={6}>
+        <Grid item lg={2} md={3}>
+            <Button
                 onClick={handlePrint}
                 color='primary'
                 startIcon={<PrintIcon />}
                 variant='contained'
                 size='large'
+                fullWidth
                 >
                 พิมพ์
-                </Button>
-        <CardContent ref={printRef}>
-            {salaries.blogs.map(row => (
-                 <div key={row.salaryId}  
-                 style={{ 
-                    size: 'landscape', 
-                    pageBreakAfter:'always', 
-                    marginTop:60,
-                    marginLeft:30, 
+            </Button>
+        </Grid>
+        <Grid item lg={10} md={3}></Grid>
+        <Grid item lg={12}>
+        <Card>
+            <CardContent ref={printRef}>
+                {salaries.blogs.map(row => (
+                    <div key={row.salaryId}  
+                    style={{ 
+                        size: 'landscape', 
+                        pageBreakAfter:'always', 
+                        marginTop:60,
+                        marginLeft:30, 
 
-                    [`@media print`]: {
-                        padding:100,
-                  },}} > 
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} textAlign="center" fontSize={18} paddingBottom={0}>
-                        <p>โรงเรียนดารุสสาลาม<br/>ค่าตอบแทนประจำ{strDate}</p>
+                        [`@media print`]: {
+                            padding:100,
+                    },}} > 
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} textAlign="center" fontSize={18} paddingBottom={0}>
+                            <p fontSize={20}> โรงเรียนดารุสสาลาม<br/>ค่าตอบแทนประจำ{strDate}</p>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid container spacing={3} fontSize={14}>
-                    <Grid item xs={4}>
-                        ชื่อ-สกุล
+                    <Grid container spacing={3} fontSize={17}>
+                        <Grid item xs={4} >
+                            ชื่อ-สกุล
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                            เงินเดือน
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                            ประกันสังคม ({row.healthInsurancePercentage*100}%)
+                        </Grid>
+                        <Grid item xs={2}  textAlign="center">
+                            สถาบันการเงินและอื่นๆ
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                            คงเหลือ
+                        </Grid>
                     </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        เงินเดือน
+                    <Grid container spacing={3} fontSize={17}>
+                        <Grid item xs={4}>
+                            {i++} - {row.memberName}
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                            {(row.basedSalary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                            {(row.healthInsurance ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                        {(row.debts ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                        </Grid>
+                        <Grid item xs={2} textAlign="center">
+                        {(row.netSalary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                        </Grid>
                     </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        ประกันสังคม ({row.healthInsurancePercentage*100}%)
-                    </Grid>
-                    <Grid item xs={2}  textAlign="center">
-                        สถาบันการเงินและอื่นๆ
-                    </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        คงเหลือ
-                    </Grid>
-                </Grid>
-                <Grid container spacing={3} fontSize={14}>
-                    <Grid item xs={4}>
-                        {i++} - {row.memberName}
-                    </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        {(row.basedSalary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                    </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        {(row.healthInsurance ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                    </Grid>
-                    <Grid item xs={2} textAlign="center">
-                        N/A
-                    </Grid>
-                    <Grid item xs={2} textAlign="center">
-                       {(row.netSalary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                    </Grid>
-                </Grid>
-                </div>
-            ))}
-        </CardContent>
-        
-    </Card>
+                    </div>
+                ))}
+            </CardContent>
+        </Card>
+    </Grid>   
+    </Grid>
   )
 }
 

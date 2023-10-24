@@ -37,6 +37,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import CheckIcon from '@material-ui/icons/Check';
 import CloseIcon from '@material-ui/icons/Close';
+import FormHelperText from '@mui/material/FormHelperText';
 
 import moment from 'moment'
 import 'moment/locale/th' 
@@ -203,7 +204,7 @@ const FormLayouts = () => {
             <FormControl fullWidth>
                   <InputLabel>ชื่อลูกหนี้</InputLabel>
                   {memberInfo ? (
-                  <Select label='ชื่อลูกหนี้' defaultValue={memberInfo?.nationalId ?? ''} {...register('nationalId')}>
+                  <Select label='ชื่อลูกหนี้' defaultValue={memberInfo?.nationalId ?? ''} {...register('nationalId', { required: true })}>
                     {memberInfo.map(item => {
                       return (
                         <MenuItem key={item.nationalId} value={item.nationalId}>
@@ -212,9 +213,13 @@ const FormLayouts = () => {
                       )
                     })}
                   </Select>
+                  
                   ) : (
                       <Skeleton variant='rectangular' width={250} height={55} />
                     )}
+                    {errors.nationalId && errors.nationalId.type === "required" && (
+                        <FormHelperText id="nationalId" sx={{color:'#d32f2f'}}>Error : กรุณาเลือกรายชื่อสมาชิก</FormHelperText>
+                      )}
                 </FormControl>
             </Grid>
             <Grid item xs={12} md={2}>
