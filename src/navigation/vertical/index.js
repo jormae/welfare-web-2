@@ -31,9 +31,9 @@ const navigation = () => {
       sectionTitle: 'Pages'
     },
     {
-      title: 'สมาชิก',
+      title: 'เจ้าหน้าที่',
       icon: Profile,
-      path: '/member'
+      path: '/staff'
     },
     // {
     //   title: 'ส่งสรุปชาร์ต',

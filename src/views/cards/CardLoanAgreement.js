@@ -37,7 +37,7 @@ const CardLoanAgreement = () => {
                   height: 70,
                   boxShadow: 3,
                   color: 'common.white',
-                  backgroundColor: `primary.main`
+                  backgroundColor: `success.main`
                 }}
               >
                 <Icon path={mdiPrinter} title='User Profile' size={2} />

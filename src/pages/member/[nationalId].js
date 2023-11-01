@@ -18,6 +18,8 @@ import TableMemberInvestmentHistory from 'src/views/tables/TableMemberInvestment
 import TableMemberLoanHistory from 'src/views/tables/TableMemberLoanHistory'
 import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHistory'
 import TableMemberSuretyHistory from 'src/views/tables/TableMemberSuretyHistory'
+import FormAccount from 'src/views/form-layouts/FormAccount'
+import { ConsoleNetworkOutline } from 'mdi-material-ui'
 
 const defaultData = {
   ptName: 'Loading',
@@ -65,6 +67,7 @@ const FormLayouts = () => {
     router.query.nationalId
   }
   const [memberDetail, setMemberDetail] = useState(defaultData)
+  console.log(memberDetail)
   const [position, setPositions] = useState([])
   const [memberTypes, setMemberTypes] = useState([])
   const [memberRoles, setMemberRoles] = useState([])
@@ -249,7 +252,7 @@ const FormLayouts = () => {
           <TabList onChange={handleChange} aria-label='lab API tabs example'>
             <Tab label='ข้อมูลสมาชิก' value='member' />
             <Tab label='ข้อมูลคู่สมรส' value='spouse' />
-            <Tab label='ประวัติหุ้น' value='investment2' />
+            <Tab label='ข้อมูลบัญชีผู้ใช้' value='account' />
           </TabList>
         </Box>
       <TabPanel value='member'>
@@ -284,11 +287,11 @@ const FormLayouts = () => {
             </Typography>
           )}
         </TabPanel>
-        <TabPanel value='investment2'>
+        <TabPanel value='account'>
           {memberDetail.nationalId ? (
-            <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-              <TableMemberInvestmentHistory />
-            </InvesmentHistoryContext.Provider>
+            <MemberContext.Provider value={memberDetail}>
+              <FormAccount />
+            </MemberContext.Provider>
           ) : (
             <Typography variant='h4'>
               <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -305,6 +308,7 @@ const FormLayouts = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleTabHistoryChange} aria-label='lab API tabs example'>
             <Tab label='ประวัติกู้' value='loan' />
+            {/* <Tab label='ประวัติกู้อื้นๆ' value='otherLoan' /> */}
             <Tab label='ประวัติหุ้น' value='investment' />
             <Tab label='ประวัติปันผล' value='dividend' />
             <Tab label='ประวัติค้ำประกัน' value='surety' />
@@ -313,9 +317,26 @@ const FormLayouts = () => {
         <TabPanel value='loan'>
           {memberLoanHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <LoanHistoryContext.Provider value={memberLoanHistories}>
-                <TableMemberLoanHistory />
-              </LoanHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
+                </LoanHistoryContext.Provider>
+              </Grid>
+            </Grid>
+          ) : (
+            <Typography variant='h4'>
+              <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
+            </Typography>
+          )}
+        </TabPanel>
+        <TabPanel value='otherLoan'>
+          {memberLoanHistories.blogs.length > 0 ? (
+            <Grid container wrap='nowrap'>
+               <Grid item xs={12} md={12} lg={12}>
+                <LoanHistoryContext.Provider value={memberLoanHistories}>
+                  <TableMemberLoanHistory />
+                </LoanHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>
@@ -326,9 +347,11 @@ const FormLayouts = () => {
         <TabPanel value='investment'>
           {memberInvestmentHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
-                <TableMemberInvestmentHistory />
-              </InvesmentHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <InvesmentHistoryContext.Provider value={memberInvestmentHistories}>
+                  <TableMemberInvestmentHistory />
+                </InvesmentHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>
@@ -339,9 +362,11 @@ const FormLayouts = () => {
         <TabPanel value='dividend'>
           {memberDividendHistories.blogs.length > 0 ? (
             <Grid container wrap='nowrap'>
-              <DividendHistoryContext.Provider value={memberDividendHistories}>
-                <TableMemberDividendHistory />
-              </DividendHistoryContext.Provider>
+               <Grid item xs={12} md={12} lg={12}>
+                <DividendHistoryContext.Provider value={memberDividendHistories}>
+                  <TableMemberDividendHistory />
+                </DividendHistoryContext.Provider>
+              </Grid>
             </Grid>
           ) : (
             <Typography variant='h4'>

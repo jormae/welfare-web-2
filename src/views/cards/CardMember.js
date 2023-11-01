@@ -57,7 +57,7 @@ const CardMember = () => {
                 <Typography variant='h6' sx={{ width: 300 }}>
                   สมาชิกทั้งหมด
                 </Typography>
-                <Typography variant='h6'>{totalMember}</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalMember} ราย</Typography>
               </Box>
             </Box>
           </Grid>

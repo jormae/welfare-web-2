@@ -174,6 +174,23 @@ const FormMember = () => {
                 </Select>
               </FormControl>
             </Grid>
+            <Grid item xs={12} md={3}>
+              <FormControl fullWidth >
+                <InputLabel>หักประกันสังคม</InputLabel>
+                <Select
+                  label='หักประกันสังคม'
+                  {...register('isHealthInsurance', { required: true })}
+                >
+                      <MenuItem key={1} value={1}>
+                        ใช่
+                      </MenuItem>
+                      <MenuItem key={0} value={0}>
+                        ไม่ใช่
+                      </MenuItem>
+                    
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
         </CardContent>
         <CardHeader title='ข้อมูลที่อยู่' titleTypographyProps={{ variant: 'h6' }} />
@@ -221,7 +238,6 @@ const FormMember = () => {
                 <LoadingButton
                   type='submit'
                   color='primary'
-                  //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}
                   loadingPosition='start'

@@ -28,6 +28,8 @@ import apiConfig from 'src/configs/apiConfig'
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import FooterIllustrationsV1 from 'src/views/pages/auth/FooterIllustration'
 import LoadingButton from '@mui/lab/LoadingButton'
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: { width: '28rem' }
@@ -47,8 +49,11 @@ const FormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 const LoginPage = () => {
+  console.log("base uri = "+process.env.REACT_APP_BASE_URI)
 
   const [loading, setLoading] = React.useState(false)
+  const [err, setError] = useState(false)
+  const [message, setMessage] = useState()
   
   const [values, setValues] = useState({
     password: '',
@@ -96,6 +101,11 @@ const LoginPage = () => {
           localStorage.setItem('memberRoleName', data.memberRoleName)
           window.location = '/'
         }
+        else{
+          setError(true)
+          setLoading(false)
+          setMessage(data.message)
+        }
       })
       .catch(error => {
         console.error('Error:', error)
@@ -116,7 +126,7 @@ const LoginPage = () => {
                 alt="The house from the offer."
                 src='/images/logos/DTWF.png'
               />
-            
+            <Typography>{process.env.REACT_APP_BASE_URI}</Typography>
             <Typography
               variant='h6'
               sx={{
@@ -134,7 +144,14 @@ const LoginPage = () => {
             <Typography variant='h5' textAlign='center' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
                {themeConfig.templateName}
             </Typography> 
-            {/* <Typography variant='body2'>กรุณาล็อกอินเพื่อเข้าสู่ระบบ</Typography> */}
+            {err ? (
+            <Alert severity="error">
+              {/* <AlertTitle>Error</AlertTitle> */}
+              {message}
+            </Alert>
+             ) : (
+              ''
+            )}
           </Box>
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)}>
             <TextField
@@ -142,15 +159,17 @@ const LoginPage = () => {
               fullWidth
               label='ชื่อบัญชี'
               sx={{ marginBottom: 4 }}
+              onKeyUp={() => {setError(false)}}
               {...register('username', { required: true })}
             />
 
             <FormControl fullWidth>
-              <InputLabel htmlFor='auth-login-password'>Password</InputLabel>
+              <InputLabel htmlFor='auth-login-password'>รหัสผ่าน</InputLabel>
               <OutlinedInput
                 label='รหัสผ่าน'
                 onChange={handleChange('password')}
                 type={values.showPassword ? 'text' : 'password'}
+                onKeyUp={() => {setError(false)}}
                 {...register('password', { required: true })}
                 endAdornment={
                   <InputAdornment position='end'>

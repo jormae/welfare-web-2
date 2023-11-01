@@ -55,9 +55,9 @@ const CardActiveLoan = () => {
               </Avatar>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: 30 }}>
                 <Typography variant='h6' sx={{ width: 300 }}>
-                  Active Loan
+                  รายการกู้สวัสดิการ
                 </Typography>
-                <Typography variant='h6'>{totalActiveLoan}</Typography>
+                <Typography variant='h6' sx={{ width: 300 }}>{totalActiveLoan ?? 0} รายการ</Typography>
               </Box>
             </Box>
           </Grid>

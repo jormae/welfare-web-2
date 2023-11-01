@@ -25,10 +25,11 @@ import CardLoanReceipt from 'src/views/cards/CardLoanReceipt'
 import CardLoanSurety1 from 'src/views/cards/CardLoanSurety1'
 import CardLoanSurety2 from 'src/views/cards/CardLoanSurety2'
 import FormDebtReport from 'src/views/form-layouts/FormDebtReport'
+import CardOtherLoanPayment from 'src/views/cards/CardOtherLoanPayment'
 
 export const LoanMemberContext = createContext()
 
-export const LoanRecordHistoryContext = createContext()
+export const LoanPaymentHistoryContext = createContext()
 
 export const LoanContext = createContext()
 
@@ -37,7 +38,7 @@ const FormLayouts = () => {
   if (router.isReady) {
     router.query.nationalId
   }
-  const [memberLoanHistories, setMemberLoanHistories] = useState({ blogs: [] })
+  const [memberLoanPaymentHistories, setMemberLoanPaymentHistories] = useState({ blogs: [] })
   const [memberDetail, setMemberDetail] = useState()
   const [loanDetail, setLoanDetail] = useState()
   const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
@@ -79,13 +80,13 @@ const FormLayouts = () => {
     }
   }
 
-  const fetchMemberLoansHistories = async () => {
-    let uri = apiConfig.baseURL + `/loans/loan-history/${router.query.nationalId}/${router.query.loanId}`
+  const fetchMemberLoanPaymentHistories = async () => {
+    let uri = apiConfig.baseURL + `/loans/payment-history/${router.query.nationalId}/${router.query.loanId}`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
       console.log(data)
-      setMemberLoanHistories({ blogs: data })
+      setMemberLoanPaymentHistories({ blogs: data })
     } catch (error) {
       console.log(error)
     }
@@ -95,12 +96,12 @@ const FormLayouts = () => {
     if (router.isReady) {
       router.query
       fetchMemberDetail()
-      fetchMemberLoansHistories()
+      fetchMemberLoanPaymentHistories()
       fetchLoanDetail()
     }
   }, [router.isReady, router.query])
 
-  console.log('memberLoanHistories = '+memberLoanHistories)
+  console.log('memberLoanPaymentHistories = '+memberLoanPaymentHistories)
   console.log('memberDetail = '+memberDetail)
   console.log('loanDetail = '+loanDetail)
 
@@ -148,9 +149,9 @@ const FormLayouts = () => {
   const SkeletonMemberLoanLoading = () => (
     <Box sx={{ width: '100%' }}>
       {memberDetail?.nationalId ? (
-        <LoanRecordHistoryContext.Provider value={memberLoanHistories}>
+        <LoanPaymentHistoryContext.Provider value={memberLoanPaymentHistories}>
           <TableMemberLoanPaymentHistory />
-        </LoanRecordHistoryContext.Provider>
+        </LoanPaymentHistoryContext.Provider>
       ) : (
         <Typography variant='h4'>
           <Skeleton width='100%' height={200} sx={{ animationDuration: '3.0s' }} />
@@ -171,6 +172,9 @@ const FormLayouts = () => {
           <CardAddLoanPayment />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
+          <CardOtherLoanPayment/>
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
           <CardLoanAgreement />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -182,9 +186,7 @@ const FormLayouts = () => {
         <Grid item xs={12} md={6} lg={4}>
           <CardLoanSurety2 />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanReceipt/>
-        </Grid>
+       
       <Grid item xs={12}>
         <SkeletonMemberLoanLoading />
       </Grid>

@@ -1,5 +1,6 @@
 // ** MUI Imports
-import React, { useContext } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableRow from '@mui/material/TableRow'
@@ -14,16 +15,22 @@ import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
-import moment from 'moment'
+import Grid from '@mui/material/Grid'
+import TextField  from "@mui/material/TextField";
+import Chip from '@mui/material/Chip';
 
 import { DataContext } from 'src/pages/member'
 
-const TableMember = () => {
+const TableMember= (props) => {
 
   const members = useContext(DataContext)
 
+  const { register } = useForm();
+  const [search, setSearch] = useState('')
+  const i = 1;
+
   const [pg, setpg] = React.useState(0);
-  const [rpg, setrpg] = React.useState(5);
+  const [rpg, setrpg] = React.useState(10);
 
   function handleChangePage(event, newpage) {
       setpg(newpage);
@@ -36,35 +43,55 @@ const TableMember = () => {
 
   return (
     <Card>
-      <CardHeader title='ทะเบียนสมาชิกทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
+      <CardHeader title='ทะเบียนเจ้าหน้าที่ทั้งหมด' titleTypographyProps={{ variant: 'h6' }} />
       <Divider sx={{ margin: 0 }} />
       <CardContent>
+        <Grid item xs={12} md={12} lg={12}>
+          <form noValidate autoComplete='off'>
+              <Grid container spacing={5}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='ค้นหาเจ้าหน้าที่' placeholder='ค้นหาเจ้าหน้าที่' {...register('search', {
+                    onChange: (e) => {setSearch(e.target.value)},
+                    onBlur: (e) => {},
+                  })} />
+                </Grid>
+              </Grid>
+          </form>
+        </Grid>
+        <Divider sx={{ margin: 0, mt:5 }} />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
               <TableRow>
-                <TableCell align='center'>รหัสสมาชิก</TableCell>
+                <TableCell align='center'>ที่</TableCell>
+                <TableCell align='center'>เลขประชาชน</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ตำแหน่ง</TableCell>
                 <TableCell align='center'>ประเภทสมาชิก</TableCell>
+                <TableCell align='center'>ประเภทการชำระเงิน</TableCell>
                 <TableCell align='center'>สถานะสมาชิก</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {members.blogs.map(row => (
-                <TableRow key={row.memberId}>
-                  <TableCell align='center' component='th' scope='row'>
+            { members.blogs.filter((row)=>{
+                return search.toLowerCase() === '' ? row : row.memberName.toLowerCase().includes(search);
+              }).slice(pg * rpg, pg *
+                rpg + rpg).map(row => (
+                <TableRow key={row.nationalId} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableCell align='center'  component='th' scope='row'>{i++}</TableCell>
+                  <TableCell align='center'>
                   {row.nationalId}
                   </TableCell>
-                  <TableCell align='center'>{row.memberName}</TableCell>
-                  <TableCell align='center'>{row.positionName}</TableCell>
-                  <TableCell align='center'>{row.memberTypeName}</TableCell>
-                  <TableCell align='center'>{row.memberStatus == 0 ? 'ปิดบัญชี' : 'ปกติ'}</TableCell>
+                  <TableCell >{row.memberName}</TableCell>
+                  <TableCell >{row.positionName}</TableCell>
+                  <TableCell >{row.memberTypeName}</TableCell>
+                  <TableCell>{row.paymentTypeName}</TableCell>
+                  <TableCell>{row.memberStatusId == 1 ? 'ปกติ' : 'ปิดบัญชี'}</TableCell>
                   <TableCell align='center'>
                     <Link href={`member/${row.nationalId}`} color='success'>
                       <Button type='button' variant='outlined'>
-                        เปิด
+                        รายละเอียด
                       </Button>
                     </Link>
                   </TableCell>
@@ -74,14 +101,15 @@ const TableMember = () => {
           </Table>
         </TableContainer>
         <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={members.length}
-                rowsPerPage={rpg}
-                page={pg}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
+          rowsPerPageOptions={[10, 20, 50]}
+          component="div"
+          count={members.blogs.length}
+          rowsPerPage={rpg}
+          page={pg}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+       
       </CardContent>
     </Card>
   )

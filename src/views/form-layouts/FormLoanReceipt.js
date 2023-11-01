@@ -23,7 +23,7 @@ import apiConfig from 'src/configs/apiConfig'
 import Divider from '@mui/material/Divider'
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material'
 // ** Icons Imports
-import SaveIcon from 'mdi-material-ui/Plus'
+import SaveIcon from '@material-ui/icons/Save'
 import LoadingButton from '@mui/lab/LoadingButton'
 import moment from 'moment'
 import 'moment/locale/th'

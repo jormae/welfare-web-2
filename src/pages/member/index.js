@@ -19,38 +19,26 @@ import CardQueueLoan from 'src/views/cards/CardQueueLoan'
 import CardMember from 'src/views/cards/CardMember'
 import CardTotalLoan from 'src/views/cards/CardTotalLoan'
 import CardAddMember from 'src/views/cards/CardAddMember'
+import TableTodo from 'src/views/tables/TableTodo'
 
 export const DataContext = createContext()
 
 export const CardContext = createContext()
 
 const FormLayouts = () => {
-  const [members, setMembers] = useState({ blogs: [] })
-  const [statNewMember, setStatNewMember] = useState(0)
-  const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  const [member, setMember] = useState({ blogs: [] })
+  console.log(member)
 
-  const fetchMembers = async () => {
+  // const memberName = typeof window !== 'undefined' ? localStorage.getItem('memberName') : null
+
+  const fetchMember = async () => {
     let uri = apiConfig.baseURL + `/members`
     console.log(uri)
     try {
       const { data } = await axios.get(uri)
-      setMembers({ blogs: data })
+      setMember({ blogs: data })
     } catch (error) {
       // console.log(error)
-    }
-  }
-
-  const fetchStatNewMember = async () => {
-    let uri = apiConfig.baseURL + `/stat/new-member/${staffName}`
-    console.log(uri)
-
-    try {
-      await axios
-        .get(uri)
-        .then(result => setStatNewMember(result.data[0]))
-        .catch(error => console.log('An error occurred' + error))
-    } catch (error) {
-      console.log(error)
     }
   }
 
@@ -74,8 +62,7 @@ const FormLayouts = () => {
       .then(data => {
         if (data.status == 'success') {
           toast.success(data.message)
-          fetchMembers()
-          fetchStatNewMember()
+          fetchMember()
         } else {
           toast.error(data.errors[0].msg)
         }
@@ -99,12 +86,10 @@ const FormLayouts = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.status !== 'success') {
           localStorage.removeItem('token')
-          localStorage.removeItem('staffName')
+          localStorage.removeItem('memberName')
           window.location = '/pages/login'
-          console.log(data)
         }
       })
       .catch(error => {
@@ -113,9 +98,8 @@ const FormLayouts = () => {
   }
 
   useEffect(() => {
-    verifyToken()
-    fetchMembers()
-    fetchStatNewMember()
+    // verifyToken()
+    fetchMember()
   }, [])
 
   return (
@@ -130,8 +114,9 @@ const FormLayouts = () => {
           <CardAddMember/>
         </Grid>
 
-      <DataContext.Provider value={members}>
+      <DataContext.Provider value={member}>
         <Grid item xs={12}>
+          {/* <TableTodo /> */}
           <TableMember />
         </Grid>
       </DataContext.Provider>

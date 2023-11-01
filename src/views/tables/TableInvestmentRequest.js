@@ -40,10 +40,7 @@ const TableInvestmentRequest = () => {
   }, [])
 
   return (
-    <Card>
-      <CardHeader title='รายการคำร้องขอเพิ่ม/ถอน/ลา หุ้น' titleTypographyProps={{ variant: 'h6' }} />
-      <Divider sx={{ margin: 0 }} />
-      <CardContent>
+
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label='simple table'>
             <TableHead>
@@ -51,6 +48,7 @@ const TableInvestmentRequest = () => {
                 <TableCell align='center'>วันที่</TableCell>
                 <TableCell align='center'>ชื่อ-สกุล</TableCell>
                 <TableCell align='center'>ประเภทสมาชิก</TableCell>
+                <TableCell align='center'>ประเภทคำร้อง</TableCell>
                 <TableCell align='center'>จำนวนหุ้น</TableCell>
                 <TableCell align='center'>ราคาต่อหน่วย</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
@@ -65,6 +63,7 @@ const TableInvestmentRequest = () => {
                   </TableCell>
                   <TableCell align='center'>{row.memberName}</TableCell>
                   <TableCell align='center'>{row.memberTypeName}</TableCell>
+                  <TableCell align='center'>{row.investmentTypeName}</TableCell>
                   <TableCell align='center' color='success'>{row.shareQuantity}</TableCell>
                   <TableCell align='center' color='success'>{row.valuePerShare}</TableCell>
                   <TableCell align='center' color='success'>{row.totalShare}</TableCell>
@@ -80,8 +79,6 @@ const TableInvestmentRequest = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </CardContent>
-    </Card>
   )
 }
 

@@ -41,3 +41,8 @@ create dashboard page for staff and member
     - loan payment (add status for closing loan)
     - allowance form/records page 
     - forms validations
+
+  version 1.2.0
+    - add report-monthly-welfare-payment (search data by year-month) and integrate filter and table pagination
+    - update loan approval data debts before approving
+    - update disable display "save account info" conditions

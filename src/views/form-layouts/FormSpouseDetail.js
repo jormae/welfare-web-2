@@ -27,7 +27,7 @@ import apiConfig from 'src/configs/apiConfig'
 
 // ** Icons Imports
 // import EyeOutline from 'mdi-material-ui/EyeOutline'
-import SaveIcon from 'mdi-material-ui/Plus'
+import SaveIcon from '@material-ui/icons/Save'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 import Divider from '@mui/material/Divider'
 import LoadingButton from '@mui/lab/LoadingButton'

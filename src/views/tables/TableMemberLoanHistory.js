@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
+import Chip from '@mui/material/Chip';
 
 import { LoanHistoryContext } from 'src/pages/member/[nationalId]'
 
@@ -30,6 +31,7 @@ const TableMemberLoanHistory = () => {
           <Table sx={{ width: '100%' }} aria-label='simple table'>
             <TableHead>
               <TableRow>
+                <TableCell align='center'>วันที่ส่ง</TableCell>
                 <TableCell align='center'>วันที่อนุมัติ</TableCell>
                 <TableCell align='center'>ประเภท</TableCell>
                 <TableCell align='center'>ระยะเวลา (เดือน)</TableCell>
@@ -37,7 +39,7 @@ const TableMemberLoanHistory = () => {
                 <TableCell align='center'>วันที่สิ้นสุด</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
                 <TableCell align='center'>ยอดชำระ</TableCell>
-                <TableCell align='center'>ยอดค้างชำระ</TableCell>
+                <TableCell align='center'>คงเหลือ</TableCell>
                 <TableCell align='center'>สถานะ</TableCell>
                 <TableCell align='center'>จัดการ</TableCell>
               </TableRow>
@@ -46,16 +48,19 @@ const TableMemberLoanHistory = () => {
               {memberLoanHistories.blogs.map(row => (
                 <TableRow key={row.loanId}>
                   <TableCell align='center' component='th' scope='row'>
-                    {moment(row.approveAt).add(543,'year').format('DD/MM/YYYY')}
+                    {moment(row.requestedDateTime).add(543,'year').format('DD/MM/YYYY')}
                   </TableCell>
-                  <TableCell align='center'>{row.loanTypeName}</TableCell>
+                  <TableCell align='center'> {moment(row.approveAt).add(543,'year').format('DD/MM/YYYY')}</TableCell>
+                  <TableCell align='center'>{row.loanTypeName} ({row.loanAmount})</TableCell>
                   <TableCell align='center'>{row.loanDuration ?? '-'}</TableCell>
                   <TableCell align='center'>{row.startLoanDate ? moment(row.startLoanDate).add(543, 'year').format('DD/MM/YYYY') : '-'}</TableCell>
                   <TableCell align='center'>{row.endLoanDate ? moment(row.endLoanDate).add(543,'year').format('DD/MM/YYYY') : '-'}</TableCell>
                   <TableCell align='center'>{row.loanAmount}</TableCell>
                   <TableCell align='center' color='primary'>{row.totalPayment ?? 0}</TableCell>
                   <TableCell align='center' color='primary'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
-                  <TableCell align='center'>{row.loanStatusName ?? 'รออนุมัติ'}</TableCell>
+                  <TableCell align='center'>
+                    <Chip label={(row.closeLoanStatusId == 3) ? "ปิดยอดสวัสดิการ" : row.loanStatusName} color="primary" />
+                  </TableCell>
                   <TableCell align='center'>
                     <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
                         <Button type='button' variant='outlined'>

@@ -15,8 +15,10 @@ import Divider from '@mui/material/Divider'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
+import Avatar from '@mui/material/Avatar'
+import apiConfig from 'src/configs/apiConfig'
 
-import { LoanRecordHistoryContext } from 'src/pages/loan/[nationalId]/[loanId]'
+import { LoanPaymentHistoryContext } from 'src/pages/loan/[nationalId]/[loanId]'
 
 const TableMemberLoanPaymentHistory = () => {
   const router = useRouter()
@@ -25,7 +27,7 @@ const TableMemberLoanPaymentHistory = () => {
   }
   console.log(router.query.nationalId)
   console.log(router.query.loanId)
-  const memberLoanRecordHistories = useContext(LoanRecordHistoryContext)
+  const memberLoanPaymentHistories = useContext(LoanPaymentHistoryContext)
 
   return (
     <Card>
@@ -39,30 +41,34 @@ const TableMemberLoanPaymentHistory = () => {
                 <TableCell align='center'>งวดที่</TableCell>
                 <TableCell align='center'>เดือน</TableCell>
                 <TableCell align='center'>วันที่ชำระ</TableCell>
-                <TableCell align='center'>ประเภทการชำระ</TableCell>
+                <TableCell align='center'>ช่องทางการชำระ</TableCell>
                 <TableCell align='center'>จำนวนเงิน</TableCell>
                 <TableCell align='center'>หลักฐาน</TableCell>
-                <TableCell align='center'>ยอดค้างชำระ</TableCell>
-                <TableCell align='center'>สถานะ</TableCell>
+                <TableCell align='center'>คงเหลือ</TableCell>
+                <TableCell align='center'>ประเภทการชำระ</TableCell>
                 <TableCell align='center'>ผู้อนุมัติ</TableCell>
                 <TableCell align='center'>วันที่อนุมัติ</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {memberLoanRecordHistories.blogs.map(row => (
+              {memberLoanPaymentHistories.blogs.map(row => (
                 <TableRow key={row.loanPaymentId}>
                   <TableCell align='center'>{row.monthNo}</TableCell>
                   <TableCell align='center'>{moment(row.loanPaymentMonth).add(543, 'year').format('MM/YYYY')}</TableCell>
                   <TableCell align='center' component='th' scope='row'>
-                    {moment(row.createdAt).add(543, 'year').format('DD/MM/YYYY HH:mm')}
+                    {moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY HH:mm')}
                   </TableCell>
                   <TableCell align='center'>{row.paymentTypeName}</TableCell>
                   <TableCell align='center'>{row.paymentAmount}</TableCell>
-                  <TableCell align='center'></TableCell>
-                  <TableCell align='center'></TableCell>
-                  <TableCell align='center'>{row.loanStatusName}</TableCell>
+                  <TableCell align='center'>
+                    <Link href={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} color='success'>
+                      <Avatar alt='John Doe' src={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} sx={{ width: '2.5rem', height: '2.5rem' }} />
+                    </Link>
+                  </TableCell>
+                  <TableCell align='center'>{parseInt(row.loanAmount , 10 ) - parseInt(row.paymentAmount , 10 )}</TableCell>
+                  <TableCell align='center'>{row.isCloseLoanPayment == 1 ? 'ปิดยอดสวัสดิการ' : 'ชำระรายเดือน'}</TableCell>
                   <TableCell align='center'>{row.approvedBy ?? '-'}</TableCell>
-                  <TableCell align='center'>{moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY') ?? '-'}</TableCell>
+                  <TableCell align='center'>{moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY HH:mm') ?? '-'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
