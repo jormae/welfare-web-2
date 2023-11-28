@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // ** MUI Imports
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
@@ -12,13 +13,19 @@ import Card from '@mui/material/Card'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Divider from '@mui/material/Divider'
-import Button from '@mui/material/Button'
 import Link from 'next/link'
 import moment from 'moment'
 import Avatar from '@mui/material/Avatar'
 import apiConfig from 'src/configs/apiConfig'
+import Chip from '@mui/material/Chip'
 
 import { LoanPaymentHistoryContext } from 'src/pages/loan/[nationalId]/[loanId]'
+
+function stringAvatar (name) {
+  return {
+    children: `${name}`
+  }
+}
 
 const TableMemberLoanPaymentHistory = () => {
   const router = useRouter()
@@ -28,6 +35,12 @@ const TableMemberLoanPaymentHistory = () => {
   console.log(router.query.nationalId)
   console.log(router.query.loanId)
   const memberLoanPaymentHistories = useContext(LoanPaymentHistoryContext)
+  // const i = 1
+  // const i2 = 1
+  const j = memberLoanPaymentHistories.blogs[0].paymentAmount
+  let k = 0
+  let k2 = 0
+  console.log(j)
 
   return (
     <Card>
@@ -42,10 +55,11 @@ const TableMemberLoanPaymentHistory = () => {
                 <TableCell align='center'>เดือน</TableCell>
                 <TableCell align='center'>วันที่ชำระ</TableCell>
                 <TableCell align='center'>ช่องทางการชำระ</TableCell>
-                <TableCell align='center'>จำนวนเงิน</TableCell>
-                <TableCell align='center'>หลักฐาน</TableCell>
+                <TableCell align='center'>ยอดก่อนชำระ</TableCell>
+                <TableCell align='center'>ยอดชำระ</TableCell>
                 <TableCell align='center'>คงเหลือ</TableCell>
                 <TableCell align='center'>ประเภทการชำระ</TableCell>
+                <TableCell align='center'>หลักฐาน</TableCell>
                 <TableCell align='center'>ผู้อนุมัติ</TableCell>
                 <TableCell align='center'>วันที่อนุมัติ</TableCell>
               </TableRow>
@@ -59,14 +73,23 @@ const TableMemberLoanPaymentHistory = () => {
                     {moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY HH:mm')}
                   </TableCell>
                   <TableCell align='center'>{row.paymentTypeName}</TableCell>
+                  <TableCell align='center'>{parseInt((row.loanAmount + row.totalProfit), 10) - parseInt(k++ * j, 10)}</TableCell>
                   <TableCell align='center'>{row.paymentAmount}</TableCell>
+                  <TableCell align='center'>{parseInt((row.loanAmount + row.totalProfit), 10) - parseInt((k2++ * j), 10) - parseInt((row.paymentAmount), 10)}</TableCell>
                   <TableCell align='center'>
-                    <Link href={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} color='success'>
-                      <Avatar alt='John Doe' src={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} sx={{ width: '2.5rem', height: '2.5rem' }} />
+                    {row.isCloseLoanPayment === 1
+                      ? (
+                      <Chip label={'ปิดยอดสวัสดิการ'} color="primary" />
+                        )
+                      : (
+                      <Chip label={'ชำระรายเดือน'} color="primary" variant='outlined'/>
+                        )}
+                  </TableCell>
+                  <TableCell align='center'>
+                    <Link passHref href={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} color='success'>
+                      <Avatar alt='N/A' {...stringAvatar('N/A')} src={`${apiConfig.baseURL}/files/payment-slip/${row.paymentFilePath}`} sx={{ width: '2.5rem', height: '2.5rem', fontSize: 14 }} />
                     </Link>
                   </TableCell>
-                  <TableCell align='center'>{parseInt(row.loanAmount , 10 ) - parseInt(row.paymentAmount , 10 )}</TableCell>
-                  <TableCell align='center'>{row.isCloseLoanPayment == 1 ? 'ปิดยอดสวัสดิการ' : 'ชำระรายเดือน'}</TableCell>
                   <TableCell align='center'>{row.approvedBy ?? '-'}</TableCell>
                   <TableCell align='center'>{moment(row.approvedAt).add(543, 'year').format('DD/MM/YYYY HH:mm') ?? '-'}</TableCell>
                 </TableRow>
@@ -74,7 +97,7 @@ const TableMemberLoanPaymentHistory = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        
+
       </CardContent>
     </Card>
   )

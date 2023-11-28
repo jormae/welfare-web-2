@@ -159,18 +159,46 @@ const FormLoanPayment = () => {
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.loanTypeName ? (
-                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanTypeName} label='ประเภทสวัสดิการ' />
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={`${paymentSuggestionInfo?.loanTypeName}  (${paymentSuggestionInfo?.loanAmount})`} label='ประเภทสวัสดิการ' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
             <Grid item xs={12} md={6} lg={3}>
-                {paymentSuggestionInfo?.loanAmount ? (
-                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanAmount} label='จำนวนเงินสวัสดิการ' />
+                {paymentSuggestionInfo ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanAmount + paymentSuggestionInfo?.totalProfit} label='ยอดจัดสวัสดิการ' />
                 ) : (
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.totalLoanBalance ? (
+                    <TextField fullWidth type='number' InputProps={{ readOnly: true }} defaultValue={paymentSuggestionInfo?.totalLoanBalance ?? 0} label='ยอดคงเหลือ' {...register('totalLoanBalance')}/>
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+            {paymentSuggestionInfo?.monthNo >= paymentSuggestionInfo?.closeLoanInMonth ? (
+                    <TextField InputProps={{ readOnly: true }} fullWidth defaultValue={paymentSuggestionInfo?.loanAmount - paymentSuggestionInfo?.totalLoanPayment} label='ยอดปิดสวัสดิการ' />
+                ) : (
+                    <Skeleton variant='rectangular' width={250} height={55} />
+                )}
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                {paymentSuggestionInfo?.monthNo >= paymentSuggestionInfo?.closeLoanInMonth ? (
+                    <FormControl fullWidth>
+                        <InputLabel>ปิดยอดสวัสดิการ</InputLabel>
+                        <Select label='ปิดยอดสวัสดิการ' defaultValue={0} {...register('isCloseLoanPayment', { required: true })}>
+                            <MenuItem key={1} value={0}>ไม่</MenuItem>
+                            <MenuItem key={2} value={1}>ใช่</MenuItem>
+                        </Select>
+                    </FormControl>
+                    ) : (
+                    null
+                )}
+            </Grid>
+            
             <Grid item xs={12} md={6} lg={3}>
             {paymentSuggestionInfo?.monthNo ? (
                     <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthNo} label='งวดที่' {...register('monthNo')}/>
@@ -183,13 +211,7 @@ const FormLoanPayment = () => {
                       shrink: true,
                     }} />
             </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-                {paymentSuggestionInfo?.totalLoanBalance ? (
-                    <TextField fullWidth type='number' InputProps={{ readOnly: true }} defaultValue={paymentSuggestionInfo?.totalLoanBalance ?? 0} label='ยอดคงเหลือ' {...register('totalLoanBalance')}/>
-                ) : (
-                    <Skeleton variant='rectangular' width={250} height={55} />
-                )}
-            </Grid>
+            
             <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.monthlyPayment ? (
                     <TextField fullWidth type='number' defaultValue={paymentSuggestionInfo?.monthlyPayment} label='ยอดชำระ' {...register('paymentAmount')} onChange={handleChangePaymentAmount}/>
@@ -197,9 +219,13 @@ const FormLoanPayment = () => {
                     <Skeleton variant='rectangular' width={250} height={55} />
                 )}
             </Grid>
-            <Grid item xs={12} md={6} lg={3}>
+            {/* <Grid item xs={12} md={6} lg={3}>
+            {paymentSuggestionInfo ? (
                 <TextField fullWidth type='text' InputProps={{ readOnly: true }} value={loanStatusName ?? 'ชำระรายเดือน'} label='ประเภทการชำระเงิน'  />
-            </Grid>
+                ) : (
+                  <Skeleton variant='rectangular' width={250} height={55} />
+              )}
+            </Grid> */}
             <Grid item xs={12} md={6} lg={3}>
                 {paymentSuggestionInfo?.paymentTypeId ? (
                     <FormControl fullWidth>
@@ -224,6 +250,8 @@ const FormLoanPayment = () => {
               <input type='hidden' {...register('userName')} value={userName} />
               <input type='hidden' {...register('memberRoleId')} value={memberRoleId} />
 
+              
+
             <Grid item xs={12}>
               <Box
                 sx={{
@@ -238,6 +266,7 @@ const FormLoanPayment = () => {
                 <LoadingButton
                   type='submit'
                   color='primary'
+
                   //   onClick={handleClick}
                   onClick={handleSubmit(onSubmit)}
                   loading={loading}

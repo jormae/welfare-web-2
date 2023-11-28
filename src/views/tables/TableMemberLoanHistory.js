@@ -55,14 +55,19 @@ const TableMemberLoanHistory = () => {
                   <TableCell align='center'>{row.loanDuration ?? '-'}</TableCell>
                   <TableCell align='center'>{row.startLoanDate ? moment(row.startLoanDate).add(543, 'year').format('DD/MM/YYYY') : '-'}</TableCell>
                   <TableCell align='center'>{row.endLoanDate ? moment(row.endLoanDate).add(543,'year').format('DD/MM/YYYY') : '-'}</TableCell>
-                  <TableCell align='center'>{row.loanAmount}</TableCell>
+                  <TableCell align='center'>{row.loanAmount + row.totalProfit}</TableCell>
                   <TableCell align='center' color='primary'>{row.totalPayment ?? 0}</TableCell>
-                  <TableCell align='center' color='primary'>{row.loanAmount - row.totalPayment ?? 0}</TableCell>
+                  <TableCell align='center' color='primary'>{(row.loanAmount + row.totalProfit) - row.totalPayment ?? 0}</TableCell>
                   <TableCell align='center'>
-                    <Chip label={(row.closeLoanStatusId == 3) ? "ปิดยอดสวัสดิการ" : row.loanStatusName} color="primary" />
+                  {row.closeLoanStatusId == 3 ? (
+                      <Chip label={"ปิดยอดสวัสดิการ"} color="primary" /> 
+                    ) : (
+                      <Chip label={row.loanStatusName} color="primary" variant='outlined'/>
+                    )}
+                    {/* <Chip label={(row.closeLoanStatusId == 3) ? "ปิดยอดสวัสดิการ" : row.loanStatusName} color="primary" /> */}
                   </TableCell>
                   <TableCell align='center'>
-                    <Link href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
+                    <Link passHref href={`../loan/${row.nationalId}/${row.loanId}`} color='primary'>
                         <Button type='button' variant='outlined'>
                             เปิด
                         </Button>

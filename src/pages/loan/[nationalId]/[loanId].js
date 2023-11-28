@@ -26,6 +26,7 @@ import CardLoanSurety1 from 'src/views/cards/CardLoanSurety1'
 import CardLoanSurety2 from 'src/views/cards/CardLoanSurety2'
 import FormDebtReport from 'src/views/form-layouts/FormDebtReport'
 import CardOtherLoanPayment from 'src/views/cards/CardOtherLoanPayment'
+import CardLoanStat from 'src/views/cards/CardLoanStat'
 
 export const LoanMemberContext = createContext()
 
@@ -45,6 +46,12 @@ const FormLayouts = () => {
 
   const [value, setValue] = React.useState('member')
   const [tabHistoryValue, setTabHistoryValue] = React.useState('loan')
+  const [tabRequests, setTabRequests] = React.useState('request-loan')
+    const [badgeCouter, setBadgeCouter ]= useState(0)
+
+    const handleTabChange = (event, newValue) => {
+        setTabRequests(newValue)
+    }
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
@@ -162,33 +169,65 @@ const FormLayouts = () => {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={12} md={6}>
-        <SkeletonMemberLoanFormLoading />
+      <Grid item xs={12} md={4} lg={4}>
+        <LoanContext.Provider value={loanDetail}>
+          <CardLoanStat />
+        </LoanContext.Provider>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <SkeletonMemberDebtReportFormLoading />
+      <Grid item xs={12} md={12} lg={8}>
+        <Grid container spacing={6}>
+            <Grid item xs={4} md={4} lg={6}>
+              <CardAddLoanPayment />
+            </Grid>
+            <Grid item xs={4} md={4} lg={6}>
+              <CardLoanAgreement />
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <CardLoanReceipt/>
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <CardLoanSurety1 />
+            </Grid>
+            <Grid item xs={12} md={6} lg={6}>
+              <CardLoanSurety2 />
+            </Grid>
+        </Grid> 
       </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardAddLoanPayment />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardOtherLoanPayment/>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanAgreement />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanReceipt/>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanSurety1 />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <CardLoanSurety2 />
-        </Grid>
-       
-      <Grid item xs={12}>
-        <SkeletonMemberLoanLoading />
+      <Grid item xs={12} md={12} lg={12}>
+        <Box sx={{ width: '100%' }}>
+          <TabContext value={tabRequests}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TabList onChange={handleTabChange} aria-label='lab API tabs example' >
+                        <Tab label='รายละเอียดสวัสดิการ' value='request-loan' />
+                        <Tab label='ประวัติการชำระสวัสดิการ' value='request-investment' />
+                    </TabList>
+                </Box>
+                    <TabPanel value='request-loan'>
+                      
+                        <Grid container wrap='nowrap'>
+                            {/* <Grid item xs={12} md={12} lg={12}> */}
+                            <Grid container spacing={6}>
+                              <Grid item xs={12} md={6} lg={6}>
+                                <SkeletonMemberLoanFormLoading />
+                              </Grid>
+                              <Grid item xs={12} md={6} lg={6}>
+                                <SkeletonMemberDebtReportFormLoading />
+                              </Grid>
+                            {/* </Grid> */}
+                            </Grid>
+                        </Grid>
+                    </TabPanel>
+                    <TabPanel value='request-investment'>
+                      <Grid container wrap='nowrap'>
+                          <Grid item xs={12} md={12} lg={12}>
+                            <Grid item xs={12}>
+                              <SkeletonMemberLoanLoading />
+                            </Grid>
+                          </Grid>
+                      </Grid>
+                    </TabPanel>
+                </TabContext>
+            </Box>
       </Grid>
     </Grid>
   )

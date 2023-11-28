@@ -99,8 +99,8 @@ const TableSalary = () => {
                   <TableCell>{row.nationalId}</TableCell>
                   <TableCell>{row.memberName}</TableCell>
                   <TableCell align='center'>{(row.salary ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
-                  <TableCell align='center'>{(healthInsurance * (row.salary > 15000 ? 15000 : row.salary)).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
-                  <TableCell align='center'>{(row.debts ?? 0).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'>{(healthInsurance * (row.salary > 15000 ? 15000 : row.salary)).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
+                  <TableCell align='center'>{(row.debts ?? 0).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                   <TableCell align='center'>{(row.salary - row.debts - (healthInsurance * (row.salary > 15000 ? 15000 : row.salary))).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</TableCell>
                 </TableRow>
               ))}

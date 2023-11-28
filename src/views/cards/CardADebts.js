@@ -109,6 +109,7 @@ const CardDebts = () => {
       </Grid>
 
       <Grid item xs={12} md={6} lg={4}>
+      <Link passHref href="/debt/bank" color='success'>
         <CardActionArea>
         <Card sx={{ pt: 5 }}>
           <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
@@ -140,8 +141,11 @@ const CardDebts = () => {
           </CardContent>
         </Card>
         </CardActionArea>
+        </Link>
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
+      <Link passHref href="/debt/student-loan" color='success'>
+
         <CardActionArea>
         <Card sx={{ pt: 5 }}>
           <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
@@ -173,8 +177,11 @@ const CardDebts = () => {
           </CardContent>
         </Card>
         </CardActionArea>
+        </Link>
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
+      <Link passHref href="/debt/house-rent" color='success'>
+
         <CardActionArea>
         <Card sx={{ pt: 5 }}>
           <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
@@ -206,8 +213,10 @@ const CardDebts = () => {
           </CardContent>
         </Card>
         </CardActionArea>
+        </Link>
       </Grid>
       <Grid item xs={12} md={6} lg={4}>
+      <Link passHref href="/debt/allowance" color='success'>
         <CardActionArea>
         <Card sx={{ pt: 5 }}>
           <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>
@@ -239,6 +248,7 @@ const CardDebts = () => {
           </CardContent>
         </Card>
         </CardActionArea>
+        </Link>
       </Grid>
     
     </Grid>

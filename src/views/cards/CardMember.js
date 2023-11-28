@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -32,8 +33,10 @@ const CardMember = () => {
   useEffect(() => {
     fetchTotalMember()
   }, [])
-  return (
-    <Link href="/member" color='success'>
+  
+return (
+    
+    <Link passHref href="/member" color='success'>
     <CardActionArea>
     <Card sx={{ pt: 5 }} direction='column'>
       <CardContent sx={{ pt: theme => `${theme.spacing(1)} !important` }}>

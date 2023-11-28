@@ -68,7 +68,7 @@
     "classnames": "^2.3.2",
     "clsx": "^1.1.1",
     "dayjs": "^1.11.9",
-    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react": "^7.33.2",
     "mdi-material-ui": "^7.1.0",
     "moment": "^2.29.4",
     "next": "12.0.4",
@@ -87,12 +87,15 @@
     "thai-baht-text": "^1.0.8"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
+    "eslint": "^8.0.1",
     "eslint-config-next": "12.0.4",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^17.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
     "next-transpile-modules": "^9.0.0",
     "prettier": "2.5.1"
   }
