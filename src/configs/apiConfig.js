@@ -6,7 +6,7 @@ const apiConfig = {
   // MY LOCALHOST
   // baseURL: 'http://192.168.110.166:3030'
   // LOCALHOST
-  baseURL: 'https://welfareapi.vercel.app'
+  baseURL: 'https://welfare-api.vercel.app'
 
   // baseURL: process.env.REACT_APP_BASE_URI
 
