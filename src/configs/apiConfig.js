@@ -3,10 +3,11 @@ const apiConfig = {
   // NAIF PC
   // baseURL: 'http://192.168.10.122:3030'
 
-  // MY LOCALHOST
-  // baseURL: 'http://192.168.110.166:3030'
+  // VERCEL
+  baseURL: 'https://welfare-api.vercel.app'
+
   // LOCALHOST
-  baseURL: 'http://localhost:3030'
+  // baseURL: 'http://localhost:3030'
 
   // baseURL: process.env.REACT_APP_BASE_URI
 
