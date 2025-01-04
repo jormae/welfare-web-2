@@ -176,10 +176,10 @@ const FormLayouts = () => {
       </Grid>
       <Grid item xs={12} md={12} lg={8}>
         <Grid container spacing={6}>
-            <Grid item xs={4} md={4} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardAddLoanPayment />
             </Grid>
-            <Grid item xs={4} md={4} lg={6}>
+            <Grid item xs={12} md={6} lg={6}>
               <CardLoanAgreement />
             </Grid>
             <Grid item xs={12} md={6} lg={6}>

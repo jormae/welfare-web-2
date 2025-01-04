@@ -83,6 +83,11 @@ const Dashboard = () => {
         setpg(0);
     }
 
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
+    // if(!token){
+    //   window.location = '/pages/login'
+    // }
+
   const userRole = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
   const username = typeof window !== 'undefined' ? localStorage.getItem('username') : null
 
@@ -177,7 +182,8 @@ const Dashboard = () => {
                 text: data.message,
                 }).then(okay => {
                   if (okay) {
-                    window.location.href = `/member/${username}`;
+                    // window.location.href = `/member/${username}`;
+                    window.location.href = `/reset-password`;
                   }
                 });
       }
@@ -197,7 +203,6 @@ const Dashboard = () => {
   }
 
   const verifyToken = async () => {
-    const token = localStorage.getItem('token')
     let uri = apiConfig.baseURL + '/auth/token'
     fetch(uri, {
       method: 'POST',

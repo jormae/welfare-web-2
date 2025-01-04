@@ -20,6 +20,7 @@ import TableMemberDividendHistory from 'src/views/tables/TableMemberDividendHist
 import TableMemberSuretyHistory from 'src/views/tables/TableMemberSuretyHistory'
 import FormAccount from 'src/views/form-layouts/FormAccount'
 import { ConsoleNetworkOutline } from 'mdi-material-ui'
+import Swal from 'sweetalert2';
 
 const defaultData = {
   ptName: 'Loading',
@@ -214,9 +215,32 @@ const FormLayouts = () => {
     }
   }
 
+  const getUserPass = async () => {
+    let uri = apiConfig.baseURL + `/auth/default-password/${router.query.nationalId}`
+    console.log(uri)
+    try {
+      const { data } = await axios.get(uri)
+      console.log(data)
+      if(data.status == "error"){
+        Swal.fire({ icon: 'warning',
+                title: "คำแนะนำ!",
+                text: data.message,
+                }).then(okay => {
+                  if (okay) {
+                    // window.location.href = `/member/${username}`;
+                    window.location.href = `/reset-password`;
+                  }
+                });
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if (router.isReady) {
       router.query
+      getUserPass()
       fetchMemberDetail()
       fetchPositions()
       fetchMemberTypes()

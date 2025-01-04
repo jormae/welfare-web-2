@@ -33,6 +33,11 @@ const FormLayouts = () => {
   const [member, setMember] = useState()
   const [paymentSuggestionInfo, setPaymentSuggestionInfo] = useState()
   const staffName = typeof window !== 'undefined' ? localStorage.getItem('staffName') : null
+  const memberRoleId = typeof window !== 'undefined' ? localStorage.getItem('memberRoleId') : null
+  if(memberRoleId == 4){
+    window.location = '/401'
+
+  }
 
   const fetchMember = async () => {
     let uri = apiConfig.baseURL + `/members/${router.query.nationalId}`

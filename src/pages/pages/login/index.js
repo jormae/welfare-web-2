@@ -99,7 +99,14 @@ const LoginPage = () => {
           localStorage.setItem('memberName', data.memberName)
           localStorage.setItem('memberRoleId', data.memberRoleId)
           localStorage.setItem('memberRoleName', data.memberRoleName)
-          window.location = '/'
+          if(data.memberRoleId == 4)
+          {
+            window.location = `/member/${data.username}`
+
+          }else{
+            window.location = '/'
+          }
+          // window.location = '/'
         }
         else{
           setError(true)

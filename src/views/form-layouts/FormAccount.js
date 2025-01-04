@@ -208,7 +208,7 @@ const FormAccount = () => {
                     <FormHelperText id="confirmPassword" sx={{color:'#d32f2f'}}>Error : คุณใส่ข้อมูลยืนยันรหัสผ่านไม่เหมือนกัน</FormHelperText>
                   )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={4}>
             {username == nationalId ? ( 
               <Box
                m={1} //margin
@@ -218,6 +218,7 @@ const FormAccount = () => {
               >
                 <Box sx={{ '& > button': { m: 1 } }}></Box>
                 <LoadingButton
+                fullWidth
                   type='submit'
                   color='primary'
                   onClick={handleSubmit(onSubmit)}
